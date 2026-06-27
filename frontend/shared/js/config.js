@@ -2,10 +2,10 @@ const SITE_CONFIG = {
   version: 'v1.0.2',
 
   brand: {
-    name: 'AartiTechServices',
-    nameUppercase: 'AARTITECHSERVICES',
+    name: 'Aarti Tech Services',
+    nameUppercase: 'AARTI TECH SERVICES',
     legalName: 'MK9 Solutions',
-    tagline: 'Life should be great rather than long',
+    tagline: "Let's Build &amp; Grow business Together",
     copyright: '\u00A9 2026 AartiTechServices. All rights reserved.',
   },
 
@@ -31,7 +31,7 @@ const SITE_CONFIG = {
   },
 
   ogImage: '/shared/assets/img/og-default.svg',
-  logoIcon: 'M',
+  logoIcon: 'A',
 
   organization: {
     telephone: '+91-9869787575',
