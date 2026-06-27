@@ -115,7 +115,8 @@
       font-size: 1.8rem;
       font-weight: 700;
       margin-bottom: 1rem;
-      letter-spacing: -0.02em;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
     .intro-section p {
       color: var(--text-secondary);
@@ -134,12 +135,12 @@
       font-weight: 700;
       text-align: center;
       margin-bottom: 2.5rem;
-      letter-spacing: -0.02em;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
     .expertise-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-left: 4px solid var(--accent);
       border-radius: 14px;
       padding: 2rem 2.5rem;
       margin-bottom: 1.5rem;
@@ -148,7 +149,6 @@
     }
     .expertise-card:hover {
       box-shadow: var(--shadow-lg);
-      border-left-color: var(--accent-light);
       transform: translateY(-2px);
     }
     .expertise-card h3 {
@@ -220,6 +220,15 @@
       border-radius: 10px;
       padding: 1rem 1.25rem;
       border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .partner-item:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent-light);
+      box-shadow: 0 6px 20px rgba(37,99,235,0.1);
+    }
+    .expertise-card:last-child:hover {
+      box-shadow: 0 0 30px rgba(37,99,235,0.12), var(--shadow-lg);
     }
     .partner-item h5 {
       margin: 0 0 0.35rem;
@@ -258,7 +267,8 @@
       font-weight: 700;
       text-align: center;
       margin-bottom: 2rem;
-      letter-spacing: -0.02em;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
     .why-us-grid {
       display: grid;
@@ -307,7 +317,8 @@
       font-weight: 700;
       text-align: center;
       margin-bottom: 0.5rem;
-      letter-spacing: -0.02em;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
     .section-block > p {
       text-align: center;
@@ -377,7 +388,8 @@
       font-size: 1.8rem;
       font-weight: 700;
       margin-bottom: 1rem;
-      letter-spacing: -0.02em;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
     .final-cta p {
       color: var(--text-secondary);
