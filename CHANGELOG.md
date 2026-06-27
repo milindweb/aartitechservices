@@ -1,5 +1,34 @@
 # Changelog
 
+## v1.0.10 — 2026-06-28 — Header cleanup & expanded engineering branches
+
+### Changed
+- Desktop nav: flattened Learning & Innovation sub-dropdown to plain link (tabs only accessible via page)
+- Desktop nav: removed Login link (already in footer)
+- Mobile nav: removed 3 indented sub-links (Projects, Industrial Training, Technical Workshops)
+- Mobile nav: removed Login link
+- Learning & Innovation: expanded Engineering Branches from 3 (Electrical, Electronics, Instrumentation) to 4 (Electrical, Electronics, Computer & AI, Mechanical) across all 3 tabs
+
+### Documentation
+- `structure.md` — updated Navigation section
+- `CHANGELOG.md` — added this entry
+
+---
+
+## v1.0.9 — 2026-06-28 — Added engineering branches to Projects, Training, Workshops tabs
+
+### Changed
+- Each tab (Projects, Industrial Training, Technical Workshops) now has an "Engineering Branches" section with 3 discipline-specific cards
+
+---
+
+## v1.0.8 — 2026-06-28 — Moved tab CTAs above contact form
+
+### Changed
+- Dynamic CTA moved above the contact form in each tab; updates text on tab switch
+
+---
+
 ## v1.0.7 — 2026-06-28 — Tabbed Learning & Innovation page
 
 ### Changed
