@@ -682,23 +682,7 @@
     </div>
   </section>
 
-  <!-- ===== Contact ===== -->
-  <section class="contact-intro">
-    <h2>Let's Work Together</h2>
-    <p>Have a project, question, or idea? We'd love to hear about it. Reach out and let's create something great.</p>
-  </section>
-  <div id="form-container"></div>
-  <script>
-    fetch("/pages/contactform.html")
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById("form-container").innerHTML = html;
-        const script = document.createElement("script");
-        script.src = "/shared/js/form-handler.js";
-        document.body.appendChild(script);
-      });
-  </script>
-
+  <!-- ===== Footer ===== -->
   <div id="footer"></div>
 
   <script src="/shared/js/headerfooter.js" defer></script>
