@@ -283,7 +283,7 @@
     <div class="p-container">
       <div id="form-container"></div>
       <script>
-      fetch("/site/pages/contactform.html")
+      fetch("/pages/contactform.html")
         .then(res => res.text())
         .then(html => {
           document.getElementById("form-container").innerHTML = html;

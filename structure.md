@@ -2,19 +2,18 @@
 
 ## Architecture
 
-Frontend : GitHub + Cloudflare Pages + mk9.in
+Frontend : Cloudflare Pages + mk9.in
 Backend  : Supabase Edge Functions (JavaScript/TypeScript)
 Database : Supabase PostgreSQL (via `backend/schema/`)
 Storage  : Supabase Storage (via client SDK)
 Auth     : Supabase Auth (Login / Registration / Forgot Password / Reset Password)
 
-## GITHUB DETAILS
-Username: milindweb
-Repository: https://github.com/milindweb/aartitechservices
+## Repository
+Local only — no remote configured
 
 ## Future Subdomains
 
-mk9.in                → Main Portal (deployed from `frontend/site/`)
+mk9.in                → Main Portal (deployed from `frontend/`)
 app.mk9.in            → App Area (deployed from `frontend/app/`) — alternative to /app/* paths
 blog.mk9.in           → Blog Module
 society.mk9.in        → Society Management
@@ -51,27 +50,24 @@ mk9/
 │   ├── 404.html                     ↤ Custom 404 page
 │   ├── robots.txt                   ↤ Crawler rules
 │   ├── sitemap.xml                  ↤ XML sitemap (manual updates required)
+│   ├── index.html                   ⭐ SEO — fully indexed
 │   │
-│   ├── site/                        ⭐ SEO — fully indexed
+│   ├── pages/
 │   │   │
-│   │   ├── index.html
+│   │   ├── contact.html
+│   │   ├── contactform.html
+│   │   ├── blog.html
+│   │   ├── links.html
 │   │   │
-│   │   └── pages/
-│   │       │
-│   │       ├── contact.html
-│   │       ├── contactform.html
-│   │       ├── blog.html
-│   │       ├── links.html
-│   │       │
-│   │       ├── expertise/
-│   │       │   ├── digital-engineering.html
-│   │       │   ├── freelance-digital-marketing-seo.html
-│   │       │   └── learning-innovation.html
-│   │       │
-│   │       └── partners/
-│   │           ├── graphics.html
-│   │           ├── electrical.html
-│   │           └── automotive.html
+│   │   ├── expertise/
+│   │   │   ├── digital-engineering.html
+│   │   │   ├── freelance-digital-marketing-seo.html
+│   │   │   └── learning-innovation.html
+│   │   │
+│   │   └── partners/
+│   │       ├── graphics.html
+│   │       ├── electrical.html
+│   │       └── automotive.html
 │   │
 │   ├── app/                         ⭐ Login required — NOINDEX, NOFOLLOW
 │   │   │
@@ -160,7 +156,7 @@ Login
 
 | Area | Path | Indexing | robots.txt |
 |------|------|----------|------------|
-| Public site | `/site/` | Indexed, follow | Allowed |
+| Public site | `/` | Indexed, follow | Allowed |
 | App area | `/app/` | `noindex, nofollow` | Disallowed |
 
 ### Implementation
@@ -187,18 +183,18 @@ Publish root: `frontend/`
 
 Public pages:
 ```
-/                         /site/index.html                                                   200
-/contact                  /site/pages/contact.html                                           200
-/blog                     /site/pages/blog.html                                              200
-/links                    /site/pages/links.html                                             200
+/                         /index.html                                                        200
+/contact                  /pages/contact.html                                                200
+/blog                     /pages/blog.html                                                   200
+/links                    /pages/links.html                                                  200
 
-/expertise/digital-engineering     /site/pages/expertise/digital-engineering.html            200
-/expertise/digital-marketing-seo   /site/pages/expertise/freelance-digital-marketing-seo.html 200
-/expertise/learning-innovation     /site/pages/expertise/learning-innovation.html             200
+/expertise/digital-engineering     /pages/expertise/digital-engineering.html                 200
+/expertise/digital-marketing-seo   /pages/expertise/freelance-digital-marketing-seo.html      200
+/expertise/learning-innovation     /pages/expertise/learning-innovation.html                  200
 
-/partners/graphics        /site/pages/partners/graphics.html                                 200
-/partners/electrical      /site/pages/partners/electrical.html                               200
-/partners/automotive      /site/pages/partners/automotive.html                               200
+/partners/graphics        /pages/partners/graphics.html                                      200
+/partners/electrical      /pages/partners/electrical.html                                    200
+/partners/automotive      /pages/partners/automotive.html                                    200
 ```
 
 Seniority (clean URL rewrites):
@@ -241,7 +237,7 @@ Legacy redirects (301):
                     ┌────────────┴─────────────┐
                     │                          │
             ┌───────┴───────┐         ┌───────┴───────┐
-            │    /site/     │         │    /app/      │
+            │     /         │         │    /app/      │
             │  (SEO: ✓)     │         │ (noindex)     │
             │               │         │               │
             │ index.html    │         │ seniority/    │
@@ -251,7 +247,7 @@ Legacy redirects (301):
             └───────────────┘         └───────────────┘
 ```
 
-- Everything inside `site/` is indexed.
+- The root `/` (index.html, pages/) is indexed.
 - Everything inside `app/` is `noindex, nofollow`.
 - `app/` is disallowed in `robots.txt`.
 

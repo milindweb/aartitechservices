@@ -2,22 +2,22 @@
 # Format: source destination status
 
 # Root -> home
-/                  /site/index.html                                           200
+/                  /index.html                                           200
 
 # Top-level pages
-/contact           /site/pages/contact.html                                   200
-/blog              /site/pages/blog.html                                      200
-/links             /site/pages/links.html                                     200
+/contact           /pages/contact.html                                   200
+/blog              /pages/blog.html                                      200
+/links             /pages/links.html                                     200
 
 # Expertise pages
-/expertise/digital-engineering     /site/pages/expertise/digital-engineering.html               200
-/expertise/digital-marketing-seo   /site/pages/expertise/freelance-digital-marketing-seo.html    200
-/expertise/learning-innovation     /site/pages/expertise/learning-innovation.html                200
+/expertise/digital-engineering     /pages/expertise/digital-engineering.html               200
+/expertise/digital-marketing-seo   /pages/expertise/freelance-digital-marketing-seo.html    200
+/expertise/learning-innovation     /pages/expertise/learning-innovation.html                200
 
 # Partners pages
-/partners/graphics        /site/pages/partners/graphics.html                                   200
-/partners/electrical      /site/pages/partners/electrical.html                                 200
-/partners/automotive      /site/pages/partners/automotive.html                                 200
+/partners/graphics        /pages/partners/graphics.html                                   200
+/partners/electrical      /pages/partners/electrical.html                                 200
+/partners/automotive      /pages/partners/automotive.html                                 200
 
 # Seniority
 /app/seniority           /app/seniority/seniority-list.html                                    200
@@ -47,4 +47,4 @@
 /modules/seniority/pages/seniority-management     /app/seniority/seniority-management.html        301
 
 # Catch site assets
-# /site/assets/*               /site/assets/:splat                                            200
+# /assets/*               /assets/:splat                                            200
