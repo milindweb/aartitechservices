@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="/shared/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Portfolio', description: 'Explore our portfolio of digital marketing campaigns, web development projects, branding work, and technical solutions delivered by AartiTechServices.', canonical: '/portfolio' };</script>
+  <script src="/shared/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="/shared/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="/shared/js/headerfooter.js" defer></script>
+  <style>
+    main { max-width: 1000px; margin: 0 auto; padding: 3rem 1rem; }
+    h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+    p { line-height: 1.8; color: var(--text-secondary); margin-bottom: 2rem; }
+    .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1.5rem; }
+    .portfolio-item { background: var(--card-bg); padding: 2rem; border-radius: 12px; border: 1px solid var(--border); box-shadow: var(--shadow); transition: all 0.3s ease; }
+    .portfolio-item:hover { transform: translateY(-4px); border-color: var(--accent-light); }
+    .portfolio-item h3 { color: var(--accent); margin: 0 0 0.5rem; }
+    .portfolio-item p { font-size: 0.95rem; margin: 0; color: var(--text-secondary); }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+  <main>
+    <h1>Our Portfolio</h1>
+    <p>A selection of projects, campaigns, and solutions we've delivered for our clients.</p>
+    <div class="portfolio-grid">
+      <div class="portfolio-item">
+        <h3>Website Development</h3>
+        <p>Custom websites and web applications built with modern technologies — responsive, fast, and SEO-optimized.</p>
+      </div>
+      <div class="portfolio-item">
+        <h3>SEO & Digital Marketing</h3>
+        <p>Successful SEO campaigns that improved search rankings, drove organic traffic, and generated qualified leads for local businesses.</p>
+      </div>
+      <div class="portfolio-item">
+        <h3>Branding & Graphics</h3>
+        <p>Logo design, brand identity, banners, and promotional material that helped businesses establish a strong visual presence.</p>
+      </div>
+    </div>
+  </main>
+
+  <div id="form-container"></div>
+  <script>
+    fetch("/pages/contactform.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("form-container").innerHTML = html;
+        const script = document.createElement("script");
+        script.src = "/shared/js/form-handler.js";
+        document.body.appendChild(script);
+      });
+  </script>
+
+  <div id="footer"></div>
+</body>
+</html>

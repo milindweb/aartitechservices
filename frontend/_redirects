@@ -5,6 +5,8 @@
 /                  /index.html                                           200
 
 # Top-level pages
+/about             /pages/about.html                                     200
+/portfolio         /pages/portfolio.html                                 200
 /contact           /pages/contact.html                                   200
 /blog              /pages/blog.html                                      200
 /links             /pages/links.html                                     200
@@ -15,9 +17,13 @@
 /expertise/learning-innovation     /pages/expertise/learning-innovation.html                200
 
 # Partners pages
+/partners             /pages/partners/index.html                                          200
 /partners/graphics        /pages/partners/graphics.html                                   200
 /partners/electrical      /pages/partners/electrical.html                                 200
 /partners/automotive      /pages/partners/automotive.html                                 200
+
+# Login
+/login               /app/seniority/seniority-list.html                                     200
 
 # Seniority
 /app/seniority           /app/seniority/seniority-list.html                                    200

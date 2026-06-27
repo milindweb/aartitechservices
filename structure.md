@@ -138,7 +138,6 @@ mk9/
 
 ## Navigation
 
-Home
 About
 Expertise
     ├── Digital Engineering

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="/shared/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Strategic Partners', description: 'Meet our strategic partners — trusted professionals in graphics, electrical, and automotive services collaborating with AartiTechServices.', canonical: '/partners' };</script>
+  <script src="/shared/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="/shared/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="/shared/js/headerfooter.js" defer></script>
+  <style>
+    main { max-width: 900px; margin: 0 auto; padding: 3rem 1rem; }
+    h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+    p { line-height: 1.8; color: var(--text-secondary); margin-bottom: 2rem; }
+    .partner-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 1.5rem; }
+    .partner-card { background: var(--card-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border); box-shadow: var(--shadow); text-decoration: none; color: inherit; display: block; transition: all 0.3s ease; }
+    .partner-card:hover { transform: translateY(-4px); border-color: var(--accent-light); }
+    .partner-card h3 { color: var(--accent); margin: 0 0 0.5rem; }
+    .partner-card p { font-size: 0.95rem; margin: 0; }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+  <main>
+    <h1>Strategic Partners</h1>
+    <p>We collaborate with trusted professionals to deliver comprehensive solutions across multiple domains.</p>
+    <div class="partner-list">
+      <a class="partner-card" href="/partners/graphics">
+        <h3>Graphics, Photography & Branding</h3>
+        <p>Logo design, banners, branding, professional photography, videography, and drone services.</p>
+      </a>
+      <a class="partner-card" href="/partners/electrical">
+        <h3>Electrical Services</h3>
+        <p>Professional electrical installation, maintenance, troubleshooting, and solar power solutions.</p>
+      </a>
+      <a class="partner-card" href="/partners/automotive">
+        <h3>Automotive Services</h3>
+        <p>Two-wheeler maintenance, repairs, diagnostics, and electric vehicle servicing.</p>
+      </a>
+    </div>
+  </main>
+
+  <div id="form-container"></div>
+  <script>
+    fetch("/pages/contactform.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("form-container").innerHTML = html;
+        const script = document.createElement("script");
+        script.src = "/shared/js/form-handler.js";
+        document.body.appendChild(script);
+      });
+  </script>
+
+  <div id="footer"></div>
+</body>
+</html>
