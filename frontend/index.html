@@ -19,10 +19,13 @@
       --text-secondary: #475569;
       --accent: #2563eb;
       --accent-light: #3b82f6;
+      --accent-dark: #1d4ed8;
       --border: #e2e8f0;
       --gradient: linear-gradient(135deg, #2563eb, #7c3aed);
+      --gradient-hero: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #2563eb 100%);
       --shadow: 0 4px 14px rgba(0,0,0,0.08);
-      --transition: all .3s ease;
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.12);
+      --transition: all 0.3s ease;
     }
 
     .dark-mode {
@@ -35,6 +38,7 @@
       --accent-light: #93c5fd;
       --border: #334155;
       --shadow: 0 4px 14px rgba(0,0,0,0.4);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.6);
     }
 
     body {
@@ -46,43 +50,42 @@
       transition: var(--transition);
     }
 
+    /* ===== Hero ===== */
     .hero {
-      padding: 6rem 1.5rem 5rem;
+      padding: 7rem 1.5rem 5rem;
       text-align: center;
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #2563eb 100%);
+      background: var(--gradient-hero);
       color: white;
       position: relative;
       overflow: hidden;
     }
     .hero::before {
-      content: ''; position: absolute; inset: 0;
+      content: '';
+      position: absolute;
+      inset: 0;
       background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
       opacity: 0.4;
     }
     .hero * { position: relative; z-index: 1; }
     .hero h1 {
-      font-size: 2.5rem;
+      font-size: 2.6rem;
       font-weight: 800;
-      margin-bottom: 1rem;
-      line-height: 1.25;
+      margin-bottom: 1.2rem;
+      line-height: 1.2;
       letter-spacing: -0.02em;
+      max-width: 860px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .hero p {
-      max-width: 640px;
+      max-width: 720px;
       margin: 0 auto 2rem;
       font-size: 1.1rem;
-      opacity: 0.9;
+      opacity: 0.92;
       line-height: 1.7;
     }
-    .hero-location {
-      font-size: 0.9rem;
-      margin-bottom: 1.5rem;
-      color: #93c5fd;
-      font-weight: 500;
-    }
-    .hero-location i { margin-right: 6px; }
-    .cta-btn {
-      padding: 0.85rem 2rem;
+    .hero .cta-btn {
+      padding: 0.9rem 2.2rem;
       border-radius: 8px;
       background: white;
       border: none;
@@ -94,94 +97,251 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      text-decoration: none;
     }
-    .cta-btn:hover {
+    .hero .cta-btn:hover {
       transform: translateY(-3px);
       box-shadow: 0 8px 25px rgba(0,0,0,0.2);
     }
 
-    .section-title {
-      font-size: 1.8rem;
+    /* ===== Intro ===== */
+    .intro-section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem;
       text-align: center;
+    }
+    .intro-section h2 {
+      font-size: 1.8rem;
       font-weight: 700;
-      margin: 4rem 0 0.5rem;
+      margin-bottom: 1rem;
       letter-spacing: -0.02em;
     }
-    .section-subtitle {
-      text-align: center;
+    .intro-section p {
       color: var(--text-secondary);
       font-size: 1.05rem;
-      max-width: 600px;
-      margin: 0.5rem auto 2.5rem;
+      line-height: 1.7;
     }
 
-    .cards-grid {
+    /* ===== Expertise Section ===== */
+    .expertise-section {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 1.5rem 3rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
-      gap: 1.5rem;
     }
-
-    .card {
+    .expertise-section > h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      letter-spacing: -0.02em;
+    }
+    .expertise-card {
       background: var(--card-bg);
-      padding: 2rem;
-      border-radius: 14px;
       border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem 2.5rem;
+      margin-bottom: 1.5rem;
       box-shadow: var(--shadow);
       transition: var(--transition);
-      text-decoration: none;
-      color: inherit;
-      display: block;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.7s ease forwards;
     }
-    .card:nth-child(1) { animation-delay: 0.1s; }
-    .card:nth-child(2) { animation-delay: 0.2s; }
-    .card:nth-child(3) { animation-delay: 0.3s; }
-    .card:nth-child(4) { animation-delay: 0.4s; }
-    .card:nth-child(5) { animation-delay: 0.5s; }
-    .card:nth-child(6) { animation-delay: 0.6s; }
-    .card:nth-child(7) { animation-delay: 0.7s; }
-    .card:nth-child(8) { animation-delay: 0.8s; }
-
-    .card:hover {
-      transform: translateY(-8px);
+    .expertise-card:hover {
+      box-shadow: var(--shadow-lg);
       border-color: var(--accent-light);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
     }
-
-    .card-icon {
-      font-size: 2rem;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .expertise-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 0 0 0.25rem;
+    }
+    .expertise-card h4 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0 0 0.75rem;
+    }
+    .expertise-card > p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin: 0 0 1rem;
+    }
+    .expertise-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.25rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+      gap: 0.35rem 1rem;
+    }
+    .expertise-list li {
+      padding: 0.35rem 0 0.35rem 1.4rem;
+      position: relative;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    .expertise-list li::before {
+      content: '\f00c';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+    .expertise-link {
       display: inline-flex;
-      transition: transform 0.3s ease;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: var(--transition);
     }
-    .card:hover .card-icon { transform: scale(1.2); }
+    .expertise-link:hover {
+      gap: 10px;
+      color: var(--accent-light);
+    }
 
-    .card h3 {
-      margin: 1rem 0 0.75rem;
-      font-size: 1.25rem;
+    /* Partner sub-items inside expertise-card */
+    .partner-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .partner-item {
+      background: var(--secondary-bg);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+    }
+    .partner-item h5 {
+      margin: 0 0 0.35rem;
+      font-size: 0.95rem;
       color: var(--accent);
       font-weight: 600;
     }
-    .card p {
+    .partner-item p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ===== Why Choose Us ===== */
+    .why-us {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 4rem;
+    }
+    .why-us h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 2rem;
+      letter-spacing: -0.02em;
+    }
+    .why-us-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+      gap: 0.75rem 1.5rem;
+      max-width: 900px;
+      margin: 0 auto 2rem;
+    }
+    .why-us-grid li {
+      list-style: none;
+      padding: 0.6rem 0 0.6rem 1.8rem;
+      position: relative;
       color: var(--text-secondary);
       font-size: 0.95rem;
-      line-height: 1.6;
-      margin: 0;
+    }
+    .why-us-grid li::before {
+      content: '\f058';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .why-us .cta-wrapper {
+      text-align: center;
+    }
+    .why-us .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      background: var(--gradient);
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+    }
+    .why-us .cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(37,99,235,0.3);
     }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(25px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* ===== Portfolio / Blog Sections ===== */
+    .section-block {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 4rem;
+    }
+    .section-block h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .section-block > p {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 640px;
+      margin: 0.5rem auto 2rem;
+      line-height: 1.7;
+    }
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+      gap: 0.6rem 1.5rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      list-style: none;
+      padding: 0;
+    }
+    .topic-grid li {
+      padding: 0.5rem 0 0.5rem 1.5rem;
+      position: relative;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    .topic-grid li::before {
+      content: '\f054';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.75rem;
+    }
+    .section-block .link-wrapper {
+      text-align: center;
+    }
+    .section-block .expertise-link {
+      font-size: 1rem;
     }
 
+    /* ===== Stats ===== */
     .stats {
       background: var(--secondary-bg);
       padding: 3rem 1.5rem;
@@ -209,72 +369,103 @@
       font-weight: 500;
     }
 
-    .team-section {
+    /* ===== Final CTA ===== */
+    .final-cta {
       max-width: 900px;
-      margin: 4rem auto;
-      padding: 0 1.5rem;
+      margin: 0 auto;
+      padding: 4rem 1.5rem;
+      text-align: center;
     }
-    .team-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
+    .final-cta h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
     }
-    .team-member {
-      padding: 1.5rem;
+    .final-cta p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 680px;
+      margin: 0 auto 2rem;
+    }
+    .final-cta .cta-group {
       display: flex;
-      gap: 1.25rem;
-      align-items: flex-start;
-      background: var(--card-bg);
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      transition: var(--transition);
-    }
-    .team-member:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent-light);
-      box-shadow: var(--shadow);
-    }
-    .team-avatar {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: #3b82f6;
-      color: white;
-      display: flex;
+      gap: 1rem;
       justify-content: center;
+      flex-wrap: wrap;
+    }
+    .final-cta .cta-btn {
+      display: inline-flex;
       align-items: center;
-      font-size: 1.2rem;
-      flex-shrink: 0;
+      gap: 8px;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
     }
-    .team-info h4 {
-      margin: 0;
+    .final-cta .cta-btn.primary {
+      background: var(--gradient);
+      color: white;
+    }
+    .final-cta .cta-btn.primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(37,99,235,0.3);
+    }
+    .final-cta .cta-btn.secondary {
+      background: var(--card-bg);
       color: var(--accent);
-      font-size: 1.1rem;
+      border: 2px solid var(--accent);
     }
-    .team-info .role {
-      color: var(--text-secondary);
-      font-size: 0.85rem;
-      font-weight: 500;
-      margin: 2px 0 6px;
+    .final-cta .cta-btn.secondary:hover {
+      background: var(--accent);
+      color: white;
+      transform: translateY(-3px);
     }
-    .team-info p {
+
+    /* ===== Contact ===== */
+    .contact-intro {
+      text-align: center;
+      padding: 3rem 1.5rem 0.5rem;
+    }
+    .contact-intro h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .contact-intro p {
       color: var(--text-secondary);
-      font-size: 0.9rem;
-      margin: 0;
-      line-height: 1.5;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* ===== Alternating background ===== */
+    .bg-alt {
+      background: var(--secondary-bg);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
 
     @media (max-width: 768px) {
       .hero { padding: 4rem 1.5rem 3rem; }
-      .hero h1 { font-size: 1.8rem; }
-      .section-title { font-size: 1.5rem; }
-      .cards-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 1.7rem; }
+      .expertise-card { padding: 1.5rem; }
+      .expertise-list { grid-template-columns: 1fr; }
+      .partner-items { grid-template-columns: 1fr; }
+      .why-us-grid { grid-template-columns: 1fr; }
+      .intro-section h2 { font-size: 1.4rem; }
+      .expertise-section > h2 { font-size: 1.4rem; }
       .stats-grid { grid-template-columns: repeat(2,1fr); }
     }
     @media (max-width: 480px) {
-      .hero h1 { font-size: 1.5rem; }
+      .hero h1 { font-size: 1.4rem; }
+      .hero p { font-size: 0.95rem; }
       .stat-item h3 { font-size: 1.6rem; }
+      .final-cta .cta-group { flex-direction: column; align-items: center; }
     }
   </style>
 </head>
@@ -282,58 +473,153 @@
 
   <div id="header"></div>
 
+  <!-- ===== Hero ===== -->
   <section class="hero">
-    <h1>Freelance Digital Marketing Consultant &amp; Smart Technical Services</h1>
-    <p>Helping businesses grow online with SEO, social media, and technical digital solutions. Affordable and ROI-focused services designed for startups and small businesses.</p>
-    <div class="hero-location"><i class="fas fa-map-marker-alt"></i> Uran, Navi Mumbai — Serving Maharashtra</div>
+    <h1>Full Stack Development, SEO &amp; Digital Marketing, Engineering Solutions</h1>
+    <p>Build, grow, and transform your business with modern digital solutions. We help businesses, startups, professionals, and educational institutions establish a powerful online presence through professional websites, custom SaaS applications, digital marketing, business automation, and engineering solutions.</p>
+    <p>Our mission is to deliver secure, scalable, and future-ready solutions that drive innovation, improve efficiency, and support long-term business growth.</p>
     <button class="cta-btn" onclick="window.location.href=SITE_CONFIG.social.whatsapp">
       Get Free Consultation <i class="fas fa-arrow-right"></i>
     </button>
   </section>
 
-  <h2 class="section-title">Our Services</h2>
-  <p class="section-subtitle">End-to-end digital and technical solutions for your business growth</p>
+  <!-- ===== Intro ===== -->
+  <section class="intro-section">
+    <h2>Digital Solutions That Drive Business Growth</h2>
+    <p>From professional business websites and custom software to digital marketing, cloud deployment, and technical training, we provide end-to-end solutions designed to help organizations increase productivity, strengthen their online presence, and accelerate business growth.</p>
+  </section>
 
-  <div class="cards-grid">
+  <!-- ===== Our Expertise ===== -->
+  <section class="expertise-section">
+    <h2>Our Expertise</h2>
 
-    <a class="card" href="/expertise/digital-marketing-seo">
-      <span class="card-icon"><i class="fas fa-chart-line"></i></span>
+    <!-- Digital Engineering -->
+    <div class="expertise-card">
+      <h3>Digital Engineering</h3>
+      <h4>Full Stack Development</h4>
+      <p>We design and develop secure, scalable, and high-performance digital solutions tailored to your business requirements.</p>
+      <ul class="expertise-list">
+        <li>Business Websites</li>
+        <li>Corporate Websites</li>
+        <li>Portfolio Websites</li>
+        <li>Custom Web Applications</li>
+        <li>SaaS Applications</li>
+        <li>Business Automation</li>
+        <li>REST API Development</li>
+        <li>Database Design</li>
+        <li>Cloud Deployment</li>
+        <li>Website Hosting &amp; Maintenance</li>
+        <li>UI/UX Development</li>
+      </ul>
+      <a href="/expertise/digital-engineering" class="expertise-link">Explore Digital Engineering <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <!-- Digital Marketing & SEO -->
+    <div class="expertise-card">
       <h3>Digital Marketing &amp; SEO</h3>
-      <p>Improve online visibility, attract qualified leads, and grow your business through Search Engine Optimization (SEO), Google Ads, social media marketing, content marketing, local SEO, and performance-driven digital strategies designed to deliver measurable results.</p>
-    </a>
+      <p>Increase your online visibility, attract quality leads, and grow your business through result-driven digital marketing strategies.</p>
+      <ul class="expertise-list">
+        <li>Search Engine Optimization (SEO)</li>
+        <li>Local SEO</li>
+        <li>Technical SEO</li>
+        <li>Google Business Profile Optimization</li>
+        <li>Google Ads</li>
+        <li>Social Media Marketing</li>
+        <li>Content Marketing</li>
+        <li>Website Performance Optimization</li>
+      </ul>
+      <a href="/expertise/digital-marketing-seo" class="expertise-link">Explore Digital Marketing <i class="fas fa-arrow-right"></i></a>
+    </div>
 
-    <a class="card" href="/expertise/digital-engineering">
-      <span class="card-icon"><i class="fas fa-laptop-code"></i></span>
-      <h3>Web & Software Development</h3>
-      <p>Modern websites, web apps, e-commerce, and custom business software — including Hospital Management, Society Management, workflow automation, and reporting systems. Tailored solutions that digitize and streamline your operations.</p>
-    </a>
+    <!-- Learning & Innovation -->
+    <div class="expertise-card">
+      <h3>Learning &amp; Innovation</h3>
+      <p>Practical learning programs designed for students, educational institutions, and working professionals.</p>
+      <ul class="expertise-list">
+        <li>Engineering Projects</li>
+        <li>Industrial Training &amp; Internships</li>
+        <li>Technical Workshops</li>
+      </ul>
+      <p>Helping students gain real-world technical experience through industry-oriented learning and live projects.</p>
+      <a href="/expertise/learning-innovation" class="expertise-link">Explore Learning Programs <i class="fas fa-arrow-right"></i></a>
+    </div>
 
-    <a class="card" href="/expertise/learning-innovation">
-      <span class="card-icon"><i class="fas fa-microchip"></i></span>
-      <h3>College Projects &amp; Training</h3>
-      <p>Industry-oriented engineering and technology solutions including IoT, embedded systems, robotics, industrial automation, PLC/SCADA, AI/ML projects, website development, software solutions, automation tools, technical documentation, workshops, apprentice training, industrial training, and skill development programs for students, professionals, and organizations.</p>
-    </a>
+    <!-- Strategic Partners -->
+    <div class="expertise-card">
+      <h3>Strategic Partners</h3>
+      <p>Complete business solutions delivered in collaboration with our trusted professional partners.</p>
+      <div class="partner-items">
+        <div class="partner-item">
+          <h5>Graphics, Photography &amp; Branding</h5>
+          <p>Creative branding, logo design, photography, videography, and marketing materials for businesses.</p>
+        </div>
+        <div class="partner-item">
+          <h5>Electrical Engineering Services</h5>
+          <p>Electrical installation, maintenance, troubleshooting, industrial automation, and technical support.</p>
+        </div>
+        <div class="partner-item">
+          <h5>Automotive Services</h5>
+          <p>Professional automotive diagnostics, maintenance, repair, and engineering solutions.</p>
+        </div>
+      </div>
+      <a href="/partners" class="expertise-link">Meet Our Strategic Partners <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </section>
 
-    <a class="card" href="/partners/graphics">
-      <span class="card-icon"><i class="fas fa-paint-brush"></i></span>
-      <h3>Graphics, Photography &amp; Branding</h3>
-      <p>From logo design, banners, and branding to professional photography, videography, and drone services — high-quality visuals that make your brand stand out. Event coverage, aerial shots, product shoots, and more.</p>
-    </a>
+  <!-- ===== Why Choose Us ===== -->
+  <section class="why-us bg-alt">
+    <h2>Why Choose Aarti Tech Services?</h2>
+    <ul class="why-us-grid">
+      <li>Professional Full Stack Development</li>
+      <li>Business-Focused Digital Solutions</li>
+      <li>SEO-Optimized Websites</li>
+      <li>Modern Cloud-Based Architecture</li>
+      <li>Secure &amp; Scalable Applications</li>
+      <li>Responsive Mobile-First Design</li>
+      <li>Industry Best Practices</li>
+      <li>Transparent Communication</li>
+      <li>Long-Term Technical Support</li>
+    </ul>
+    <div class="cta-wrapper">
+      <a href="/contact" class="cta-btn">Contact Us <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </section>
 
-    <a class="card" href="/partners/electrical">
-      <span class="card-icon"><i class="fas fa-bolt"></i></span>
-      <h3>Electrical Services</h3>
-      <p>Professional electrical installation, maintenance, troubleshooting, and repair services for residential, commercial, and industrial applications. Services include wiring, panel installation, preventive maintenance, industrial electrical work, energy-efficient solutions, and solar power system installation and support.</p>
-    </a>
+  <!-- ===== Featured Portfolio ===== -->
+  <section class="section-block">
+    <h2>Featured Portfolio</h2>
+    <p>Discover some of our recent projects across website development, custom software, business automation, and digital solutions.</p>
+    <ul class="topic-grid">
+      <li>Business Websites</li>
+      <li>SaaS Applications</li>
+      <li>Business Automation Systems</li>
+      <li>Ticket Management Systems</li>
+      <li>Society Management Solutions</li>
+      <li>Professional Portfolio Websites</li>
+    </ul>
+    <div class="link-wrapper">
+      <a href="/portfolio" class="expertise-link">View Complete Portfolio <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </section>
 
-    <a class="card" href="/partners/automotive">
-      <span class="card-icon"><i class="fas fa-motorcycle"></i></span>
-      <h3>Automotive Services</h3>
-      <p>Comprehensive two-wheeler maintenance and repair services including routine servicing, diagnostics, engine repairs, electrical troubleshooting, preventive maintenance, and electric two-wheeler repair and servicing.</p>
-    </a>
+  <!-- ===== Latest Insights ===== -->
+  <section class="section-block bg-alt">
+    <h2>Latest Insights</h2>
+    <p>Stay informed with expert articles, practical tutorials, and the latest trends in technology and digital business.</p>
+    <ul class="topic-grid">
+      <li>Full Stack Development</li>
+      <li>SEO &amp; Digital Marketing</li>
+      <li>Cloud Technologies</li>
+      <li>AI &amp; Automation</li>
+      <li>Business Growth</li>
+      <li>Technical Training</li>
+    </ul>
+    <div class="link-wrapper">
+      <a href="/blog" class="expertise-link">Read Our Blog <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </section>
 
-  </div>
-
+  <!-- ===== Stats ===== -->
   <section class="stats">
     <div class="stats-grid">
       <div class="stat-item">
@@ -355,22 +641,23 @@
     </div>
   </section>
 
-  <section class="team-section">
-    <h2 class="section-title">About Us</h2>
-    <p class="section-subtitle">Meet the team behind AartiTechServices</p>
-    <div class="team-grid">
-      <div class="team-member">
-        <div class="team-avatar"><i class="fas fa-user"></i></div>
-        <div class="team-info">
-          <h4>Er. Aarti</h4>
-          <div class="role">CEO &amp; Founder</div>
-          <p>DEE, B.E (Electrical), Digital Marketing Executive with 2+ years of experience helping businesses grow online.</p>
-        </div>
-      </div>
+  <!-- ===== Final CTA ===== -->
+  <section class="final-cta">
+    <h2>Let's Build &amp; Grow Together</h2>
+    <p>Whether you're launching a startup, expanding your business, developing custom software, improving your online presence, or planning your next digital transformation, we're here to help.</p>
+    <p>Let's work together to build innovative, scalable, and future-ready digital solutions that create real business value.</p>
+    <h3 style="margin-bottom:1.5rem;font-weight:600;">Ready to start your next project?</h3>
+    <div class="cta-group">
+      <button class="cta-btn primary" onclick="window.location.href=SITE_CONFIG.social.whatsapp">
+        Get Free Consultation <i class="fas fa-arrow-right"></i>
+      </button>
+      <a href="/contact" class="cta-btn secondary">
+        Contact Us Today <i class="fas fa-arrow-right"></i>
+      </a>
     </div>
   </section>
 
-  <!-- Contact Form -->
+  <!-- ===== Contact ===== -->
   <section class="contact-intro">
     <h2>Let's Work Together</h2>
     <p>Have a project, question, or idea? We'd love to hear about it. Reach out and let's create something great.</p>

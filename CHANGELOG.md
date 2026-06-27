@@ -1,5 +1,24 @@
 # Changelog
 
+## v1.0.11 — 2026-06-28 — Complete homepage redesign
+
+### Changed
+- `index.html` — completely rewritten with 10 new sections per provided content:
+  - Hero with updated headline, mission statement, and CTA
+  - "Digital Solutions That Drive Business Growth" intro
+  - "Our Expertise" with 4 detailed service cards (Digital Engineering, Digital Marketing & SEO, Learning & Innovation, Strategic Partners)
+  - "Why Choose Aarti Tech Services" feature grid
+  - "Featured Portfolio" category list
+  - "Latest Insights" blog topics
+  - "Let's Build & Grow Together" final CTA section
+  - Stats bar, contact form, and contact intro retained
+- WhatsApp CTA buttons use dynamic `SITE_CONFIG.social.whatsapp` from config.js
+
+### Documentation
+- `CHANGELOG.md` — added this entry
+
+---
+
 ## v1.0.10 — 2026-06-28 — Header cleanup & expanded engineering branches
 
 ### Changed
