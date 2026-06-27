@@ -19,9 +19,6 @@
 /partners/electrical      /site/pages/partners/electrical.html                                 200
 /partners/automotive      /site/pages/partners/automotive.html                                 200
 
-# App area pages
-/app/*                   /app/:splat                                                           200
-
 # Seniority
 /app/seniority           /app/seniority/seniority-list.html                                    200
 /app/seniority/manage    /app/seniority/seniority-management.html                              200
@@ -48,9 +45,6 @@
 /seniority/manage               /app/seniority/manage                                           301
 /modules/seniority/pages/seniority-list          /app/seniority/seniority-list.html              301
 /modules/seniority/pages/seniority-management     /app/seniority/seniority-management.html        301
-
-# Catch shared files (no change needed since publish root is frontend/)
-/shared/*                       /shared/:splat                                                 200
 
 # Catch site assets
 # /site/assets/*               /site/assets/:splat                                            200

@@ -4,7 +4,7 @@
 
 Frontend : GitHub + Cloudflare Pages + mk9.in
 Backend  : Supabase Edge Functions (JavaScript/TypeScript)
-Database : Supabase PostgreSQL (via `backend/schema/` + `backend/migrations/`)
+Database : Supabase PostgreSQL (via `backend/schema/`)
 Storage  : Supabase Storage (via client SDK)
 Auth     : Supabase Auth (Login / Registration / Forgot Password / Reset Password)
 
@@ -28,87 +28,56 @@ mk9/
 │
 ├── README.md
 ├── CHANGELOG.md
-├── LICENSE
 ├── .gitignore
-├── .env.example
-├── .env.local (⚠️ DO NOT COMMIT)
-├── package.json
-├── package-lock.json
+├── .env.original                  ↤ Backup of original env vars
 │
 ├── supabase/
 │   │
-│   ├── config.toml
-│   │
 │   └── functions/
 │       │
-│       ├── auth-handler/
-│       ├── blog-posts/
-│       ├── blog-comments/
-│       ├── hospital-appointments/
-│       ├── hospital-doctors/
-│       ├── society-groups/
-│       ├── society-posts/
-│       ├── seniority-records/
-│       ├── seniority-promotions/
-│       ├── admin-audit/
-│       └── admin-settings/
+│       └── blog-posts/
+│           └── index.ts
 │
 ├── docs/
-│   │
-│   ├── SRS/
-│   │   ├── website-srs.md
-│   │   ├── blog-srs.md
-│   │   ├── hospital-srs.md
-│   │   ├── society-srs.md
-│   │   └── seniority-srs.md
-│   │
-│   ├── DATABASE/
-│   │   ├── database-design.md
-│   │   ├── er-diagram.md
-│   │   └── schema-notes.md
-│   │
-│   ├── API/
-│   │   └── api-documentation.md
 │   │
 │   ├── DEPLOYMENT.md
 │   └── ROADMAP.md
 │
 ├── frontend/
 │   │
-│   ├── package.json
-│   ├── .env.example
-│   ├── .env.local (⚠️ DO NOT COMMIT)
 │   ├── .htaccess                    ↤ Apache security & caching
 │   ├── _headers                     ↤ Cloudflare headers & caching / SEO
 │   ├── _redirects                   ↤ Cloudflare URL rewrites
+│   ├── 404.html                     ↤ Custom 404 page
+│   ├── robots.txt                   ↤ Crawler rules
+│   ├── sitemap.xml                  ↤ XML sitemap (manual updates required)
 │   │
 │   ├── site/                        ⭐ SEO — fully indexed
 │   │   │
 │   │   ├── index.html
-│   │   ├── sitemap.xml
 │   │   │
-│   │   ├── pages/
-│   │   │   │
-│   │   │   ├── contact.html
-│   │   │   ├── contactform.html
-│   │   │   ├── blog.html
-│   │   │   ├── links.html
-│   │   │   │
-│   │   │   ├── expertise/
-│   │   │   │   ├── digital-engineering.html
-│   │   │   │   ├── freelance-digital-marketing-seo.html
-│   │   │   │   └── learning-innovation.html
-│   │   │   │
-│   │   │   └── partners/
-│   │   │       ├── graphics.html
-│   │   │       ├── electrical.html
-│   │   │       └── automotive.html
+│   │   └── pages/
+│   │       │
+│   │       ├── contact.html
+│   │       ├── contactform.html
+│   │       ├── blog.html
+│   │       ├── links.html
+│   │       │
+│   │       ├── expertise/
+│   │       │   ├── digital-engineering.html
+│   │       │   ├── freelance-digital-marketing-seo.html
+│   │       │   └── learning-innovation.html
+│   │       │
+│   │       └── partners/
+│   │           ├── graphics.html
+│   │           ├── electrical.html
+│   │           └── automotive.html
 │   │
 │   ├── app/                         ⭐ Login required — NOINDEX, NOFOLLOW
 │   │   │
-│   │   ├── seniority/
-│   │   │   ├── seniority-list.html
-│   │   │   └── seniority-management.html
+│   │   └── seniority/
+│   │       ├── seniority-list.html
+│   │       └── seniority-management.html
 │   │
 │   ├── shared/
 │   │   │
@@ -128,25 +97,26 @@ mk9/
 │   │   │   └── form-handler.js
 │   │   │
 │   │   └── assets/
-│   │       ├── img/
-│   │       │   ├── og-default.svg
-│   │       │   ├── favicon.png
-│   │       │   ├── logo.png
-│   │       │   ├── icons8-project-96.png
-│   │       │   └── graphics/
-│   │       │       ├── birthday.svg
-│   │       │       ├── wedding.svg
-│   │       │       ├── logo.svg
-│   │       │       └── video.svg
+│   │       └── img/
+│   │           ├── og-default.svg
+│   │           ├── favicon.png
+│   │           ├── logo.png
+│   │           ├── icons8-project-96.png
+│   │           └── graphics/
+│   │               ├── birthday.svg
+│   │               ├── wedding.svg
+│   │               ├── logo.svg
+│   │               └── video.svg
 │   │
 │   ├── services/
 │   │   │
 │   │   └── blogService.js
+│   │
+│   └── config/                      (empty — reserved for future use)
 │
 ├── backend/
 │   │
 │   ├── .env.example
-│   ├── .env.local (⚠️ DO NOT COMMIT)
 │   │
 │   ├── schema/
 │   │   ├── schema.sql
@@ -154,116 +124,19 @@ mk9/
 │   │   └── rls-policies.sql
 │   │
 │   ├── seed/
-│   │   ├── seed.sql
-│   │   └── seed-data.json
+│   │   └── seed.sql
 │   │
-│   ├── migrations/
-│   │   ├── 001_initial_schema.sql
-│   │   ├── 002_blog_module.sql
-│   │   ├── 003_hospital_module.sql
-│   │   ├── 004_society_module.sql
-│   │   ├── 005_seniority_module.sql
-│   │   └── migration-status.md
-│   │
-│   ├── modules/
-│   │   │
-│   │   ├── auth/
-│   │   │   ├── schema/
-│   │   │   │   └── auth-schema.sql
-│   │   │   └── policies/
-│   │   │       └── auth-policies.sql
-│   │   │
-│   │   ├── blog/
-│   │   │   ├── schema/
-│   │   │   │   └── blog-schema.sql
-│   │   │   ├── policies/
-│   │   │   │   └── blog-policies.sql
-│   │   │   └── seed/
-│   │   │       └── blog-seed.sql
-│   │   │
-│   │   ├── hospital/
-│   │   │   ├── schema/
-│   │   │   │   └── hospital-schema.sql
-│   │   │   ├── policies/
-│   │   │   │   └── hospital-policies.sql
-│   │   │   └── seed/
-│   │   │       └── hospital-seed.sql
-│   │   │
-│   │   ├── society/
-│   │   │   ├── schema/
-│   │   │   │   └── society-schema.sql
-│   │   │   ├── policies/
-│   │   │   │   └── society-policies.sql
-│   │   │   └── seed/
-│   │   │       └── society-seed.sql
-│   │   │
-│   │   ├── seniority/
-│   │   │   ├── schema/
-│   │   │   │   └── seniority-schema.sql
-│   │   │   ├── policies/
-│   │   │   │   └── seniority-policies.sql
-│   │   │   └── seed/
-│   │   │       └── seniority-seed.sql
-│   │   │
-│   │   └── admin/
-│   │       ├── schema/
-│   │       │   └── admin-schema.sql
-│   │       └── policies/
-│   │           └── admin-policies.sql
-│   │
-│   ├── shared/
-│   │   │
-│   │   ├── config/
-│   │   │   ├── supabase-config.ts
-│   │   │   └── constants.ts
-│   │   │
-│   │   ├── middleware/
-│   │   │   ├── auth-middleware.ts
-│   │   │   ├── rate-limit.ts
-│   │   │   └── error-handler.ts
-│   │   │
-│   │   ├── utils/
-│   │   │   ├── validators.ts
-│   │   │   ├── formatters.ts
-│   │   │   ├── logger.ts
-│   │   │   └── helpers.ts
-│   │   │
-│   │   └── types/
-│   │       ├── index.ts
-│   │       ├── database.ts
-│   │       └── api.ts
-│   │
-│   └── scripts/
-│       ├── backup.sh
-│       ├── deploy.sh
-│       ├── setup.sh
-│       └── reset-db.sh
-│
-├── storage/
-│   │
-│   ├── blog/
-│   │   └── featured/
-│   ├── hospital/
-│   │   ├── documents/
-│   │   └── prescriptions/
-│   ├── society/
-│   ├── seniority/
-│   ├── documents/
-│   ├── reports/
-│   └── templates/
-│
-├── .github/
-│   └── workflows/
-│       ├── deploy-frontend.yml
-│       └── deploy-functions.yml
+│   └── modules/
+│       │
+│       └── blog/
+│           └── functions/           (empty — reserved for blog edge functions)
 │
 └── Future/
     ├── CRM
     ├── ERP
     ├── HRMS
-    ├── School
     ├── Inventory
-    └── Any New Application
+    └── School
 
 ---
 
@@ -328,19 +201,30 @@ Public pages:
 /partners/automotive      /site/pages/partners/automotive.html                               200
 ```
 
-App area (catch-all):
+Seniority (clean URL rewrites):
 ```
-/app/*                   /app/:splat                                                          200
+/app/seniority           /app/seniority/seniority-list.html                                 200
+/app/seniority/manage    /app/seniority/seniority-management.html                           200
 ```
 
 Legacy redirects (301):
 ```
 /seo-digital-marketing          /expertise/digital-marketing-seo                              301
 /website-development            /expertise/digital-engineering                                301
+/business-automation            /expertise/digital-engineering                                301
 /project-training               /expertise/learning-innovation                                301
 /graphics-branding              /partners/graphics                                            301
 /electrical                     /partners/electrical                                          301
 /automotive                     /partners/automotive                                          301
+
+/pages/services/business-automation.html        /expertise/digital-engineering              301
+/pages/services/photography.html                /partners/graphics                         301
+/workshop.html                  /expertise/learning-innovation                              301
+
+/seniority                      /app/seniority                                               301
+/seniority/manage               /app/seniority/manage                                        301
+/modules/seniority/pages/seniority-list          /app/seniority/seniority-list.html         301
+/modules/seniority/pages/seniority-management     /app/seniority/seniority-management.html  301
 ```
 
 ---
@@ -376,13 +260,10 @@ Legacy redirects (301):
 ## Key Files & Configuration
 
 ### Root Level
-- **package.json** — Project dependencies & scripts (includes `supabase` CLI)
-- **.env.example** — Template for environment variables (version control safe)
-- **.env.local** — Actual secrets & keys (⚠️ add to .gitignore)
-- **.gitignore** — Prevent node_modules, .env.local, build files from repo
+- **.gitignore** — Prevent .env, node_modules, build files from repo
+- **.env.original** — Backup of original environment variables
 
 ### Supabase (Edge Functions)
-- **supabase/config.toml** — Project ID, function settings, auth config
 - **supabase/functions/<name>/** — Each Edge Function as a standalone module
 - Functions named `{module}-{entity}` (e.g., `blog-posts`)
 - Deploy with: `supabase functions deploy <name>`
@@ -402,7 +283,6 @@ Legacy redirects (301):
 - **backend/schema/schema.sql** — Core tables, indexes, RLS policies
 - **backend/schema/rls-policies.sql** — Detailed row-level security documentation
 - **backend/seed/seed.sql** — Initial data for categories, departments, groups
-- **backend/migrations/** — Versioned database changes
 
 ---
 
@@ -414,7 +294,6 @@ To add a new module:
   2. Create `supabase/functions/<name>-*/index.ts` for each edge function
   3. Create `backend/modules/<name>/` (schema/, policies/, seed/)
   4. Add migration file in `backend/migrations/`
-  5. Register routes in `frontend/config/routes.js`
 
 All future modules should use:
 
