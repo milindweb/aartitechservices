@@ -9,7 +9,7 @@
   X-Robots-Tag: noindex, nofollow
 
 # Cache static assets
-/site/shared/assets/*
+/shared/assets/*
   Cache-Control: public, max-age=31536000, immutable
 
 *.css

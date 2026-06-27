@@ -187,8 +187,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Load header into #header
-  loadComponent("/site/shared/components/header.html", "header", initHeader);
+  loadComponent("/shared/components/header.html", "header", initHeader);
 
   // Load footer into #footer
-  loadComponent("/site/shared/components/footer.html", "footer", initFooter);
+  loadComponent("/shared/components/footer.html", "footer", initFooter);
 });
