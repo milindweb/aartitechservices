@@ -130,8 +130,6 @@
       </div>
     </section>
 
-    <section class="contact-intro"><h2>Get Your Project</h2><p>Need a ready project or custom development? Let's discuss your requirements.</p></section>
-
   </div>
 
   <!-- TAB: TRAINING -->
@@ -211,8 +209,6 @@
       </div>
     </section>
 
-    <section class="contact-intro"><h2>Apply for Internship</h2><p>Ready to start your training journey? Apply now and take the first step toward your career.</p></section>
-
   </div>
 
   <!-- TAB: WORKSHOPS -->
@@ -277,8 +273,6 @@
       </div>
     </section>
 
-    <section class="contact-intro"><h2>Organize a Workshop</h2><p>Interested in hosting a workshop at your institution? Get in touch and we'll design a session tailored to your needs.</p></section>
-
   </div>
 
   <!-- SHARED SECTIONS (visible across all tabs) -->
@@ -325,10 +319,10 @@
     </div>
   </section>
 
-  <!-- Contact Form -->
-  <section class="contact-intro">
-    <h2>Start Your Project</h2>
-    <p>Need a ready project, training, or guidance? We're here to help you succeed.</p>
+  <!-- Dynamic CTA -->
+  <section class="contact-intro" id="tab-cta">
+    <h2 id="cta-title">Get Your Project</h2>
+    <p id="cta-desc">Need a ready project or custom development? Let's discuss your requirements.</p>
   </section>
   <section class="p-section" style="padding-top:0">
     <div class="p-container">
@@ -347,6 +341,16 @@
         document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
         btn.classList.add('active');
         document.getElementById('tab-' + tab).classList.add('active');
+
+        // Update CTA
+        const ctas = {
+          projects: ['Get Your Project', 'Need a ready project or custom development? Let\'s discuss your requirements.'],
+          training: ['Apply for Internship', 'Ready to start your training journey? Apply now and take the first step toward your career.'],
+          workshops: ['Organize a Workshop', 'Interested in hosting a workshop at your institution? Get in touch and we\'ll design a session tailored to your needs.']
+        };
+        document.getElementById('cta-title').textContent = ctas[tab][0];
+        document.getElementById('cta-desc').textContent = ctas[tab][1];
+
         history.replaceState(null, '', '#' + tab);
         window.scrollTo({ top: document.querySelector('.tab-bar').offsetTop - 80, behavior: 'smooth' });
       });
