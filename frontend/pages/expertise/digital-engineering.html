@@ -13,6 +13,24 @@
 
   <style>
     .p-hero h1 span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .p-grid-features { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 1.25rem; }
+    .p-card-feature { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem 1.5rem; box-shadow: var(--shadow); transition: all 0.3s ease; }
+    .p-card-feature:hover { transform: translateY(-4px); border-color: var(--accent-light); box-shadow: 0 12px 30px rgba(0,0,0,0.12); }
+    .p-card-feature .icon { font-size: 1.8rem; margin-bottom: 0.75rem; color: var(--accent); }
+    .p-card-feature h3 { font-size: 1.1rem; font-weight: 600; margin: 0 0 0.5rem; color: var(--text-primary); }
+    .p-card-feature p { font-size: 0.9rem; color: var(--text-secondary); margin: 0; line-height: 1.6; }
+    .p-grid-benefits { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 0.75rem; max-width: 900px; margin: 0 auto; }
+    .p-benefit-item { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.25rem; box-shadow: var(--shadow); display: flex; align-items: center; gap: 0.75rem; transition: all 0.3s ease; }
+    .p-benefit-item:hover { border-color: var(--accent-light); transform: translateY(-2px); }
+    .p-benefit-item i { font-size: 1.2rem; color: var(--accent); width: 1.5rem; text-align: center; }
+    .p-benefit-item span { font-size: 0.95rem; font-weight: 500; color: var(--text-primary); }
+    .p-cta-section { text-align: center; padding: 3.5rem 2rem; background: var(--gradient); border-radius: 24px; max-width: 900px; margin: 0 auto; }
+    .p-cta-section h2 { font-size: 1.8rem; color: #fff; margin: 0 0 0.75rem; }
+    .p-cta-section p { color: rgba(255,255,255,0.85); max-width: 600px; margin: 0 auto 1.5rem; line-height: 1.6; font-size: 1.05rem; }
+    .p-cta-section .cta-btn { display: inline-flex; align-items: center; gap: 8px; padding: 0.9rem 2rem; border-radius: 8px; background: #fff; color: #0f172a; font-size: 1rem; font-weight: 600; text-decoration: none; transition: all 0.3s ease; border: none; cursor: pointer; }
+    .p-cta-section .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
+    @media (max-width: 768px) { .p-grid-features { grid-template-columns: 1fr; } .p-grid-benefits { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .p-grid-benefits { grid-template-columns: 1fr; } }
   </style>
 
   <script type="application/ld+json">
@@ -31,148 +49,107 @@
 
   <!-- HERO -->
   <div class="p-hero">
-    <h1><span>Web &amp; Software</span> Development</h1>
-    <p>We build modern websites, web applications, e-commerce stores, and custom business software — from hospital and society management to workflow automation and reporting systems. Tailored solutions that digitize and streamline your operations.</p>
+    <h1><span>Digital</span> Engineering</h1>
+    <p>Powerful Features for Every Business. Everything you need to build, manage, and grow your business with modern digital solutions.</p>
   </div>
 
-  <!-- STATS -->
+  <!-- FEATURES -->
   <section class="p-section">
     <div class="p-container">
-      <div class="p-grid-4" style="margin:0">
-        <div style="text-align:center"><div class="p-stat-num">20+</div><div style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px">Projects Delivered</div></div>
-        <div style="text-align:center"><div class="p-stat-num">15+</div><div style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px">Happy Clients</div></div>
-        <div style="text-align:center"><div class="p-stat-num">4+</div><div style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px">Years Experience</div></div>
-        <div style="text-align:center"><div class="p-stat-num">100%</div><div style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px">Client Satisfaction</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WEB DEVELOPMENT -->
-  <section class="p-section p-alt">
-    <div class="p-container">
-      <h2 class="p-title">Web Development</h2>
-      <p class="p-subtitle">Modern, responsive, and SEO-friendly websites and web applications built for performance, security, and scalability.</p>
-      <div class="p-grid-3">
-        <div class="p-card">
-          <div class="p-card-icon"><i class="bi bi-globe"></i></div>
+      <h2 class="p-title">Powerful Features for Every Business</h2>
+      <p class="p-subtitle">Everything you need to build, manage, and grow your business with modern digital solutions.</p>
+      <div class="p-grid-features">
+        <div class="p-card-feature">
+          <div class="icon"><i class="fas fa-globe"></i></div>
           <h3>Business Websites</h3>
-          <ul>
-            <li>Responsive, SEO-friendly business websites</li>
-            <li>Portfolio, landing pages and corporate sites</li>
-            <li>E-commerce and online store solutions</li>
-            <li>Fast, secure, and mobile-optimized</li>
-          </ul>
+          <p>Professional websites for startups, businesses, portfolios, and organizations.</p>
         </div>
-        <div class="p-card">
-          <div class="p-card-icon"><i class="bi bi-grid-3x3-gap"></i></div>
-          <h3>Web Applications</h3>
-          <ul>
-            <li>Custom web applications and business portals</li>
-            <li>Client dashboards and admin panels</li>
-            <li>Database-driven dynamic websites</li>
-            <li>API integrations and third-party services</li>
-          </ul>
+        <div class="p-card-feature">
+          <div class="icon"><i class="fas fa-shield-halved"></i></div>
+          <h3>Secure &amp; Reliable</h3>
+          <p>Industry-standard security, SSL protection, secure authentication, and regular backups.</p>
         </div>
-        <div class="p-card">
-          <div class="p-card-icon"><i class="bi bi-lightning-charge"></i></div>
-          <h3>Performance &amp; SEO</h3>
-          <ul>
-            <li>Optimized for speed and Core Web Vitals</li>
-            <li>SEO-friendly structure and markup</li>
-            <li>Accessibility compliance (WCAG)</li>
-            <li>SSL, security headers and best practices</li>
-          </ul>
+        <div class="p-card-feature">
+          <div class="icon"><i class="fas fa-cloud"></i></div>
+          <h3>Cloud Solutions</h3>
+          <p>Access your business securely from anywhere with cloud-based applications.</p>
         </div>
-        <div class="p-card">
-          <div class="p-card-icon"><i class="bi bi-wrench"></i></div>
-          <h3>Maintenance &amp; Support</h3>
-          <ul>
-            <li>Ongoing website maintenance and updates</li>
-            <li>Content updates and feature additions</li>
-            <li>Performance monitoring and optimization</li>
-            <li>Technical support and troubleshooting</li>
-          </ul>
+        <div class="p-card-feature">
+          <div class="icon"><i class="fas fa-users"></i></div>
+          <h3>Role-Based Access</h3>
+          <p>Separate permissions for Admin, Staff, Customers, and Managers.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- BUSINESS SOFTWARE -->
-  <section class="p-section">
-    <div class="p-container">
-      <h2 class="p-title">Business Software Solutions</h2>
-      <p class="p-subtitle">Custom-built software to digitize and automate your business operations — no recurring license fees, tailored to your workflow.</p>
-      <div class="p-grid-3">
-        <div class="p-card">
-          <div class="p-card-icon"><i class="bi bi-hospital"></i></div>
-          <h3>Hospital &amp; Clinic Management</h3>
-          <p>Complete digital management for hospitals and clinics — patient records, appointments, billing, prescriptions, doctor schedules, and staff management.</p>
+        <div class="p-card-feature">
+          <div class="icon"><i class="fas fa-gauge-high"></i></div>
+          <h3>Smart Dashboard</h3>
+          <p>Real-time reports, analytics, and business insights in one place.</p>
         </div>
-        <div class="p-card">
-          <div class="p-card-icon"><i class="bi bi-people"></i></div>
-          <h3>Society Management</h3>
-          <p>Manage housing societies with member directories, event notices, complaint tracking, committee management, and digital communication tools.</p>
+        <div class="p-card-feature">
+          <div class="icon"><i class="fas fa-gears"></i></div>
+          <h3>Business Automation</h3>
+          <p>Automate daily tasks, workflows, notifications, and approvals.</p>
         </div>
-        <div class="p-card">
-          <div class="p-card-icon"><i class="bi bi-graph-up-arrow"></i></div>
-          <h3>Seniority Management</h3>
-          <p>Track employee seniority, promotions, service records, and generate reports for organizational planning and compliance.</p>
+        <div class="p-card-feature">
+          <div class="icon"><i class="fas fa-mobile-screen"></i></div>
+          <h3>Mobile Friendly</h3>
+          <p>Responsive websites and web applications that work on all devices.</p>
         </div>
-        <div class="p-card">
-          <div class="p-card-icon"><i class="bi bi-id-card"></i></div>
-          <h3>Member Portals</h3>
-          <p>Custom portals for organizations to manage memberships, renewals, payments, and communication with members.</p>
+        <div class="p-card-feature">
+          <div class="icon"><i class="fas fa-credit-card"></i></div>
+          <h3>Payment Integration</h3>
+          <p>Razorpay, UPI, Cards, Net Banking, and other online payment solutions.</p>
         </div>
-        <div class="p-card">
-          <div class="p-card-icon"><i class="bi bi-arrow-repeat"></i></div>
-          <h3>Workflow Automation</h3>
-          <p>Automate repetitive business processes — approvals, notifications, data entry, report generation, and task management.</p>
+        <div class="p-card-feature">
+          <div class="icon"><i class="fas fa-envelope"></i></div>
+          <h3>Communication</h3>
+          <p>Email, WhatsApp, SMS, and contact form integrations.</p>
         </div>
-        <div class="p-card">
-          <div class="p-card-icon"><i class="bi bi-bar-chart"></i></div>
-          <h3>Reporting &amp; Analytics</h3>
-          <p>Custom dashboards and reporting systems to track business metrics, generate insights, and make data-driven decisions.</p>
+        <div class="p-card-feature">
+          <div class="icon"><i class="fas fa-link"></i></div>
+          <h3>Third-Party Integrations</h3>
+          <p>Google Maps, APIs, CRM, ERP, Accounting, and other business tools.</p>
+        </div>
+        <div class="p-card-feature">
+          <div class="icon"><i class="fas fa-chart-line"></i></div>
+          <h3>SEO &amp; Digital Marketing</h3>
+          <p>Search engine optimization, Google Business Profile, and digital marketing services.</p>
+        </div>
+        <div class="p-card-feature">
+          <div class="icon"><i class="fas fa-screwdriver-wrench"></i></div>
+          <h3>Ongoing Support</h3>
+          <p>Maintenance, updates, performance monitoring, and technical assistance.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- WHY CHOOSE -->
+  <!-- WHY CHOOSE US -->
   <section class="p-section p-alt">
     <div class="p-container">
-      <h2 class="p-title">Why Choose Us</h2>
-      <p class="p-subtitle">We deliver custom solutions that fit your business perfectly — no bloat, no lock-in, just what you need.</p>
-      <div class="p-grid-3">
-        <div class="p-card">
-          <div class="p-card-icon"><i class="bi bi-gear"></i></div>
-          <h3>Tailored to Your Business</h3>
-          <p>Every solution is custom-built for your specific workflows and requirements — no one-size-fits-all approach.</p>
-        </div>
-        <div class="p-card">
-          <div class="p-card-icon"><i class="bi bi-currency-rupee"></i></div>
-          <h3>No Recurring License Fees</h3>
-          <p>Own your software outright — no expensive monthly subscriptions or hidden costs. One-time investment, lifetime value.</p>
-        </div>
-        <div class="p-card">
-          <div class="p-card-icon"><i class="bi bi-emoji-smile"></i></div>
-          <h3>Easy to Use</h3>
-          <p>Simple, intuitive interfaces designed for your team to adopt quickly without extensive training or documentation.</p>
-        </div>
-        <div class="p-card">
-          <div class="p-card-icon"><i class="bi bi-shield-check"></i></div>
-          <h3>Secure &amp; Reliable</h3>
-          <p>Built with security best practices, data encryption, role-based access control, and regular backups for peace of mind.</p>
-        </div>
-        <div class="p-card">
-          <div class="p-card-icon"><i class="bi bi-code-slash"></i></div>
-          <h3>Modern Tech Stack</h3>
-          <p>Built with modern frameworks and standards — responsive design, SEO optimization, fast loading, and scalable architecture.</p>
-        </div>
-        <div class="p-card">
-          <div class="p-card-icon"><i class="bi bi-headset"></i></div>
-          <h3>End-to-End Support</h3>
-          <p>From requirements gathering and planning to development, deployment, and ongoing support — we're with you at every step.</p>
-        </div>
+      <h2 class="p-title">Why Businesses Choose Us</h2>
+      <p class="p-subtitle">We deliver solutions that help businesses grow with confidence.</p>
+      <div class="p-grid-benefits">
+        <div class="p-benefit-item"><i class="fas fa-rocket"></i><span>Increase Productivity</span></div>
+        <div class="p-benefit-item"><i class="fas fa-clock"></i><span>Save Time &amp; Reduce Costs</span></div>
+        <div class="p-benefit-item"><i class="fas fa-chart-line"></i><span>Grow Your Business Faster</span></div>
+        <div class="p-benefit-item"><i class="fas fa-lock"></i><span>Complete Control &amp; Security</span></div>
+        <div class="p-benefit-item"><i class="fas fa-bolt"></i><span>Fast Performance</span></div>
+        <div class="p-benefit-item"><i class="fas fa-chart-simple"></i><span>Better Business Decisions</span></div>
+        <div class="p-benefit-item"><i class="fas fa-earth-americas"></i><span>Access Anywhere</span></div>
+        <div class="p-benefit-item"><i class="fas fa-handshake"></i><span>Dedicated Support</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA -->
+  <section class="p-section">
+    <div class="p-container">
+      <div class="p-cta-section">
+        <h2>One Partner. Complete Digital Solutions.</h2>
+        <p>Build your website, automate your business, and grow with confidence.</p>
+        <button class="cta-btn" onclick="window.location.href=SITE_CONFIG.social.whatsapp">
+          Get Free Consultation <i class="fas fa-arrow-right"></i>
+        </button>
       </div>
     </div>
   </section>
