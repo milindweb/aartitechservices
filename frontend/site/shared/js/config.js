@@ -30,7 +30,7 @@ const SITE_CONFIG = {
     linkedin: '#',
   },
 
-  ogImage: '/shared/assets/img/og-default.svg',
+  ogImage: '/site/shared/assets/img/og-default.svg',
   logoIcon: 'M',
 
   organization: {

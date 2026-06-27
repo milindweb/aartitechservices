@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="/shared/js/config.js"></script>
+  <script src="/site/shared/js/config.js"></script>
   <script>const PAGE_CONFIG = { title: 'Graphics, Photography & Branding Services', description: 'Professional graphic design, branding, photography, videography, and drone services — logos, banners, invites, video editing, event coverage, aerial shots, and more.', canonical: '/partners/graphics' };</script>
-  <script src="/shared/js/seo-injector.js"></script>
+  <script src="/site/shared/js/seo-injector.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="/shared/css/style.css" />
-  <script src="/shared/js/headerfooter.js" defer></script>
+  <link rel="stylesheet" href="/site/shared/css/style.css" />
+  <script src="/site/shared/js/headerfooter.js" defer></script>
 
   <style>
     .p-hero h1 span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -168,10 +168,10 @@
       <h2 class="p-title">OUR SHOWCASE</h2>
       <p class="p-subtitle">A glimpse of our recent work — from brand identities and event coverage to creative campaigns.</p>
       <div class="p-grid-3 p-gallery">
-        <div class="p-card"><img src="/shared/assets/img/graphics/birthday.svg" alt="Birthday Banner"></div>
-        <div class="p-card"><img src="/shared/assets/img/graphics/wedding.svg" alt="Wedding Card"></div>
-        <div class="p-card"><img src="/shared/assets/img/graphics/logo.svg" alt="Logo Design"></div>
-        <div class="p-card"><img src="/shared/assets/img/graphics/video.svg" alt="Video Editing"></div>
+        <div class="p-card"><img src="/site/shared/assets/img/graphics/birthday.svg" alt="Birthday Banner"></div>
+        <div class="p-card"><img src="/site/shared/assets/img/graphics/wedding.svg" alt="Wedding Card"></div>
+        <div class="p-card"><img src="/site/shared/assets/img/graphics/logo.svg" alt="Logo Design"></div>
+        <div class="p-card"><img src="/site/shared/assets/img/graphics/video.svg" alt="Video Editing"></div>
       </div>
     </div>
   </section>
@@ -190,7 +190,7 @@
         .then(html => {
           document.getElementById("form-container").innerHTML = html;
           const script = document.createElement("script");
-          script.src = "/shared/js/form-handler.js";
+          script.src = "/site/shared/js/form-handler.js";
           document.body.appendChild(script);
         });
     </script>

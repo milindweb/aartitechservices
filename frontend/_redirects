@@ -59,7 +59,7 @@
 /modules/seniority/pages/seniority-management     /app/seniority/seniority-management.html        301
 
 # Catch shared files (no change needed since publish root is frontend/)
-/shared/*                       /shared/:splat                                                 200
+/site/shared/*                       /site/shared/:splat                                                 200
 
 # Catch site assets
 /site/assets/*                  /site/assets/:splat                                            200
