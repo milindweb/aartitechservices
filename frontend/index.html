@@ -41,6 +41,17 @@
       --shadow-lg: 0 12px 40px rgba(0,0,0,0.6);
     }
 
+    .cursor-glow {
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(37,99,235,0.08) 0%, transparent 70%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      transition: opacity 0.3s ease;
+    }
     body {
       background: var(--primary-bg);
       color: var(--text-primary);
@@ -143,10 +154,10 @@
       padding: 2rem 2.5rem;
       margin-bottom: 1.5rem;
       box-shadow: var(--shadow);
-      transition: var(--transition);
+      transition: var(--transition), border-color 0.3s ease, box-shadow 0.4s ease;
     }
     .expertise-card:hover {
-      box-shadow: var(--shadow-lg);
+      box-shadow: 0 0 25px rgba(37,99,235,0.15), var(--shadow-lg);
       transform: translateY(-2px);
       border-color: var(--accent-light);
     }
@@ -489,6 +500,8 @@
 </head>
 <body>
 
+  <div class="cursor-glow" id="cursorGlow"></div>
+
   <div id="header"></div>
 
   <!-- ===== Hero ===== -->
@@ -651,6 +664,11 @@
   <div id="footer"></div>
 
   <script>
+    const glow = document.getElementById('cursorGlow');
+    document.addEventListener('mousemove', e => {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top = e.clientY + 'px';
+    });
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) entry.target.classList.add('visible');
