@@ -1,18 +1,23 @@
 # Changelog
 
-## v1.0.11 — 2026-06-28 — Complete homepage redesign
+## v1.0.12 — 2026-06-28 — Digital engineering page overhaul
 
 ### Changed
-- `index.html` — completely rewritten with 10 new sections per provided content:
-  - Hero with updated headline, mission statement, and CTA
-  - "Digital Solutions That Drive Business Growth" intro
-  - "Our Expertise" with 4 detailed service cards (Digital Engineering, Digital Marketing & SEO, Learning & Innovation, Strategic Partners)
-  - "Why Choose Aarti Tech Services" feature grid
-  - "Featured Portfolio" category list
-  - "Latest Insights" blog topics
-  - "Let's Build & Grow Together" final CTA section
-  - Stats bar, contact form, and contact intro retained
-- WhatsApp CTA buttons use dynamic `SITE_CONFIG.social.whatsapp` from config.js
+- `frontend/pages/expertise/digital-engineering.html` — major content and design update:
+  - Renamed "Starter Website" → "Static Website" card with updated features and description
+  - Added discount pricing display (strikethrough original price + sale price) for Static, Business, and Web App plans
+  - Enterprise plan now shows ₹49,999 / onwards instead of "Custom Quote"
+  - Converted all plan feature lists to inline paragraph descriptions for consistent layout
+  - Added horizontal divider line below prices
+  - Icon and plan name now on same line via `.plan-header` flex container
+  - All plan names uppercased and bold
+  - Old prices colored red, current prices in site accent blue with increased font size
+  - All card buttons unified to site accent blue
+  - Card hover glow effect with blue border + shadow
+  - Scroll-triggered fade-in animation via IntersectionObserver
+  - Price hover scale animation
+  - Removed duplicate hero/subtitle content
+  - Capitalized all page headings
 
 ### Documentation
 - `CHANGELOG.md` — added this entry
