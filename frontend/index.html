@@ -152,8 +152,20 @@
     .expertise-card h3 {
       font-size: 1.3rem;
       font-weight: 700;
-      color: var(--accent);
       margin: 0 0 0.25rem;
+    }
+    .expertise-card h3 i {
+      margin-right: 10px;
+      font-size: 1.3rem;
+    }
+    .expertise-card h3 a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    .expertise-card h3 a:hover {
+      color: var(--accent-light);
+      text-decoration: underline;
     }
     .expertise-card h4 {
       font-size: 1.05rem;
@@ -220,8 +232,21 @@
     .partner-item h5 {
       margin: 0 0 0.35rem;
       font-size: 0.95rem;
-      color: var(--accent);
       font-weight: 600;
+    }
+    .partner-item h5 i {
+      margin-right: 8px;
+      width: 1.1rem;
+      text-align: center;
+    }
+    .partner-item h5 a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    .partner-item h5 a:hover {
+      color: var(--accent-light);
+      text-decoration: underline;
     }
     .partner-item p {
       margin: 0;
@@ -495,7 +520,7 @@
 
     <!-- Digital Engineering -->
     <div class="expertise-card">
-      <h3>Digital Engineering</h3>
+      <h3><a href="/expertise/digital-engineering"><i class="fas fa-laptop-code"></i>Digital Engineering</a></h3>
       <h4>Full Stack Development</h4>
       <p>We design and develop secure, scalable, and high-performance digital solutions tailored to your business requirements.</p>
       <ul class="expertise-list">
@@ -516,7 +541,7 @@
 
     <!-- Digital Marketing & SEO -->
     <div class="expertise-card">
-      <h3>Digital Marketing &amp; SEO</h3>
+      <h3><a href="/expertise/digital-marketing-seo"><i class="fas fa-chart-line"></i>Digital Marketing &amp; SEO</a></h3>
       <p>Increase your online visibility, attract quality leads, and grow your business through result-driven digital marketing strategies.</p>
       <ul class="expertise-list">
         <li>Search Engine Optimization (SEO)</li>
@@ -533,7 +558,7 @@
 
     <!-- Learning & Innovation -->
     <div class="expertise-card">
-      <h3>Learning &amp; Innovation</h3>
+      <h3><a href="/expertise/learning-innovation"><i class="fas fa-graduation-cap"></i>Learning &amp; Innovation</a></h3>
       <p>Practical learning programs designed for students, educational institutions, and working professionals.</p>
       <ul class="expertise-list">
         <li>Engineering Projects</li>
@@ -546,19 +571,19 @@
 
     <!-- Strategic Partners -->
     <div class="expertise-card">
-      <h3>Strategic Partners</h3>
+      <h3><a href="/partners"><i class="fas fa-handshake"></i>Strategic Partners</a></h3>
       <p>Complete business solutions delivered in collaboration with our trusted professional partners.</p>
       <div class="partner-items">
         <div class="partner-item">
-          <h5>Graphics, Photography &amp; Branding</h5>
+          <h5><a href="/partners/graphics"><i class="fas fa-paint-brush"></i>Graphics, Photography &amp; Branding</a></h5>
           <p>Creative branding, logo design, photography, videography, and marketing materials for businesses.</p>
         </div>
         <div class="partner-item">
-          <h5>Electrical Engineering Services</h5>
+          <h5><a href="/partners/electrical"><i class="fas fa-bolt"></i>Electrical Engineering Services</a></h5>
           <p>Electrical installation, maintenance, troubleshooting, industrial automation, and technical support.</p>
         </div>
         <div class="partner-item">
-          <h5>Automotive Services</h5>
+          <h5><a href="/partners/automotive"><i class="fas fa-car"></i>Automotive Services</a></h5>
           <p>Professional automotive diagnostics, maintenance, repair, and engineering solutions.</p>
         </div>
       </div>
