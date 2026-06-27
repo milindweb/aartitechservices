@@ -21,9 +21,22 @@ Multi-service business portal with static HTML/CSS/JS frontend, Supabase backend
 │   ├── 404.html           # Custom 404 page
 │   ├── robots.txt         # Crawler rules
 │   ├── sitemap.xml        # XML sitemap
-│   ├── site/              # SEO-indexed public pages
-│   │   ├── index.html     # Homepage
-│   │   └── pages/         # Contact, blog, expertise, partners
+│   ├── index.html         # Homepage (SEO indexed)
+│   ├── pages/             # SEO-indexed public pages
+│   │   ├── about.html     # About page
+│   │   ├── contact.html   # Contact page
+│   │   ├── blog.html      # Blog page
+│   │   ├── links.html     # Links page
+│   │   ├── portfolio.html # Portfolio page
+│   │   ├── expertise/     # Service pages
+│   │   │   ├── digital-engineering.html
+│   │   │   ├── freelance-digital-marketing-seo.html
+│   │   │   └── learning-innovation.html  # Tabbed: Projects, Training, Workshops
+│   │   └── partners/      # Partner pages
+│   │       ├── index.html
+│   │       ├── graphics.html
+│   │       ├── electrical.html
+│   │       └── automotive.html
 │   ├── app/               # Login-required (noindex)
 │   │   └── seniority/     # Seniority management
 │   ├── shared/            # Shared components, CSS, JS, assets

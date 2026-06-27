@@ -15,9 +15,9 @@
 /expertise/digital-engineering     /pages/expertise/digital-engineering.html               200
 /expertise/digital-marketing-seo   /pages/expertise/freelance-digital-marketing-seo.html    200
 /expertise/learning-innovation     /pages/expertise/learning-innovation.html                200
-/expertise/learning-innovation/projects     /pages/expertise/projects.html                  200
-/expertise/learning-innovation/training     /pages/expertise/training.html                  200
-/expertise/learning-innovation/workshops    /pages/expertise/workshop.html                  200
+/expertise/learning-innovation/projects     /expertise/learning-innovation#projects          301
+/expertise/learning-innovation/training     /expertise/learning-innovation#training          301
+/expertise/learning-innovation/workshops    /expertise/learning-innovation#workshops         301
 
 # Partners pages
 /partners             /pages/partners/index.html                                          200

@@ -1,5 +1,41 @@
 # Changelog
 
+## v1.0.7 — 2026-06-28 — Tabbed Learning & Innovation page
+
+### Changed
+- Consolidated Projects, Industrial Training, Technical Workshops into a single tabbed page at `/expertise/learning-innovation`
+- Added animated tab switching (fade + slide) with URL hash support (`#projects`, `#training`, `#workshops`)
+- Old standalone pages redirected via 301 to hash anchors
+- Header nav links updated to point to hash URLs
+
+### Removed
+- `frontend/pages/expertise/projects.html`
+- `frontend/pages/expertise/training.html`
+- `frontend/pages/expertise/workshop.html`
+
+### Documentation
+- `README.md` — updated file tree
+- `structure.md` — updated file tree and navigation section
+- `CHANGELOG.md` — added this entry
+
+---
+
+## v1.0.6 — 2026-06-28 — Animated nested dropdown navigation
+
+### Changed
+- Upgraded Expertise dropdown with animated nested sub-menus
+- Learning & Innovation now shows Projects, Industrial Training, Technical Workshops in a slide-in sub-dropdown
+- Strategic Partners now shows Graphics, Electrical, Automotive in a slide-in sub-dropdown
+- Main dropdown uses smooth fade+slide animation instead of abrupt show/hide
+- Dark mode styles added for sub-dropdown panels
+
+### Documentation
+- `README.md` — updated project structure to reflect flattened `frontend/` layout and new pages
+- `structure.md` — added sub-items for Strategic Partners in Navigation section
+- `CHANGELOG.md` — added this entry
+
+---
+
 ## v1.0.2 — 2026-06-27 — Removed GitHub remote & flattened site structure
 
 ### Changed

@@ -81,30 +81,85 @@
 }
 
 .hf-dropdown-content {
-  display: none;
   position: absolute;
   background: #1f2937;
   top: 100%;
   left: 0;
-  min-width: 180px;
-  border-radius: 6px;
-  overflow: hidden;
+  min-width: 200px;
+  border-radius: 8px;
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 .hf-dropdown:hover .hf-dropdown-content {
-  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .hf-dropdown-item {
   display: block;
-  padding: 10px 15px;
+  padding: 10px 16px;
   color: white;
   text-decoration: none;
   transition: background 0.3s;
+  position: relative;
 }
 
 .hf-dropdown-item:hover {
   background: #374151;
+}
+
+.hf-sub-dropdown-content .hf-dropdown-item:not(:last-child) {
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Nested sub-dropdown */
+.hf-dropdown-item-sub {
+  position: relative;
+}
+
+.hf-sub-dropdown-content {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  min-width: 240px;
+  background: #1f2937;
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  opacity: 0;
+  transform: translateX(-8px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.hf-dropdown-item-sub:hover .hf-sub-dropdown-content {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.hf-sub-dropdown-content .hf-dropdown-item:last-child {
+  border-bottom: none;
+}
+
+/* Arrow indicator for items with sub-menus */
+.hf-dropdown-item.has-sub::after {
+  content: '\25b8';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.4;
+  font-size: 0.8rem;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.hf-dropdown-item-sub:hover .has-sub::after {
+  transform: translateY(-50%) translateX(3px);
+  opacity: 0.8;
 }
 
 /* Theme Toggle */
@@ -563,6 +618,11 @@
 
 .dark-mode .hf-dropdown-item:hover {
   background: #1e293b;
+}
+
+.dark-mode .hf-sub-dropdown-content {
+  background: #0a0f1a;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
 }
 
 .dark-mode .hf-mobile-menu {
