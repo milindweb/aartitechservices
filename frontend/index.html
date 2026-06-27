@@ -297,9 +297,27 @@
     }
     .why-us-grid li {
       list-style: none;
-      padding: 0.6rem 0;
-      color: var(--text-secondary);
+    }
+    .why-us-list li {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      box-shadow: var(--shadow);
       font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      transition: var(--transition);
+    }
+    .why-us-list li::before {
+      content: "\2713";
+      color: var(--accent);
+      font-weight: 700;
+      margin-right: 8px;
+    }
+    .why-us-list li:hover {
+      border-color: var(--accent-light);
+      transform: translateY(-2px);
     }
     .why-us .cta-wrapper {
       text-align: center;
@@ -355,9 +373,21 @@
       padding: 0;
     }
     .topic-grid li {
-      padding: 0.5rem 0;
-      color: var(--text-secondary);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.9rem 1.2rem;
+      box-shadow: var(--shadow);
       font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      text-align: center;
+      transition: var(--transition);
+      list-style: none;
+    }
+    .topic-grid li:hover {
+      border-color: var(--accent-light);
+      transform: translateY(-2px);
     }
     .section-block .link-wrapper {
       text-align: center;
