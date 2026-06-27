@@ -1,0 +1,65 @@
+# Cloudflare Pages redirects
+# Format: source destination status
+
+# Root → home
+/                  /site/index.html                                           200
+
+# Top-level pages
+/about             /site/pages/about.html                                     200
+/portfolio         /site/pages/portfolio.html                                 200
+/contact           /site/pages/contact.html                                   200
+/blog              /site/pages/blog.html                                      200
+/links             /site/pages/links.html                                     200
+
+# Expertise pages
+/expertise/digital-engineering     /site/pages/expertise/digital-engineering.html               200
+/expertise/digital-marketing-seo   /site/pages/expertise/freelance-digital-marketing-seo.html    200
+/expertise/learning-innovation     /site/pages/expertise/learning-innovation.html                200
+/expertise/strategic-partners      /site/pages/expertise/strategic-partners.html                 200
+
+# Partners pages
+/partners/graphics        /site/pages/partners/graphics.html                                   200
+/partners/photography     /site/pages/partners/photography.html                                200
+/partners/electrical      /site/pages/partners/electrical.html                                 200
+/partners/automotive      /site/pages/partners/automotive.html                                 200
+
+# Auth pages (only entry point to app area)
+/login                   /app/auth/login.html                                                  200
+/register                /app/auth/register.html                                               200
+/forgot-password         /app/auth/forgot-password.html                                        200
+
+# App area pages
+/app/*                   /app/:splat                                                           200
+
+# Seniority
+/app/seniority           /app/seniority/seniority-list.html                                    200
+/app/seniority/manage    /app/seniority/seniority-management.html                              200
+
+# Legacy redirects (301) — old service URLs → new clean URLs
+/seo-digital-marketing          /expertise/digital-marketing-seo                                301
+/website-development            /expertise/digital-engineering                                  301
+/business-automation            /expertise/digital-engineering                                  301
+/project-training               /expertise/learning-innovation                                  301
+/photography                    /partners/graphics                                              301
+/graphics-branding              /partners/graphics                                             301
+/electrical                     /partners/electrical                                            301
+/automotive                     /partners/automotive                                            301
+
+# Old direct file paths (previously at /pages/services/)
+/pages/services/business-automation.html        /expertise/digital-engineering                   301
+/pages/services/photography.html                /partners/graphics                              301
+
+# Old workshop redirect
+/workshop.html                  /expertise/learning-innovation                                  301
+
+# Legacy seniority paths
+/seniority                      /app/seniority                                                  301
+/seniority/manage               /app/seniority/manage                                           301
+/modules/seniority/pages/seniority-list          /app/seniority/seniority-list.html              301
+/modules/seniority/pages/seniority-management     /app/seniority/seniority-management.html        301
+
+# Catch shared files (no change needed since publish root is frontend/)
+/shared/*                       /shared/:splat                                                 200
+
+# Catch site assets
+/site/assets/*                  /site/assets/:splat                                            200

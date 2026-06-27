@@ -1,0 +1,6 @@
+node_modules/
+.env.local
+backend/.env.local
+*.log
+.DS_Store
+structure copy.md

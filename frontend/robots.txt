@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /app/
+
+# Update domain in shared/js/config.js when changing domain
+Sitemap: https://mk9.in/sitemap.xml
