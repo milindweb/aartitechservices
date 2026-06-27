@@ -62,7 +62,10 @@ mk9/
 │   │   ├── expertise/
 │   │   │   ├── digital-engineering.html
 │   │   │   ├── freelance-digital-marketing-seo.html
-│   │   │   └── learning-innovation.html
+│   │   │   ├── learning-innovation.html
+│   │   │   ├── projects.html
+│   │   │   ├── training.html
+│   │   │   └── workshop.html
 │   │   │
 │   │   └── partners/
 │   │       ├── graphics.html
@@ -143,6 +146,9 @@ Expertise
     ├── Digital Engineering
     ├── Digital Marketing & SEO
     ├── Learning & Innovation
+    │   ├── Projects (learning-innovation/projects)
+    │   ├── Industrial Training (learning-innovation/training)
+    │   └── Technical Workshops (learning-innovation/workshops)
     └── Strategic Partners
 Portfolio
 Blog

@@ -12,7 +12,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="/shared/js/headerfooter.js" defer></script>
 
-  <style></style>
+  <style>
+    .explore-nav { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; margin: 2rem auto 1rem; max-width: 700px; }
+    .explore-nav a { padding: 0.6rem 1.5rem; border-radius: 8px; background: var(--card-bg); border: 1px solid var(--border); color: var(--text-primary); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: all 0.3s ease; }
+    .explore-nav a:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow); }
+  </style>
 </head>
 <body>
   <div id="header"></div>
@@ -24,6 +28,12 @@
       <p>Industry-oriented engineering projects, hands-on training programs, and skill development for students, professionals, and organizations. Get ready-to-implement projects, certified training, and complete documentation.</p>
     </div>
   </section>
+
+  <div class="explore-nav">
+    <a href="/expertise/learning-innovation/projects">Projects</a>
+    <a href="/expertise/learning-innovation/training">Industrial Training</a>
+    <a href="/expertise/learning-innovation/workshops">Technical Workshops</a>
+  </div>
 
   <!-- STATS -->
   <section class="p-section">
@@ -38,7 +48,7 @@
   </section>
 
   <!-- BUY PROJECTS -->
-  <section class="p-section p-alt">
+  <section id="projects" class="p-section p-alt">
     <div class="p-container">
       <h2 class="p-title">BUY READY PROJECTS</h2>
       <p class="p-subtitle">Fully tested, documented, and ready-to-submit projects across multiple engineering domains. Custom modifications available on request.</p>
@@ -148,7 +158,7 @@
   </section>
 
   <!-- TRAINING PROGRAMS -->
-  <section class="p-section p-alt">
+  <section id="training" class="p-section p-alt">
     <div class="p-container">
       <h2 class="p-title">TRAINING PROGRAMS</h2>
       <p class="p-subtitle">Hands-on training with certified completion — designed for college students, freshers, and working professionals.</p>
@@ -167,8 +177,8 @@
         </div>
         <div class="p-card">
           <div class="p-card-icon"><i class="fas fa-users"></i></div>
-          <h3>Workshops &amp; Seminars</h3>
-          <p>Domain-specific workshops on Python, IoT, Embedded Systems, Web Development, AI/ML, and Industrial Automation conducted at your college.</p>
+        <h3 id="workshops">Workshops &amp; Seminars</h3>
+           <p>Domain-specific workshops on Python, IoT, Embedded Systems, Web Development, AI/ML, and Industrial Automation conducted at your college.</p>
           <span class="p-badge">Certificate Provided</span>
         </div>
         <div class="p-card">
