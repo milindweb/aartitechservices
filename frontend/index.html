@@ -157,6 +157,8 @@
     .expertise-card h3 i {
       margin-right: 10px;
       font-size: 1.3rem;
+      transition: transform 0.3s ease;
+      display: inline-block;
     }
     .expertise-card h3 a {
       color: var(--accent);
@@ -166,8 +168,11 @@
     }
     .expertise-card h3 a:hover {
       color: var(--accent-light);
-      transform: scale(1.06);
       filter: brightness(1.1);
+    }
+    .expertise-card h3 a:hover i {
+      transform: scale(1.2);
+      display: inline-block;
     }
     .expertise-card h4 {
       font-size: 1.05rem;
@@ -239,6 +244,8 @@
       margin-right: 8px;
       width: 1.1rem;
       text-align: center;
+      transition: transform 0.3s ease;
+      display: inline-block;
     }
     .partner-item h5 a {
       color: var(--accent);
@@ -248,8 +255,11 @@
     }
     .partner-item h5 a:hover {
       color: var(--accent-light);
-      transform: scale(1.06);
       filter: brightness(1.1);
+    }
+    .partner-item h5 a:hover i {
+      transform: scale(1.2);
+      display: inline-block;
     }
     .partner-item p {
       margin: 0;
@@ -482,7 +492,7 @@
 
   <!-- ===== Hero ===== -->
   <section class="hero">
-    <h1>Full Stack Development, SEO &amp; Digital Marketing, Engineering Solutions</h1>
+    <h1>Full Stack Development, SEO Digital Marketing, Engineering Solutions</h1>
     <p>Build, grow, and transform your business with modern digital solutions. We help businesses, startups, professionals, and educational institutions establish a powerful online presence through professional websites, custom SaaS applications, digital marketing, business automation, and engineering solutions.</p>
     <p>Our mission is to deliver secure, scalable, and future-ready solutions that drive innovation, improve efficiency, and support long-term business growth.</p>
     <button class="cta-btn" onclick="window.location.href=SITE_CONFIG.social.whatsapp">
@@ -498,13 +508,12 @@
 
   <!-- ===== Our Expertise ===== -->
   <section class="expertise-section">
-    <h2>Our Expertise</h2>
+    <h2>OUR EXPERTISE</h2>
 
     <!-- Digital Engineering -->
     <div class="expertise-card reveal reveal-delay-1">
       <h3><a href="/expertise/digital-engineering"><i class="fas fa-laptop-code"></i>DIGITAL ENGINEERING</a></h3>
-      <h4>Full Stack Development</h4>
-      <p>We build custom business websites, corporate websites, portfolio websites, web applications, SaaS platforms, and REST APIs with secure database design and cloud deployment. Our full-stack development services include business automation, hosting, maintenance, UI/UX development, and workflow optimization to streamline your operations.</p>
+      <p>We are a Full Stack Developer, build custom business websites, corporate websites, portfolio websites, web applications, SaaS platforms, and REST APIs with secure database design and cloud deployment. Our full-stack development services include business automation, hosting, maintenance, UI/UX development, and workflow optimization to streamline your operations.</p>
       <a href="/expertise/digital-engineering" class="expertise-link">Explore Digital Engineering <i class="fas fa-arrow-right"></i></a>
     </div>
 
@@ -528,15 +537,15 @@
       <p>Comprehensive solutions delivered through trusted professional collaborations.</p>
       <div class="partner-items">
         <div class="partner-item">
-          <h5><a href="/partners/graphics"><i class="fas fa-paint-brush"></i>GRAPHICS, PHOTOGRAPHY &amp; BRANDING</a></h5>
+          <h5><a href="/partners/graphics"><i class="fas fa-paint-brush"></i>Photography & Branding</a></h5>
           <p>Creative branding, logo design, photography, videography, and marketing materials for businesses.</p>
         </div>
         <div class="partner-item">
-          <h5><a href="/partners/electrical"><i class="fas fa-bolt"></i>ELECTRICAL ENGINEERING SERVICES</a></h5>
+          <h5><a href="/partners/electrical"><i class="fas fa-bolt"></i>Electrical Engineering Services</a></h5>
           <p>Electrical installation, maintenance, troubleshooting, industrial automation, and technical support.</p>
         </div>
         <div class="partner-item">
-          <h5><a href="/partners/automotive"><i class="fas fa-car"></i>AUTOMOTIVE SERVICES</a></h5>
+          <h5><a href="/partners/automotive"><i class="fas fa-car"></i>Automotive Services</a></h5>
           <p>Professional automotive diagnostics, maintenance, repair, and engineering solutions.</p>
         </div>
       </div>
@@ -546,7 +555,7 @@
 
   <!-- ===== Why Choose Us ===== -->
   <section class="why-us bg-alt reveal">
-    <h2>Why Choose Aarti Tech Services?</h2>
+    <h2>WHY CHOOSE AARTI TECH SERVICES?</h2>
     <ul class="why-us-grid">
       <li>Professional Full Stack Development</li>
       <li>Business-Focused Digital Solutions</li>
@@ -565,7 +574,7 @@
 
   <!-- ===== Featured Portfolio ===== -->
   <section class="section-block reveal">
-    <h2>Featured Portfolio</h2>
+    <h2>FEATURED PORTFOLIO</h2>
     <p>Discover some of our recent projects across website development, custom software, business automation, and digital solutions.</p>
     <ul class="topic-grid">
       <li>Business Websites</li>
@@ -582,7 +591,7 @@
 
   <!-- ===== Latest Insights ===== -->
   <section class="section-block bg-alt reveal">
-    <h2>Latest Insights</h2>
+    <h2>LATEST INSIGHTS</h2>
     <p>Stay informed with expert articles, practical tutorials, and the latest trends in technology and digital business.</p>
     <ul class="topic-grid">
       <li>Full Stack Development</li>
