@@ -85,104 +85,63 @@ mk9/
 │   ├── site/                        ⭐ SEO — fully indexed
 │   │   │
 │   │   ├── index.html
+│   │   ├── sitemap.xml
 │   │   │
 │   │   ├── pages/
 │   │   │   │
-│   │   │   ├── about.html
 │   │   │   ├── contact.html
-│   │   │   ├── portfolio.html
+│   │   │   ├── contactform.html
 │   │   │   ├── blog.html
 │   │   │   ├── links.html
 │   │   │   │
 │   │   │   ├── expertise/
 │   │   │   │   ├── digital-engineering.html
 │   │   │   │   ├── freelance-digital-marketing-seo.html
-│   │   │   │   ├── learning-innovation.html
-│   │   │   │   └── strategic-partners.html
+│   │   │   │   └── learning-innovation.html
 │   │   │   │
-│   │   │   ├── partners/
-│   │   │   │   ├── graphics.html
-│   │   │   │   ├── photography.html
-│   │   │   │   ├── electrical.html
-│   │   │   │   └── automotive.html
-│   │   │   │
-│   │   │   └── blog/
-│   │   │       ├── seo/
-│   │   │       ├── development/
-│   │   │       ├── cloud/
-│   │   │       ├── automation/
-│   │   │       ├── ai/
-│   │   │       └── training/
-│   │   │
-│   │   └── assets/
+│   │   │   └── partners/
+│   │   │       ├── graphics.html
+│   │   │       ├── electrical.html
+│   │   │       └── automotive.html
 │   │
 │   ├── app/                         ⭐ Login required — NOINDEX, NOFOLLOW
 │   │   │
-│   │   ├── auth/   (Use supaabse default auth system)
-│   │   │   ├── login.html
-│   │   │   ├── register.html
-│   │   │   └── forgot-password.html
-│   │   │
-│   │   ├── hospital/
 │   │   ├── seniority/
-│   │   ├── ticket-manager/
-│   │   ├── admin/
-│   │   └── future-apps/
+│   │   │   ├── seniority-list.html
+│   │   │   └── seniority-management.html
 │   │
 │   ├── shared/
 │   │   │
 │   │   ├── components/
 │   │   │   ├── header.html
-│   │   │   ├── footer.html
-│   │   │   ├── navbar.html
-│   │   │   ├── sidebar.html
-│   │   │   └── loader.html
+│   │   │   └── footer.html
 │   │   │
 │   │   ├── css/
 │   │   │   ├── style.css             # Shared base styles
 │   │   │   ├── headerfooter.css
-│   │   │   ├── variables.css
-│   │   │   └── responsive.css
+│   │   │   └── nadstyle.css
 │   │   │
 │   │   ├── js/
 │   │   │   ├── config.js             # Centralized site config (brand, domain, contact, social)
 │   │   │   ├── seo-injector.js       # Reads config + PAGE_CONFIG; injects meta/OG/Twitter/JSON-LD
-│   │   │   ├── app.js
-│   │   │   ├── auth.js
-│   │   │   ├── navbar.js
 │   │   │   ├── headerfooter.js       # Loads header/footer HTML + replaces {{PLACEHOLDERS}}
-│   │   │   ├── form-handler.js
-│   │   │   └── utils.js
+│   │   │   └── form-handler.js
 │   │   │
 │   │   └── assets/
 │   │       ├── img/
 │   │       │   ├── og-default.svg
+│   │       │   ├── favicon.png
+│   │       │   ├── logo.png
+│   │       │   ├── icons8-project-96.png
 │   │       │   └── graphics/
 │   │       │       ├── birthday.svg
 │   │       │       ├── wedding.svg
 │   │       │       ├── logo.svg
 │   │       │       └── video.svg
-│   │       ├── icons/
-│   │       ├── fonts/
-│   │       └── data/
 │   │
 │   ├── services/
 │   │   │
-│   │   ├── supabaseClient.js
-│   │   ├── api.js
-│   │   ├── authService.js
-│   │   ├── blogService.js
-│   │   ├── hospitalService.js
-│   │   ├── societyService.js
-│   │   ├── seniorityService.js
-│   │   ├── storageService.js
-│   │   └── adminService.js
-│   │
-│   └── config/
-│       ├── supabase.js
-│       ├── env.js
-│       ├── routes.js
-│       └── constants.js
+│   │   └── blogService.js
 │
 ├── backend/
 │   │
@@ -351,32 +310,22 @@ Sitemap: https://mk9.in/sitemap.xml
 ### `_redirects` rules
 
 Publish root: `frontend/`
+404 page: `frontend/404.html`
 
 Public pages:
 ```
 /                         /site/index.html                                                   200
-/about                    /site/pages/about.html                                             200
 /contact                  /site/pages/contact.html                                           200
-/portfolio                /site/pages/portfolio.html                                         200
 /blog                     /site/pages/blog.html                                              200
 /links                    /site/pages/links.html                                             200
 
 /expertise/digital-engineering     /site/pages/expertise/digital-engineering.html            200
 /expertise/digital-marketing-seo   /site/pages/expertise/freelance-digital-marketing-seo.html 200
 /expertise/learning-innovation     /site/pages/expertise/learning-innovation.html             200
-/expertise/strategic-partners      /site/pages/expertise/strategic-partners.html              200
 
 /partners/graphics        /site/pages/partners/graphics.html                                 200
-/partners/photography     /site/pages/partners/photography.html                              200
 /partners/electrical      /site/pages/partners/electrical.html                               200
 /partners/automotive      /site/pages/partners/automotive.html                               200
-```
-
-Auth pages (only entry point to app area):
-```
-/login                   /app/auth/login.html                                                200
-/register                /app/auth/register.html                                              200
-/forgot-password         /app/auth/forgot-password.html                                       200
 ```
 
 App area (catch-all):
@@ -411,19 +360,16 @@ Legacy redirects (301):
             │    /site/     │         │    /app/      │
             │  (SEO: ✓)     │         │ (noindex)     │
             │               │         │               │
-            │ index.html    │         │ auth/         │
-            │ pages/        │         │ hospital/     │
-            │ expertise/    │         │ society/      │
-            │ partners/     │         │ seniority/    │
-            │ blog/         │         │ admin/        │
-            │ portfolio/    │         │ ticket-man./  │
+            │ index.html    │         │ seniority/    │
+            │ pages/        │         │               │
+            │ expertise/    │         │               │
+            │ partners/     │         │               │
             └───────────────┘         └───────────────┘
 ```
 
 - Everything inside `site/` is indexed.
 - Everything inside `app/` is `noindex, nofollow`.
 - `app/` is disallowed in `robots.txt`.
-- Login is the only public entry point to the applications.
 
 ---
 
@@ -450,9 +396,7 @@ Legacy redirects (301):
 - Static XML/text files (`sitemap.xml`, `robots.txt`) still require manual domain updates
 
 ### Frontend Config
-- **frontend/config/supabase.js** — Supabase client initialization with ANON_KEY
-- **frontend/services/authService.js** — Auth operations (login, register, logout)
-- **frontend/services/supabaseClient.js** — Shared Supabase client instance
+- **frontend/shared/js/config.js** — All site config (brand, domain, contact, social)
 
 ### Backend Schema
 - **backend/schema/schema.sql** — Core tables, indexes, RLS policies

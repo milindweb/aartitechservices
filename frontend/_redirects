@@ -1,12 +1,10 @@
 # Cloudflare Pages redirects
 # Format: source destination status
 
-# Root → home
+# Root -> home
 /                  /site/index.html                                           200
 
 # Top-level pages
-/about             /site/pages/about.html                                     200
-/portfolio         /site/pages/portfolio.html                                 200
 /contact           /site/pages/contact.html                                   200
 /blog              /site/pages/blog.html                                      200
 /links             /site/pages/links.html                                     200
@@ -15,18 +13,11 @@
 /expertise/digital-engineering     /site/pages/expertise/digital-engineering.html               200
 /expertise/digital-marketing-seo   /site/pages/expertise/freelance-digital-marketing-seo.html    200
 /expertise/learning-innovation     /site/pages/expertise/learning-innovation.html                200
-/expertise/strategic-partners      /site/pages/expertise/strategic-partners.html                 200
 
 # Partners pages
 /partners/graphics        /site/pages/partners/graphics.html                                   200
-/partners/photography     /site/pages/partners/photography.html                                200
 /partners/electrical      /site/pages/partners/electrical.html                                 200
 /partners/automotive      /site/pages/partners/automotive.html                                 200
-
-# Auth pages (only entry point to app area)
-/login                   /app/auth/login.html                                                  200
-/register                /app/auth/register.html                                               200
-/forgot-password         /app/auth/forgot-password.html                                        200
 
 # App area pages
 /app/*                   /app/:splat                                                           200
@@ -35,7 +26,7 @@
 /app/seniority           /app/seniority/seniority-list.html                                    200
 /app/seniority/manage    /app/seniority/seniority-management.html                              200
 
-# Legacy redirects (301) — old service URLs → new clean URLs
+# Legacy redirects (301) - old service URLs -> new clean URLs
 /seo-digital-marketing          /expertise/digital-marketing-seo                                301
 /website-development            /expertise/digital-engineering                                  301
 /business-automation            /expertise/digital-engineering                                  301
@@ -62,4 +53,4 @@
 /shared/*                       /shared/:splat                                                 200
 
 # Catch site assets
-/site/assets/*                  /site/assets/:splat                                            200
+# /site/assets/*               /site/assets/:splat                                            200
