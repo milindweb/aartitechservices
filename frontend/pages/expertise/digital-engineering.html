@@ -29,7 +29,53 @@
     .p-cta-section p { color: rgba(255,255,255,0.85); max-width: 600px; margin: 0 auto 1.5rem; line-height: 1.6; font-size: 1.05rem; }
     .p-cta-section .cta-btn { display: inline-flex; align-items: center; gap: 8px; padding: 0.9rem 2rem; border-radius: 8px; background: #fff; color: #0f172a; font-size: 1rem; font-weight: 600; text-decoration: none; transition: all 0.3s ease; border: none; cursor: pointer; }
     .p-cta-section .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
-    @media (max-width: 768px) { .p-grid-features { grid-template-columns: 1fr; } .p-grid-benefits { grid-template-columns: 1fr 1fr; } }
+
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 1.5rem; margin-top: 2rem; }
+    .pricing-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 2rem 1.5rem; box-shadow: var(--shadow); transition: all 0.3s ease; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+    .pricing-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.15); }
+    .pricing-card .plan-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+    .pricing-card .plan-name { font-size: 1.2rem; font-weight: 700; margin: 0 0 0.25rem; color: var(--text-primary); }
+    .pricing-card .plan-price { font-size: 1.8rem; font-weight: 800; margin: 0.5rem 0; color: var(--text-primary); }
+    .pricing-card .plan-price span { font-size: 0.9rem; font-weight: 400; color: var(--text-secondary); }
+    .pricing-card .plan-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 1rem; }
+    .pricing-card .plan-features { list-style: none; padding: 0; margin: 0 0 1.5rem; flex: 1; }
+    .pricing-card .plan-features li { padding: 0.4rem 0; font-size: 0.88rem; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
+    .pricing-card .plan-features li i { color: #16a34a; font-size: 0.8rem; width: 1rem; }
+    .pricing-card .plan-badge { font-size: 0.78rem; color: var(--text-secondary); font-weight: 500; margin-top: 0.5rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+    .pricing-card .plan-cta { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 0.75rem 1.5rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: all 0.3s ease; border: none; cursor: pointer; margin-top: auto; color: #fff; }
+    .pricing-card .plan-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+    .pricing-card.starter { border-top: 4px solid #16a34a; }
+    .pricing-card.starter .plan-cta { background: #16a34a; }
+    .pricing-card.business { border-top: 4px solid #2563eb; }
+    .pricing-card.business .plan-cta { background: #2563eb; }
+    .pricing-card.webapp { border-top: 4px solid #7c3aed; }
+    .pricing-card.webapp .plan-cta { background: #7c3aed; }
+    .pricing-card.enterprise { border-top: 4px solid #dc2626; }
+    .pricing-card.enterprise .plan-cta { background: #dc2626; }
+    .pricing-card.popular { border: 2px solid #2563eb; }
+    .pricing-card.popular::after { content: "Popular"; position: absolute; top: 12px; right: -28px; background: #2563eb; color: #fff; font-size: 0.7rem; font-weight: 600; padding: 0.2rem 2rem; transform: rotate(45deg); }
+
+    .compare-wrapper { overflow-x: auto; margin-top: 2rem; border-radius: 14px; border: 1px solid var(--border); box-shadow: var(--shadow); }
+    .compare-table { width: 100%; border-collapse: collapse; min-width: 700px; font-size: 0.88rem; }
+    .compare-table th { background: var(--secondary-bg); padding: 0.9rem 1rem; text-align: left; font-weight: 600; color: var(--text-primary); border-bottom: 2px solid var(--border); white-space: nowrap; }
+    .compare-table th:first-child { position: sticky; left: 0; background: var(--secondary-bg); z-index: 1; }
+    .compare-table td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+    .compare-table td:first-child { font-weight: 500; color: var(--text-primary); position: sticky; left: 0; background: var(--primary-bg); }
+    .compare-table tr:hover td { background: var(--secondary-bg); }
+    .compare-table .tick { color: #16a34a; }
+    .compare-table .dash { color: var(--text-secondary); opacity: 0.4; }
+    .compare-table .optional { color: var(--accent); font-size: 0.8rem; font-style: italic; }
+
+    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+    .info-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; box-shadow: var(--shadow); }
+    .info-card h3 { font-size: 1.05rem; font-weight: 600; margin: 0 0 0.75rem; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
+    .info-card h3 i { color: var(--accent); }
+    .info-card p, .info-card li { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+    .info-card ul { list-style: none; padding: 0; margin: 0; }
+    .info-card ul li { padding: 0.3rem 0; display: flex; align-items: center; gap: 8px; }
+    .info-card ul li i { color: var(--accent); font-size: 0.75rem; }
+
+    @media (max-width: 768px) { .p-grid-features { grid-template-columns: 1fr; } .p-grid-benefits { grid-template-columns: 1fr 1fr; } .pricing-grid { grid-template-columns: 1fr; } .info-grid { grid-template-columns: 1fr; } }
     @media (max-width: 480px) { .p-grid-benefits { grid-template-columns: 1fr; } }
   </style>
 
@@ -119,6 +165,197 @@
           <h3>Maintenance &amp; Support</h3>
           <p>Software updates, security patches, monitoring, backups, performance optimization, and technical support.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANS -->
+  <section class="p-section p-alt">
+    <div class="p-container">
+      <h2 class="p-title">Website &amp; Software Development Plans</h2>
+      <p class="p-subtitle">Transform your ideas into powerful digital solutions. Whether you need a professional business website, a custom web application, or enterprise software, we deliver secure, scalable, and high-performance solutions tailored to your business goals. Every project is developed using modern technologies with a strong focus on performance, security, user experience, and future scalability.</p>
+
+      <div class="pricing-grid">
+        <div class="pricing-card starter">
+          <div class="plan-icon">🟢</div>
+          <div class="plan-name">Starter Website</div>
+          <div class="plan-price">Starting From &#8377;4,999</div>
+          <div class="plan-desc">Perfect for startups, local businesses, freelancers, consultants, restaurants, shops, and personal brands looking to establish a professional online presence.</div>
+          <ul class="plan-features">
+            <li><i class="fas fa-check"></i> Modern Responsive Design</li>
+            <li><i class="fas fa-check"></i> Mobile &amp; Tablet Friendly</li>
+            <li><i class="fas fa-check"></i> Up to 5 Professional Pages</li>
+            <li><i class="fas fa-check"></i> Contact Form</li>
+            <li><i class="fas fa-check"></i> Google Maps</li>
+            <li><i class="fas fa-check"></i> Social Media Integration</li>
+            <li><i class="fas fa-check"></i> Basic SEO Optimization</li>
+            <li><i class="fas fa-check"></i> SSL Security</li>
+            <li><i class="fas fa-check"></i> Fast Performance</li>
+            <li><i class="fas fa-check"></i> Google Search Ready</li>
+          </ul>
+          <div class="plan-badge"><strong>Best For:</strong> Small Businesses • Startups • Shops • Portfolio • Local Services</div>
+          <button class="plan-cta" onclick="window.location.href=SITE_CONFIG.social.whatsapp">Buy Now <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <div class="pricing-card business popular">
+          <div class="plan-icon">🔵</div>
+          <div class="plan-name">Business Website</div>
+          <div class="plan-price">Starting From &#8377;9,999</div>
+          <div class="plan-desc">Designed for businesses that require dynamic content, professional branding, and an easy-to-manage website.</div>
+          <ul class="plan-features">
+            <li><i class="fas fa-check"></i> Everything in Starter Website, plus</li>
+            <li><i class="fas fa-check"></i> Admin Dashboard</li>
+            <li><i class="fas fa-check"></i> Unlimited Pages</li>
+            <li><i class="fas fa-check"></i> Blog / News Management</li>
+            <li><i class="fas fa-check"></i> Photo &amp; Video Gallery</li>
+            <li><i class="fas fa-check"></i> Dynamic Content Management</li>
+            <li><i class="fas fa-check"></i> Service &amp; Product Catalog</li>
+            <li><i class="fas fa-check"></i> Advanced SEO Structure</li>
+            <li><i class="fas fa-check"></i> Business Email Configuration*</li>
+            <li><i class="fas fa-check"></i> Inquiry Management</li>
+          </ul>
+          <div class="plan-badge"><strong>Best For:</strong> Companies • Schools • Institutes • Clinics • NGOs • Organizations</div>
+          <button class="plan-cta" onclick="window.location.href=SITE_CONFIG.social.whatsapp">Buy Now <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <div class="pricing-card webapp">
+          <div class="plan-icon">🟣</div>
+          <div class="plan-name">Business Web Application</div>
+          <div class="plan-price">Starting From &#8377;24,999</div>
+          <div class="plan-desc">Custom web applications that automate business operations and improve productivity with secure cloud-based access.</div>
+          <ul class="plan-features">
+            <li><i class="fas fa-check"></i> Everything in Business Website, plus</li>
+            <li><i class="fas fa-check"></i> Secure User Login</li>
+            <li><i class="fas fa-check"></i> Role-Based Access Control</li>
+            <li><i class="fas fa-check"></i> Database Integration</li>
+            <li><i class="fas fa-check"></i> Admin &amp; Staff Dashboards</li>
+            <li><i class="fas fa-check"></i> Reports &amp; Analytics</li>
+            <li><i class="fas fa-check"></i> File &amp; Document Management</li>
+            <li><i class="fas fa-check"></i> Email Notifications</li>
+            <li><i class="fas fa-check"></i> Payment Gateway Integration*</li>
+            <li><i class="fas fa-check"></i> Custom Business Modules</li>
+            <li><i class="fas fa-check"></i> API Integration</li>
+          </ul>
+          <div class="plan-badge"><strong>Best For:</strong> Society Management • Hospital Management • Clinic Software • Booking Systems • CRM • Inventory • HRMS • Member Portals</div>
+          <button class="plan-cta" onclick="window.location.href=SITE_CONFIG.social.whatsapp">Buy Now <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <div class="pricing-card enterprise">
+          <div class="plan-icon">🔴</div>
+          <div class="plan-name">Enterprise Software Solution</div>
+          <div class="plan-price">Custom Quote</div>
+          <div class="plan-desc">Enterprise-grade software built for organizations requiring advanced workflows, integrations, automation, high availability, and unlimited scalability.</div>
+          <ul class="plan-features">
+            <li><i class="fas fa-check"></i> Custom Software Development</li>
+            <li><i class="fas fa-check"></i> Enterprise Architecture</li>
+            <li><i class="fas fa-check"></i> Multi-Branch Support</li>
+            <li><i class="fas fa-check"></i> Advanced Security</li>
+            <li><i class="fas fa-check"></i> Workflow Automation</li>
+            <li><i class="fas fa-check"></i> Third-Party Integrations</li>
+            <li><i class="fas fa-check"></i> Custom APIs</li>
+            <li><i class="fas fa-check"></i> High Performance Infrastructure</li>
+            <li><i class="fas fa-check"></i> Dedicated Technical Support</li>
+            <li><i class="fas fa-check"></i> Long-Term Scalability</li>
+          </ul>
+          <div class="plan-badge"><strong>Best For:</strong> Large Enterprises • Manufacturing • ERP • Government Projects • Educational Institutions • Healthcare Organizations</div>
+          <button class="plan-cta" onclick="window.location.href=SITE_CONFIG.social.whatsapp">Contact Us <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARE PLANS -->
+  <section class="p-section">
+    <div class="p-container">
+      <h2 class="p-title">Compare Our Plans</h2>
+      <p class="p-subtitle">Choose the right plan for your business needs.</p>
+      <div class="compare-wrapper">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Features</th>
+              <th>🟢 Starter</th>
+              <th>🔵 Business</th>
+              <th>🟣 Web App</th>
+              <th>🔴 Enterprise</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Responsive Design</td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td></tr>
+            <tr><td>Mobile Friendly</td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td></tr>
+            <tr><td>SSL Security</td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td></tr>
+            <tr><td>SEO Ready</td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td></tr>
+            <tr><td>Contact Form</td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td></tr>
+            <tr><td>WhatsApp Integration</td><td><span class="dash">&mdash;</span></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td></tr>
+            <tr><td>Google Maps</td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td></tr>
+            <tr><td>Social Media Integration</td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td></tr>
+            <tr><td>Admin Dashboard</td><td><span class="dash">&mdash;</span></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td></tr>
+            <tr><td>Dynamic Content</td><td><span class="dash">&mdash;</span></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td></tr>
+            <tr><td>Blog / News</td><td><span class="dash">&mdash;</span></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td></tr>
+            <tr><td>Business Email Setup*</td><td><span class="optional">Optional</span></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td></tr>
+            <tr><td>User Authentication</td><td><span class="dash">&mdash;</span></td><td><span class="optional">Optional</span></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td></tr>
+            <tr><td>Database Integration</td><td><span class="dash">&mdash;</span></td><td><span class="optional">Optional</span></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td></tr>
+            <tr><td>Reports &amp; Analytics</td><td><span class="dash">&mdash;</span></td><td><span class="dash">&mdash;</span></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td></tr>
+            <tr><td>File &amp; Document Management</td><td><span class="dash">&mdash;</span></td><td><span class="optional">Optional</span></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td></tr>
+            <tr><td>Role-Based Access</td><td><span class="dash">&mdash;</span></td><td><span class="dash">&mdash;</span></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td></tr>
+            <tr><td>Payment Gateway*</td><td><span class="optional">Optional</span></td><td><span class="optional">Optional</span></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td></tr>
+            <tr><td>API Integration</td><td><span class="dash">&mdash;</span></td><td><span class="optional">Optional</span></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td></tr>
+            <tr><td>Third-Party Integrations</td><td><span class="dash">&mdash;</span></td><td><span class="optional">Optional</span></td><td><i class="fas fa-check tick"></i></td><td><i class="fas fa-check tick"></i></td></tr>
+            <tr><td>Custom Modules</td><td>Limited</td><td>Moderate</td><td>Advanced</td><td>Unlimited</td></tr>
+            <tr><td>Scalability</td><td>Standard</td><td>High</td><td>Very High</td><td>Enterprise</td></tr>
+            <tr><td>Technical Support</td><td>Standard</td><td>Priority</td><td>Premium</td><td>Dedicated</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPORTANT INFO -->
+  <section class="p-section p-alt">
+    <div class="p-container">
+      <h2 class="p-title">Important Information</h2>
+      <p class="p-subtitle">Understanding what's included and what's quoted separately.</p>
+      <div class="info-grid">
+        <div class="info-card">
+          <h3><i class="fas fa-globe"></i> Domain Registration</h3>
+          <p>Custom domain registration (.com, .in, .org and other extensions) is available. Domain registration and annual renewal charges are quoted separately and remain under the client's ownership.</p>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-server"></i> Hosting &amp; Cloud Infrastructure</h3>
+          <p>Hosting or cloud infrastructure is not included in the development cost. The appropriate hosting solution is recommended based on your project requirements, ranging from shared cloud hosting to dedicated VPS or enterprise cloud infrastructure.</p>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-wrench"></i> Maintenance &amp; Technical Support</h3>
+          <p>Development charges cover design, development, testing, and deployment. Ongoing maintenance, security updates, backups, technical support, content updates, and future enhancements are available under separate Annual Maintenance Plans (AMC) or Monthly Support Plans.</p>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-external-link-alt"></i> Third-Party Services</h3>
+          <p>The following services are quoted separately whenever applicable:</p>
+          <ul>
+            <li><i class="fas fa-circle"></i> Domain Registration &amp; Renewal</li>
+            <li><i class="fas fa-circle"></i> Web Hosting / Cloud Hosting / VPS</li>
+            <li><i class="fas fa-circle"></i> Business Email Services</li>
+            <li><i class="fas fa-circle"></i> SMS &amp; WhatsApp APIs</li>
+            <li><i class="fas fa-circle"></i> Payment Gateway Setup &amp; Transaction Charges</li>
+            <li><i class="fas fa-circle"></i> Google Workspace / Microsoft 365</li>
+            <li><i class="fas fa-circle"></i> Premium Plugins, Themes &amp; Software Licenses</li>
+            <li><i class="fas fa-circle"></i> Third-Party API &amp; Subscription Services</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEED CUSTOM SOLUTION -->
+  <section class="p-section" style="padding-bottom:0">
+    <div class="p-container">
+      <div class="p-cta-section">
+        <h2>Need a Custom Solution?</h2>
+        <p>Every business is unique. If your requirements extend beyond our standard packages, we'll design and develop a fully customized solution tailored to your workflow, industry, and future growth.</p>
+        <p style="font-size:1.1rem;font-weight:600;color:#fff;margin-bottom:1.5rem">Contact us today for a free consultation and personalized quotation.</p>
+        <button class="cta-btn" onclick="window.location.href=SITE_CONFIG.social.whatsapp">
+          Get Free Consultation <i class="fas fa-arrow-right"></i>
+        </button>
       </div>
     </div>
   </section>
