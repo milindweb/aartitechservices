@@ -1,5 +1,6 @@
 node_modules/
 .env.local
+.env.original
 backend/.env.local
 *.log
 .DS_Store
