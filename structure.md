@@ -114,6 +114,44 @@ mk9/
 │   │   │       ├── ai/
 │   │   │       └── training/
 │   │   │
+│   │   ├── shared/
+│   │   │   │
+│   │   │   ├── components/
+│   │   │   │   ├── header.html
+│   │   │   │   ├── footer.html
+│   │   │   │   ├── navbar.html
+│   │   │   │   ├── sidebar.html
+│   │   │   │   └── loader.html
+│   │   │   │
+│   │   │   ├── css/
+│   │   │   │   ├── style.css             # Shared base styles
+│   │   │   │   ├── headerfooter.css
+│   │   │   │   ├── variables.css
+│   │   │   │   └── responsive.css
+│   │   │   │
+│   │   │   ├── js/
+│   │   │   │   ├── config.js             # Centralized site config (brand, domain, contact, social)
+│   │   │   │   ├── seo-injector.js       # Reads config + PAGE_CONFIG; injects meta/OG/Twitter/JSON-LD
+│   │   │   │   ├── app.js
+│   │   │   │   ├── auth.js
+│   │   │   │   ├── navbar.js
+│   │   │   │   ├── headerfooter.js       # Loads header/footer HTML + replaces {{PLACEHOLDERS}}
+│   │   │   │   ├── form-handler.js
+│   │   │   │   └── utils.js
+│   │   │   │
+│   │   │   └── assets/
+│   │   │       ├── img/
+│   │   │       │   ├── og-default.svg
+│   │   │       │   ├── favicon.png
+│   │   │       │   └── graphics/
+│   │   │       │       ├── birthday.svg
+│   │   │       │       ├── wedding.svg
+│   │   │       │       ├── logo.svg
+│   │   │       │       └── video.svg
+│   │   │       ├── icons/
+│   │   │       ├── fonts/
+│   │   │       └── data/
+│   │   │
 │   │   └── assets/
 │   │
 │   ├── app/                         ⭐ Login required — NOINDEX, NOFOLLOW
@@ -128,43 +166,6 @@ mk9/
 │   │   ├── ticket-manager/
 │   │   ├── admin/
 │   │   └── future-apps/
-│   │
-│   ├── shared/
-│   │   │
-│   │   ├── components/
-│   │   │   ├── header.html
-│   │   │   ├── footer.html
-│   │   │   ├── navbar.html
-│   │   │   ├── sidebar.html
-│   │   │   └── loader.html
-│   │   │
-│   │   ├── css/
-│   │   │   ├── style.css             # Shared base styles
-│   │   │   ├── headerfooter.css
-│   │   │   ├── variables.css
-│   │   │   └── responsive.css
-│   │   │
-│   │   ├── js/
-│   │   │   ├── config.js             # Centralized site config (brand, domain, contact, social)
-│   │   │   ├── seo-injector.js       # Reads config + PAGE_CONFIG; injects meta/OG/Twitter/JSON-LD
-│   │   │   ├── app.js
-│   │   │   ├── auth.js
-│   │   │   ├── navbar.js
-│   │   │   ├── headerfooter.js       # Loads header/footer HTML + replaces {{PLACEHOLDERS}}
-│   │   │   ├── form-handler.js
-│   │   │   └── utils.js
-│   │   │
-│   │   └── assets/
-│   │       ├── img/
-│   │       │   ├── og-default.svg
-│   │       │   └── graphics/
-│   │       │       ├── birthday.svg
-│   │       │       ├── wedding.svg
-│   │       │       ├── logo.svg
-│   │       │       └── video.svg
-│   │       ├── icons/
-│   │       ├── fonts/
-│   │       └── data/
 │   │
 │   ├── services/
 │   │   │
@@ -442,8 +443,8 @@ Legacy redirects (301):
 - Deploy with: `supabase functions deploy <name>`
 
 ### Site Configuration (Centralized)
-- **frontend/shared/js/config.js** — Single source of truth: brand name, domain, contact info, social links, OG image path
-- **frontend/shared/js/seo-injector.js** — Reads `SITE_CONFIG` + per-page `PAGE_CONFIG`; dynamically generates `<title>`, all meta/OG/Twitter tags, canonical URL, and JSON-LD (Organization + BreadcrumbList)
+- **frontend/site/shared/js/config.js** — Single source of truth: brand name, domain, contact info, social links, OG image path
+- **frontend/site/shared/js/seo-injector.js** — Reads `SITE_CONFIG` + per-page `PAGE_CONFIG`; dynamically generates `<title>`, all meta/OG/Twitter tags, canonical URL, and JSON-LD (Organization + BreadcrumbList)
 - **Each HTML page** defines only a small `PAGE_CONFIG = { title, description, canonical }` block — no hardcoded meta tags
 - **header.html / footer.html** — Use `{{PLACEHOLDER}}` syntax (e.g., `{{SITE_NAME_UPPER}}`, `{{PHONE}}`, `{{SOCIAL_WA}}`); replaced at runtime by `headerfooter.js` using values from `config.js`
 - Change brand name, domain, phone, email, or social links in **one file** (`config.js`) and it propagates to every page, header, footer, and JSON-LD automatically
