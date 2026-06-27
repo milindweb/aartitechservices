@@ -9,7 +9,6 @@ Storage  : Supabase Storage (via client SDK)
 Auth     : Supabase Auth (Login / Registration / Forgot Password / Reset Password)
 
 ## GITHUB DETAILS
-Username: milindweb
 Repository: https://github.com/milindweb/aartitechservices
 
 ## Future Subdomains
