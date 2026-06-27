@@ -115,8 +115,6 @@
       font-size: 1.8rem;
       font-weight: 700;
       margin-bottom: 1rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
     }
     .intro-section p {
       color: var(--text-secondary);
@@ -135,8 +133,6 @@
       font-weight: 700;
       text-align: center;
       margin-bottom: 2.5rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
     }
     .expertise-card {
       background: var(--card-bg);
@@ -164,10 +160,12 @@
       color: var(--accent);
       text-decoration: none;
       transition: var(--transition);
+      display: inline-block;
     }
     .expertise-card h3 a:hover {
       color: var(--accent-light);
-      text-decoration: underline;
+      transform: scale(1.06);
+      filter: brightness(1.1);
     }
     .expertise-card h4 {
       font-size: 1.05rem;
@@ -244,10 +242,12 @@
       color: var(--accent);
       text-decoration: none;
       transition: var(--transition);
+      display: inline-block;
     }
     .partner-item h5 a:hover {
       color: var(--accent-light);
-      text-decoration: underline;
+      transform: scale(1.06);
+      filter: brightness(1.1);
     }
     .partner-item p {
       margin: 0;
@@ -267,8 +267,6 @@
       font-weight: 700;
       text-align: center;
       margin-bottom: 2rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
     }
     .why-us-grid {
       display: grid;
@@ -317,8 +315,6 @@
       font-weight: 700;
       text-align: center;
       margin-bottom: 0.5rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
     }
     .section-block > p {
       text-align: center;
@@ -388,8 +384,6 @@
       font-size: 1.8rem;
       font-weight: 700;
       margin-bottom: 1rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
     }
     .final-cta p {
       color: var(--text-secondary);
@@ -505,7 +499,7 @@
     <div class="expertise-card reveal reveal-delay-1">
       <h3><a href="/expertise/digital-engineering"><i class="fas fa-laptop-code"></i>Digital Engineering</a></h3>
       <h4>Full Stack Development</h4>
-      <p>We design and develop secure, scalable, and high-performance digital solutions tailored to your business requirements.</p>
+      <p>We build custom business websites, web applications, SaaS platforms, and REST APIs with secure database design and cloud deployment. Our full-stack development services include hosting, maintenance, UI/UX development, business automation, and workflow optimization to streamline your operations.</p>
       <ul class="expertise-list">
         <li>Business Websites</li>
         <li>Corporate Websites</li>
@@ -525,7 +519,7 @@
     <!-- Digital Marketing & SEO -->
     <div class="expertise-card reveal reveal-delay-2">
       <h3><a href="/expertise/digital-marketing-seo"><i class="fas fa-chart-line"></i>Digital Marketing &amp; SEO</a></h3>
-      <p>Increase your online visibility, attract quality leads, and grow your business through result-driven digital marketing strategies.</p>
+      <p>We drive online growth through search engine optimization, local SEO, technical SEO, Google Ads, and social media marketing. Our services include content marketing, Google Business Profile optimization, keyword research, competitor analysis, and monthly performance reporting.</p>
       <ul class="expertise-list">
         <li>Search Engine Optimization (SEO)</li>
         <li>Local SEO</li>
@@ -542,20 +536,19 @@
     <!-- Learning & Innovation -->
     <div class="expertise-card reveal reveal-delay-3">
       <h3><a href="/expertise/learning-innovation"><i class="fas fa-graduation-cap"></i>Learning &amp; Innovation</a></h3>
-      <p>Practical learning programs designed for students, educational institutions, and working professionals.</p>
+      <p>We provide engineering projects across electrical, electronics, computer, and mechanical domains along with industrial training, internships, and technical workshops. Each project includes reports, documentation, PPTs, and one-on-one guidance for viva and submissions.</p>
       <ul class="expertise-list">
         <li>Engineering Projects</li>
         <li>Industrial Training &amp; Internships</li>
         <li>Technical Workshops</li>
       </ul>
-      <p>Helping students gain real-world technical experience through industry-oriented learning and live projects.</p>
       <a href="/expertise/learning-innovation" class="expertise-link">Explore Learning Programs <i class="fas fa-arrow-right"></i></a>
     </div>
 
     <!-- Strategic Partners -->
     <div class="expertise-card reveal reveal-delay-4">
       <h3><a href="/partners"><i class="fas fa-handshake"></i>Strategic Partners</a></h3>
-      <p>Complete business solutions delivered in collaboration with our trusted professional partners.</p>
+      <p>Comprehensive solutions delivered through trusted professional collaborations.</p>
       <div class="partner-items">
         <div class="partner-item">
           <h5><a href="/partners/graphics"><i class="fas fa-paint-brush"></i>Graphics, Photography &amp; Branding</a></h5>
