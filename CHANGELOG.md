@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.0.1 — 2026-06-27 — MIME type fix & structure sync
+
+### Fixed
+- `frontend/_redirects` — removed `/shared/*` identity rewrite that caused JS/CSS to be served as `text/html`, blocking them via `X-Content-Type-Options: nosniff`
+- `frontend/_redirects` — removed `/app/*` identity rewrite (same MIME type risk for future assets under `/app/`)
+
+### Documentation
+- `structure.md` — rewritten to match actual filesystem (removed non-existent files/dirs, fixed paths)
+- `CHANGELOG.md` — added this entry
+- `README.md` — updated project structure tree to match actual filesystem
+
+---
+
 ## v1.0.0 — 2026-06-27 — new code written for old website update
 
 ### Added

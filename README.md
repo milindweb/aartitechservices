@@ -16,24 +16,29 @@ Multi-service business portal with static HTML/CSS/JS frontend, Supabase backend
 
 ```
 ├── frontend/              # Static website (Cloudflare Pages)
-│   ├── index.html         # Homepage
-│   ├── pages/             # Site pages
-│   │   ├── blog.html
-│   │   ├── contact.html
-│   │   └── services/      # 8 service pages
-│   ├── modules/           # Business domain modules
+│   ├── _headers           # Cloudflare headers & caching
+│   ├── _redirects         # Cloudflare URL rewrites
+│   ├── 404.html           # Custom 404 page
+│   ├── robots.txt         # Crawler rules
+│   ├── sitemap.xml        # XML sitemap
+│   ├── site/              # SEO-indexed public pages
+│   │   ├── index.html     # Homepage
+│   │   └── pages/         # Contact, blog, expertise, partners
+│   ├── app/               # Login-required (noindex)
 │   │   └── seniority/     # Seniority management
-│   ├── services/          # API service classes
-│   └── shared/            # Shared components, CSS, JS, assets
-│       └── js/
-│           ├── config.js        # Centralized site config (brand, domain, contact)
-│           └── seo-injector.js  # Dynamic SEO meta tag injection
+│   ├── shared/            # Shared components, CSS, JS, assets
+│   │   ├── components/    # header.html, footer.html
+│   │   ├── css/           # style.css, headerfooter.css, nadstyle.css
+│   │   ├── js/            # config.js, seo-injector.js, headerfooter.js, form-handler.js
+│   │   └── assets/img/    # Logo, favicon, OG image, icons
+│   └── services/          # API service classes
 ├── backend/               # Database schema & configuration
-│   ├── schema/            # Full DB schema, RLS policies, docs
-│   └── seed/              # Seed data
+│   ├── schema/            # schema.sql, rls-policies.sql, database-design.md
+│   └── seed/              # seed.sql
 ├── supabase/
 │   └── functions/         # Edge Functions
 │       └── blog-posts/    # Blog CRUD API
+└── docs/                  # DEPLOYMENT.md, ROADMAP.md
 ```
 
 ## Features
