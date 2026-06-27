@@ -144,8 +144,17 @@ Expertise
     ├── Digital Marketing & SEO
     ├── Learning & Innovation
     │   ├── Projects (learning-innovation#projects)
+    │   │   ├── Electrical Engineering
+    │   │   ├── Electronics Engineering
+    │   │   └── Mechanical Engineering
     │   ├── Industrial Training (learning-innovation#training)
+    │   │   ├── Electrical Engineering
+    │   │   ├── Electronics Engineering
+    │   │   └── Instrumentation Engineering
     │   └── Technical Workshops (learning-innovation#workshops)
+    │       ├── Electrical Engineering
+    │       ├── Electronics Engineering
+    │       └── Instrumentation Engineering
     └── Strategic Partners
         ├── Graphics, Photography & Branding (partners/graphics)
         ├── Electrical Services (partners/electrical)
