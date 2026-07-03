@@ -93,6 +93,38 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /**
+   * Update auth nav link based on session
+   */
+  function updateAuthNavLink(headerRoot) {
+    var link = headerRoot.querySelector('.hf-nav-menu .hf-nav-item:last-child a');
+    var mobileLink = headerRoot.querySelector('.hf-mobile-nav-list li:last-child a');
+    if (!link) return;
+
+    try {
+      var sessionData = localStorage.getItem('supabase.auth.token');
+      if (sessionData) {
+        var parsed = JSON.parse(sessionData);
+        if (parsed && parsed.currentSession) {
+          link.innerHTML = '<i class="fas fa-tachometer-alt"></i> DASHBOARD';
+          link.href = '/dashboard';
+          if (mobileLink) {
+            mobileLink.innerHTML = '<i class="fas fa-tachometer-alt"></i> DASHBOARD';
+            mobileLink.href = '/dashboard';
+          }
+          return;
+        }
+      }
+    } catch (e) {}
+
+    link.innerHTML = '<i class="fas fa-sign-in-alt"></i> SIGN IN';
+    link.href = '/login';
+    if (mobileLink) {
+      mobileLink.innerHTML = '<i class="fas fa-sign-in-alt"></i> SIGN IN';
+      mobileLink.href = '/login';
+    }
+  }
+
+  /**
    * Initialize Header Functionality
    */
   function initHeader(headerRoot) {
@@ -105,6 +137,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Initialize theme toggle
     initThemeToggle(headerRoot);
+
+    // Update auth nav link based on session state
+    updateAuthNavLink(headerRoot);
 
     // Toggle mobile menu
     mobileToggle.addEventListener("click", () => {

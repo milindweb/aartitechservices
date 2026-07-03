@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/shared/js/config.js"></script>
+  <script>
+    const PAGE_CONFIG = {
+      title: 'Hands on Arduino ESP32 Workshop',
+      description: 'A comprehensive hands-on workshop covering Arduino programming, ESP32 IoT projects, sensor interfacing, and real-world embedded system development.',
+      canonical: '/blog/arduino-esp32-workshop',
+    };
+  </script>
+  <script src="/shared/js/seo-injector.js"></script>
+
+  <link rel="icon" type="image/png" href="/shared/assets/img/favicon.png">
+  <link rel="stylesheet" href="/shared/css/style.css" />
+  <link rel="stylesheet" href="/shared/css/headerfooter.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <style>
+    .bp-container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+    .bp-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+    .bp-meta .bp-badge { background: var(--gradient); color: #fff; padding: 0.2rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+    .bp-container h1 { font-size: 2rem; font-weight: 800; margin: 0 0 1.5rem; color: var(--text-primary); line-height: 1.3; }
+    .bp-container h2 { font-size: 1.4rem; font-weight: 700; margin: 2rem 0 0.75rem; color: var(--text-primary); }
+    .bp-container h3 { font-size: 1.15rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    .bp-container p { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin: 0 0 1rem; }
+    .bp-container ul, .bp-container ol { color: var(--text-secondary); line-height: 1.8; margin: 0 0 1rem; padding-left: 1.5rem; }
+    .bp-container li { margin-bottom: 0.3rem; }
+    .bp-container img { max-width: 100%; border-radius: 12px; margin: 1.5rem 0; }
+    .bp-container code { background: var(--secondary-bg); padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.9em; }
+    .bp-container pre { background: var(--secondary-bg); padding: 1rem; border-radius: 10px; overflow-x: auto; border: 1px solid var(--border); margin: 1rem 0; }
+    .bp-container pre code { background: none; padding: 0; }
+    .bp-container blockquote { border-left: 4px solid var(--accent); padding: 0.5rem 1rem; margin: 1rem 0; background: var(--secondary-bg); border-radius: 0 8px 8px 0; color: var(--text-secondary); }
+    .bp-back { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); text-decoration: none; font-weight: 600; margin-bottom: 2rem; transition: var(--transition); }
+    .bp-back:hover { gap: 10px; }
+    .bp-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .bp-tags span { font-size: 0.8rem; padding: 0.3rem 0.7rem; background: var(--secondary-bg); border-radius: 20px; color: var(--text-secondary); border: 1px solid var(--border); }
+    .bp-tip { background: var(--secondary-bg); border-left: 4px solid var(--accent); padding: 1rem 1.25rem; border-radius: 0 10px 10px 0; margin: 1rem 0; }
+    .bp-tip p { margin: 0; font-size: 0.95rem; }
+
+    @media (max-width: 600px) {
+      .bp-container h1 { font-size: 1.5rem; }
+      .bp-container { padding: 1.5rem 1rem 3rem; }
+    }
+  </style>
+
+  <script src="/shared/js/headerfooter.js" defer></script>
+</head>
+<body>
+
+  <div id="header"></div>
+
+  <main class="bp-container">
+    <a href="/blog" class="bp-back"><i class="bi bi-arrow-left"></i> Back to Blog</a>
+
+    <div class="bp-meta">
+      <span><i class="bi bi-calendar3"></i> <time datetime="2026-07-05">July 5, 2026</time></span>
+      <span class="bp-badge">Training &amp; Workshops</span>
+    </div>
+
+    <h1>Hands on Arduino ESP32 Workshop</h1>
+
+    <p>The Arduino and ESP32 are two of the most popular platforms in the embedded systems world. Arduino is the perfect starting point for beginners, while ESP32 brings built-in WiFi and Bluetooth for IoT projects. Combining them in a structured workshop gives students a complete foundation in modern embedded development.</p>
+
+    <p>This workshop is designed for engineering students, hobbyists, and anyone looking to build real-world IoT and automation projects.</p>
+
+    <h2>Workshop Structure</h2>
+
+    <pre><code>Day 1: Arduino fundamentals — blink, buttons, sensors
+Day 2: Advanced Arduino — motors, displays, interrupts
+Day 3: ESP32 introduction — WiFi, web server, cloud
+Day 4: IoT project — build a complete smart device
+Day 5: Testing, troubleshooting, and project showcase</code></pre>
+
+    <h2>Day 1: Arduino Basics</h2>
+
+    <h3>Getting Started</h3>
+    <ul>
+      <li>Understanding Arduino Uno board layout — pins, power, clock.</li>
+      <li>Installing Arduino IDE and setting up the board.</li>
+      <li>Structure of an Arduino sketch — setup() and loop().</li>
+    </ul>
+
+    <h3>First Program: LED Blink</h3>
+    <pre><code>void setup() {
+  pinMode(13, OUTPUT);  // Built-in LED
+}
+
+void loop() {
+  digitalWrite(13, HIGH);
+  delay(1000);
+  digitalWrite(13, LOW);
+  delay(1000);
+}</code></pre>
+
+    <h3>Digital Input: Push Button</h3>
+    <p>Students learn to read a button press and control an LED:</p>
+    <pre><code>int buttonPin = 2;
+int ledPin = 13;
+
+void setup() {
+  pinMode(buttonPin, INPUT_PULLUP);
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  if (digitalRead(buttonPin) == LOW) {
+    digitalWrite(ledPin, HIGH);
+  } else {
+    digitalWrite(ledPin, LOW);
+  }
+}</code></pre>
+
+    <h3>Analog Input: Potentiometer</h3>
+    <p>Reading variable voltage and mapping to LED brightness:</p>
+    <pre><code>int potPin = A0;
+int ledPin = 9;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  int value = analogRead(potPin);
+  int brightness = map(value, 0, 1023, 0, 255);
+  analogWrite(ledPin, brightness);
+  Serial.println(value);
+  delay(50);
+}</code></pre>
+
+    <h2>Day 2: Sensors and Actuators</h2>
+
+    <h3>Ultrasonic Distance Sensor (HC-SR04)</h3>
+    <pre><code>int trig = 9, echo = 10;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(trig, OUTPUT);
+  pinMode(echo, INPUT);
+}
+
+void loop() {
+  digitalWrite(trig, LOW); delayMicroseconds(2);
+  digitalWrite(trig, HIGH); delayMicroseconds(10);
+  digitalWrite(trig, LOW);
+
+  long duration = pulseIn(echo, HIGH);
+  int cm = duration * 0.034 / 2;
+
+  Serial.print("Distance: ");
+  Serial.print(cm);
+  Serial.println(" cm");
+  delay(200);
+}</code></pre>
+
+    <h3>Servo Motor Control</h3>
+    <pre><code>#include &lt;Servo.h&gt;
+Servo myServo;
+int potPin = A0;
+
+void setup() {
+  myServo.attach(9);
+}
+
+void loop() {
+  int val = analogRead(potPin);
+  int angle = map(val, 0, 1023, 0, 180);
+  myServo.write(angle);
+  delay(15);
+}</code></pre>
+
+    <h3>DHT11 Temperature and Humidity Sensor</h3>
+    <pre><code>#include &lt;DHT.h&gt;
+DHT dht(2, DHT11);
+
+void setup() {
+  Serial.begin(9600);
+  dht.begin();
+}
+
+void loop() {
+  float h = dht.readHumidity();
+  float t = dht.readTemperature();
+
+  if (isnan(h) || isnan(t)) {
+    Serial.println("Sensor error");
+    return;
+  }
+
+  Serial.print("Temp: "); Serial.print(t);
+  Serial.print("C  Humidity: "); Serial.println(h);
+  delay(2000);
+}</code></pre>
+
+    <div class="bp-tip">
+      <p><strong>Teaching tip:</strong> Let students combine sensors creatively. Example: ultrasonic sensor + servo = automatic dustbin lid, DHT11 + relay = temperature-controlled fan. These mini-projects build confidence before the main project day.</p>
+    </div>
+
+    <h2>Day 3: ESP32 — IoT and WiFi</h2>
+
+    <p>The ESP32 is the heart of modern IoT. It has dual-core processor, WiFi, Bluetooth, and plenty of GPIO pins — all for under Rs. 500.</p>
+
+    <h3>Setting Up ESP32 in Arduino IDE</h3>
+    <ul>
+      <li>Add ESP32 board URL to Preferences.</li>
+      <li>Install ESP32 board package via Boards Manager.</li>
+      <li>Select board: ESP32 Dev Module.</li>
+    </ul>
+
+    <h3>WiFi Scanner</h3>
+    <pre><code>#include &lt;WiFi.h&gt;
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.mode(WIFI_STA);
+  WiFi.disconnect();
+  delay(100);
+
+  Serial.println("Scanning WiFi networks...");
+  int n = WiFi.scanNetworks();
+  for (int i = 0; i &lt; n; i++) {
+    Serial.print(i + 1);
+    Serial.print(": ");
+    Serial.print(WiFi.SSID(i));
+    Serial.print(" (");
+    Serial.print(WiFi.RSSI(i));
+    Serial.println(" dBm)");
+  }
+}
+
+void loop() {}</code></pre>
+
+    <h3>ESP32 Web Server — Control LED from Phone</h3>
+    <pre><code>#include &lt;WiFi.h&gt;
+#include &lt;WebServer.h&gt;
+
+const char* ssid = "YourWiFi";
+const char* password = "YourPassword";
+
+WebServer server(80);
+int ledPin = 2;
+
+void handleRoot() {
+  String html = "&lt;html&gt;&lt;body&gt;";
+  html += "&lt;h1&gt;ESP32 LED Control&lt;/h1&gt;";
+  html += "&lt;a href='/on'&gt;&lt;button&gt;ON&lt;/button&gt;&lt;/a&gt;";
+  html += "&lt;a href='/off'&gt;&lt;button&gt;OFF&lt;/button&gt;&lt;/a&gt;";
+  html += "&lt;/body&gt;&lt;/html&gt;";
+  server.send(200, "text/html", html);
+}
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+  WiFi.begin(ssid, password);
+
+  server.on("/", handleRoot);
+  server.on("/on", []() { digitalWrite(ledPin, HIGH); server.send(200, "text/plain", "ON"); });
+  server.on("/off", []() { digitalWrite(ledPin, LOW); server.send(200, "text/plain", "OFF"); });
+
+  server.begin();
+}
+
+void loop() {
+  server.handleClient();
+}</code></pre>
+
+    <h3>Sending Sensor Data to Cloud</h3>
+    <p>Students learn to send sensor data to a cloud dashboard using Blynk or ThingSpeak:</p>
+    <pre><code>#include &lt;WiFi.h&gt;
+#include &lt;ThingSpeak.h&gt;
+
+WiFiClient client;
+unsigned long channelID = YOUR_CHANNEL_ID;
+const char* apiKey = "YOUR_API_KEY";
+
+void setup() {
+  WiFi.begin("SSID", "Password");
+  ThingSpeak.begin(client);
+}
+
+void loop() {
+  int sensorValue = analogRead(34);
+  ThingSpeak.setField(1, sensorValue);
+  ThingSpeak.writeFields(channelID, apiKey);
+  delay(30000); // Update every 30 sec
+}</code></pre>
+
+    <h2>Day 4: IoT Project — Smart Plant Monitoring System</h2>
+
+    <p>Students build a complete IoT project that monitors soil moisture, temperature, and humidity, and automatically waters the plant:</p>
+
+    <h3>Components</h3>
+    <ul>
+      <li>ESP32 Dev Board</li>
+      <li>Soil moisture sensor (capacitive type)</li>
+      <li>DHT11 temperature and humidity sensor</li>
+      <li>Relay module + small water pump</li>
+      <li>OLED display (128x64, I2C)</li>
+      <li>Breadboard and jumper wires</li>
+    </ul>
+
+    <h3>Working Logic</h3>
+    <ul>
+      <li>Read soil moisture every 10 seconds.</li>
+      <li>Display temperature, humidity, and moisture on OLED.</li>
+      <li>If moisture is below threshold, activate pump for 3 seconds.</li>
+      <li>Send all data to ThingSpeak cloud dashboard.</li>
+      <li>Show alerts on OLED when water level is low.</li>
+    </ul>
+
+    <pre><code>#include &lt;WiFi.h&gt;
+#include &lt;DHT.h&gt;
+#include &lt;Wire.h&gt;
+#include &lt;Adafruit_SSD1306.h&gt;
+
+DHT dht(4, DHT11);
+Adafruit_SSD1306 display(128, 64, &Wire, -1);
+int moisturePin = 34;
+int relayPin = 5;
+
+void setup() {
+  WiFi.begin("SSID", "Password");
+  pinMode(relayPin, OUTPUT);
+  dht.begin();
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+}
+
+void loop() {
+  int moisture = analogRead(moisturePin);
+  float temp = dht.readTemperature();
+  float hum = dht.readHumidity();
+
+  // Display on OLED
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setCursor(0, 0);
+  display.println("Plant Monitor");
+  display.print("Moisture: "); display.println(moisture);
+  display.print("Temp: "); display.print(temp); display.println("C");
+  display.print("Humidity: "); display.print(hum); display.println("%");
+
+  if (moisture &gt; 3000) { // Dry soil
+    digitalWrite(relayPin, HIGH); // Pump ON
+    display.println("PUMP ON");
+    delay(3000);
+    digitalWrite(relayPin, LOW); // Pump OFF
+  }
+
+  display.display();
+  delay(10000);
+}</code></pre>
+
+    <h2>Day 5: Troubleshooting and Showcase</h2>
+
+    <h3>Common Issues and Fixes</h3>
+    <pre><code>Problem                 Cause                   Fix
+Board not detected      Wrong port/driver      Install CP210x/CH340 driver
+Upload fails            Board not in flash     Hold BOOT button during upload
+mode
+Serial shows garbage    Wrong baud rate        Set to 115200 for ESP32
+WiFi not connecting     Wrong SSID/password    Check credentials, 2.4GHz only
+Sensor reading 0        Wrong pin/Wiring       Check connections, VCC/GND
+OLED blank              Wrong I2C address      Scan with i2c_scanner sketch
+Pump not activating     Relay not powered      Check relay VCC and GND</code></pre>
+
+    <h3>Project Showcase Format</h3>
+    <p>Each team presents their working project in 5 minutes:</p>
+    <ol>
+      <li>Problem statement — what does your project solve?</li>
+      <li>Circuit demo — show the hardware working live.</li>
+      <li>Code walkthrough — explain key functions.</li>
+      <li>Cloud dashboard — show real-time data (if applicable).</li>
+      <li>Challenges faced — what went wrong and how you fixed it.</li>
+    </ol>
+
+    <h2>Kit Contents</h2>
+
+    <pre><code>Workshop Kit per student:
+1 × Arduino Uno (compatible)
+1 × ESP32 Dev Board
+1 × Breadboard (830 points)
+1 × USB cable (Arduino) + 1 × Micro USB cable (ESP32)
+10 × LEDs (assorted)
+10 × Resistors (220Ω, 1kΩ, 10kΩ)
+1 × Potentiometer (10kΩ)
+2 × Push buttons
+1 × Buzzer
+1 × DHT11 sensor
+1 × HC-SR04 ultrasonic sensor
+1 × Servo motor (SG90)
+1 × Soil moisture sensor
+1 × OLED display (128x64, I2C)
+1 × Relay module (1-channel)
+1 × Small water pump
+1 × L293D motor driver
+40 × Male-male jumper wires
+20 × Male-female jumper wires
+1 × Multimeter (basic)</code></pre>
+
+    <h2>Projects Students Can Build After This Workshop</h2>
+
+    <ul>
+      <li>Smart home automation — control appliances from phone via ESP32.</li>
+      <li>Weather station — measure and upload temperature, humidity, pressure.</li>
+      <li>Smart dustbin — ultrasonic sensor + servo for automatic lid.</li>
+      <li>Water quality monitor — TDS sensor + ESP32 for real-time data.</li>
+      <li>Fire alarm system — flame sensor + buzzer + SMS alert.</li>
+      <li>Smart parking system — IR sensors + ESP32 showing slot availability.</li>
+    </ul>
+
+    <h2>Conclusion</h2>
+
+    <p>The Arduino and ESP32 combination gives students everything they need to build real-world IoT and automation projects. Arduino provides the easiest learning curve for beginners, while ESP32 opens the door to WiFi-connected, cloud-enabled devices that are in high demand in industry.</p>
+
+    <p>After this workshop, students will have the confidence to design their own embedded systems, write efficient code, and troubleshoot hardware problems — skills that are directly applicable in careers across electronics, software, and IoT.</p>
+
+    <div class="bp-tags">
+      <span>Arduino</span>
+      <span>ESP32</span>
+      <span>IoT</span>
+      <span>Workshops</span>
+      <span>Training</span>
+    </div>
+  </main>
+
+  <div id="footer"></div>
+
+</body>
+</html>

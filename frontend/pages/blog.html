@@ -69,6 +69,8 @@
     }
     .bl-tag-cloud span:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
 
+    .bl-contact-wrap { max-width: 640px; margin: 3rem auto 0; }
+
     .bl-search-wrap { margin-bottom: 1rem; }
     .bl-search-wrap input {
       width: 100%; padding: 0.7rem 1rem; border: 1px solid var(--border); border-radius: 10px;
@@ -147,24 +149,26 @@
 
     <!-- Pagination -->
     <div class="bl-pagination" id="bl-pagination"></div>
-  </main>
 
-  <!-- Contact Form -->
-  <section class="contact-intro">
-    <h2>Stay Connected</h2>
-    <p>Have questions or want to discuss a topic? We'd love to hear your thoughts. Reach out anytime.</p>
-  </section>
-  <div id="form-container"></div>
-  <script>
-    fetch("/pages/contactform.html")
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById("form-container").innerHTML = html;
-        const script = document.createElement("script");
-        script.src = "/shared/js/form-handler.js";
-        document.body.appendChild(script);
-      });
-  </script>
+    <!-- Contact Form -->
+    <div class="bl-contact-wrap">
+      <section class="contact-intro">
+        <h2>Stay Connected</h2>
+        <p>Have questions or want to discuss a topic? We'd love to hear your thoughts. Reach out anytime.</p>
+      </section>
+      <div id="form-container"></div>
+      <script>
+        fetch("/pages/contactform.html")
+          .then(res => res.text())
+          .then(html => {
+            document.getElementById("form-container").innerHTML = html;
+            const script = document.createElement("script");
+            script.src = "/shared/js/form-handler.js";
+            document.body.appendChild(script);
+          });
+      </script>
+    </div>
+  </main>
 
   <!-- Global Footer -->
   <div id="footer"></div>

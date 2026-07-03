@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/shared/js/config.js"></script>
+  <script>
+    const PAGE_CONFIG = {
+      title: 'Building a Modern Portfolio Website with Cloudflare Pages & Vanilla JS',
+      description: 'Learn how to build and deploy a fast, SEO-friendly portfolio website using vanilla HTML, CSS, and JavaScript on Cloudflare Pages — no build tools needed.',
+      canonical: '/blog/modern-portfolio-cloudflare-pages',
+    };
+  </script>
+  <script src="/shared/js/seo-injector.js"></script>
+
+  <link rel="icon" type="image/png" href="/shared/assets/img/favicon.png">
+  <link rel="stylesheet" href="/shared/css/style.css" />
+  <link rel="stylesheet" href="/shared/css/headerfooter.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <style>
+    .bp-container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+    .bp-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+    .bp-meta .bp-badge { background: var(--gradient); color: #fff; padding: 0.2rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+    .bp-container h1 { font-size: 2rem; font-weight: 800; margin: 0 0 1.5rem; color: var(--text-primary); line-height: 1.3; }
+    .bp-container h2 { font-size: 1.4rem; font-weight: 700; margin: 2rem 0 0.75rem; color: var(--text-primary); }
+    .bp-container h3 { font-size: 1.15rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    .bp-container p { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin: 0 0 1rem; }
+    .bp-container ul, .bp-container ol { color: var(--text-secondary); line-height: 1.8; margin: 0 0 1rem; padding-left: 1.5rem; }
+    .bp-container li { margin-bottom: 0.3rem; }
+    .bp-container img { max-width: 100%; border-radius: 12px; margin: 1.5rem 0; }
+    .bp-container code { background: var(--secondary-bg); padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.9em; }
+    .bp-container pre { background: var(--secondary-bg); padding: 1rem; border-radius: 10px; overflow-x: auto; border: 1px solid var(--border); margin: 1rem 0; }
+    .bp-container pre code { background: none; padding: 0; }
+    .bp-container blockquote { border-left: 4px solid var(--accent); padding: 0.5rem 1rem; margin: 1rem 0; background: var(--secondary-bg); border-radius: 0 8px 8px 0; color: var(--text-secondary); }
+    .bp-back { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); text-decoration: none; font-weight: 600; margin-bottom: 2rem; transition: var(--transition); }
+    .bp-back:hover { gap: 10px; }
+    .bp-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .bp-tags span { font-size: 0.8rem; padding: 0.3rem 0.7rem; background: var(--secondary-bg); border-radius: 20px; color: var(--text-secondary); border: 1px solid var(--border); }
+    .bp-tip { background: var(--secondary-bg); border-left: 4px solid var(--accent); padding: 1rem 1.25rem; border-radius: 0 10px 10px 0; margin: 1rem 0; }
+    .bp-tip p { margin: 0; font-size: 0.95rem; }
+
+    @media (max-width: 600px) {
+      .bp-container h1 { font-size: 1.5rem; }
+      .bp-container { padding: 1.5rem 1rem 3rem; }
+    }
+  </style>
+
+  <script src="/shared/js/headerfooter.js" defer></script>
+</head>
+<body>
+
+  <div id="header"></div>
+
+  <main class="bp-container">
+    <a href="/blog" class="bp-back"><i class="bi bi-arrow-left"></i> Back to Blog</a>
+
+    <div class="bp-meta">
+      <span><i class="bi bi-calendar3"></i> <time datetime="2026-06-10">June 10, 2026</time></span>
+      <span class="bp-badge">Web Development</span>
+    </div>
+
+    <h1>Building a Modern Portfolio Website with Cloudflare Pages &amp; Vanilla JS</h1>
+
+    <p>Your portfolio website is your digital storefront. Whether you're a freelancer, developer, designer, or business owner, a fast, well-designed portfolio can make the difference between landing a client and losing them to a competitor.</p>
+
+    <p>In this guide, we'll walk through building a complete portfolio website using nothing but vanilla HTML, CSS, and JavaScript — no frameworks, no build tools, no complicated setup. And we'll deploy it on Cloudflare Pages for free, with HTTPS, custom domain, and global CDN baked in.</p>
+
+    <h2>Why Vanilla JS + Cloudflare Pages?</h2>
+
+    <p>Modern web development often feels like a maze of frameworks, bundlers, and config files. But for a portfolio website, simplicity wins. Here's why this stack makes sense:</p>
+
+    <ul>
+      <li><strong>Zero build step</strong> — Write code, push to Git, and it's live. No npm install, no webpack, no waiting.</li>
+      <li><strong>Blazing fast</strong> — Cloudflare Pages serves static files from its global CDN. No server-side rendering delays.</li>
+      <li><strong>Free hosting</strong> — Cloudflare Pages offers generous free tier with unlimited bandwidth for static sites.</li>
+      <li><strong>SEO-friendly</strong> — Static HTML is instantly crawlable by search engines.</li>
+      <li><strong>Full control</strong> — Every line of code is yours. No framework lock-in, no bloat.</li>
+    </ul>
+
+    <h2>Step 1: Project Structure</h2>
+
+    <p>Let's start with a clean project structure that keeps things organized without overcomplicating things:</p>
+
+    <pre><code>portfolio/
+├── index.html
+├── about.html
+├── projects.html
+├── contact.html
+├── css/
+│   └── style.css
+├── js/
+│   └── main.js
+└── assets/
+    ├── images/
+    └── resume.pdf</code></pre>
+
+    <p>Each page is a standalone HTML file. Shared styles live in <code>style.css</code>, and interactivity goes in <code>main.js</code>. Simple, predictable, and easy to maintain.</p>
+
+    <h2>Step 2: Building the Layout</h2>
+
+    <p>We'll use a mobile-first approach with CSS custom properties for theming. Here's the foundation:</p>
+
+    <pre><code>:root {
+  --primary: #2563eb;
+  --dark: #0f172a;
+  --light: #f8fafc;
+  --gray: #64748b;
+  --border: #e2e8f0;
+  --shadow: 0 4px 14px rgba(0,0,0,0.08);
+  --radius: 12px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--dark);
+  background: var(--light);
+  line-height: 1.7;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}</code></pre>
+
+    <div class="bp-tip">
+      <p><strong>Tip:</strong> Use <code>system-ui</code> as the font stack. It adapts to the user's operating system font, giving a native feel on every device without loading external fonts.</p>
+    </div>
+
+    <h2>Step 3: Creating a Reusable Header and Footer</h2>
+
+    <p>Instead of repeating the same navigation code on every page, we'll use a small JavaScript snippet that loads the header and footer dynamically:</p>
+
+    <pre><code>&lt;!-- In each HTML page --&gt;
+&lt;div id="header"&gt;&lt;/div&gt;
+&lt;div id="footer"&gt;&lt;/div&gt;
+
+&lt;script src="js/main.js" defer&gt;&lt;/script&gt;</code></pre>
+
+    <pre><code>// main.js
+fetch('components/header.html')
+  .then(r => r.text())
+  .then(html => document.getElementById('header').innerHTML = html);
+
+fetch('components/footer.html')
+  .then(r => r.text())
+  .then(html => document.getElementById('footer').innerHTML = html);</code></pre>
+
+    <p>This keeps your navigation and footer in one place. Update it once, and every page reflects the change.</p>
+
+    <h2>Step 4: Designing the Hero Section</h2>
+
+    <p>The hero is the first thing visitors see. Keep it clean and focused:</p>
+
+    <pre><code>&lt;section class="hero"&gt;
+  &lt;h1&gt;Hi, I'm Alex&lt;/h1&gt;
+  &lt;p&gt;Full-stack developer &amp; designer&lt;/p&gt;
+  &lt;p&gt;I build fast, accessible websites and web applications.&lt;/p&gt;
+  &lt;a href="/projects" class="btn"&gt;View My Work&lt;/a&gt;
+&lt;/section&gt;</code></pre>
+
+    <pre><code>.hero {
+  padding: 6rem 1.5rem;
+  text-align: center;
+  background: linear-gradient(135deg, #0f172a, #2563eb);
+  color: white;
+  border-radius: 0 0 var(--radius) var(--radius);
+}</code></pre>
+
+    <h2>Step 5: Adding a Projects Grid</h2>
+
+    <p>Showcase your work with a responsive CSS grid. No frameworks needed:</p>
+
+    <pre><code>.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.project-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}</code></pre>
+
+    <p>The <code>auto-fit</code> and <code>minmax()</code> combination ensures the grid automatically adjusts from 3 columns on desktop to 1 column on mobile — no media queries required.</p>
+
+    <h2>Step 6: Deploying to Cloudflare Pages</h2>
+
+    <p>Cloudflare Pages makes deployment incredibly simple. Here's how:</p>
+
+    <ol>
+      <li><strong>Push your code to GitHub</strong> — Create a repository and push your project.</li>
+      <li><strong>Log in to Cloudflare Pages</strong> — Go to the Cloudflare dashboard and click Pages.</li>
+      <li><strong>Connect your Git provider</strong> — Authorize Cloudflare to access your repository.</li>
+      <li><strong>Configure build settings</strong> — Set the build command to empty (no build step) and publish directory to <code>/</code> (or your project root).</li>
+      <li><strong>Deploy</strong> — Click "Deploy" and your site will be live in under a minute.</li>
+    </ol>
+
+    <pre><code># Cloudflare Pages configuration
+Build command: (none)
+Publish directory: /
+Root directory: /</code></pre>
+
+    <div class="bp-tip">
+      <p><strong>Pro tip:</strong> Add a <code>_redirects</code> file in your publish root to enable clean URLs. For example: <code>/about /about.html 200</code> turns <code>/about.html</code> into <code>/about</code>.</p>
+    </div>
+
+    <h2>Step 7: Adding a Custom Domain</h2>
+
+    <p>Cloudflare Pages lets you add a custom domain with one click:</p>
+
+    <ul>
+      <li>Go to your project in the Cloudflare dashboard.</li>
+      <li>Click "Custom domains" and enter your domain (e.g., <code>alex.dev</code>).</li>
+      <li>Cloudflare automatically provisions an SSL certificate and sets up DNS.</li>
+      <li>HTTPS is enabled automatically and redirects from HTTP to HTTPS are handled for you.</li>
+    </ul>
+
+    <h2>Step 8: Performance Optimization</h2>
+
+    <p>A portfolio website should load in under 2 seconds. Here's how to keep it fast:</p>
+
+    <ul>
+      <li><strong>Optimize images</strong> — Use WebP format and compress to under 100KB per image.</li>
+      <li><strong>Minimize CSS and JS</strong> — Remove unused styles and whitespace. Cloudflare can auto-minify for you.</li>
+      <li><strong>Lazy load images</strong> — Add <code>loading="lazy"</code> to images below the fold.</li>
+      <li><strong>Keep it simple</strong> — Every external script or font is a network request. Question each dependency.</li>
+    </ul>
+
+    <pre><code>&lt;!-- Lazy loading example --&gt;
+&lt;img src="project-thumbnail.webp" alt="Project screenshot" loading="lazy"&gt;</code></pre>
+
+    <h2>Conclusion</h2>
+
+    <p>Building a portfolio website doesn't require a complex framework or a build pipeline. With vanilla HTML, CSS, and JavaScript, you can create a fast, beautiful, and maintainable site that loads instantly and ranks well on search engines.</p>
+
+    <p>Cloudflare Pages handles the hosting, CDN, HTTPS, and deployment pipeline for free — letting you focus on what matters most: showcasing your work and attracting clients.</p>
+
+    <p>Ready to build yours? Start with a single <code>index.html</code> file, add your content, push to Git, and deploy. Your portfolio could be live in under an hour.</p>
+
+    <div class="bp-tags">
+      <span>HTML</span>
+      <span>CSS</span>
+      <span>JavaScript</span>
+      <span>Cloudflare</span>
+    </div>
+  </main>
+
+  <div id="footer"></div>
+
+</body>
+</html>

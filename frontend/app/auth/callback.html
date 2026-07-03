@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Redirecting... - Aarti Tech Services</title>
+  <script src="/shared/js/config.js"></script>
+  <link rel="stylesheet" href="/shared/css/style.css" />
+  <link rel="stylesheet" href="/shared/css/auth.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/config/supabase.js"></script>
+  <script src="/shared/js/auth.js"></script>
+  <style>
+    .callback-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--secondary-bg);
+    }
+    .callback-card {
+      text-align: center;
+      background: var(--card-bg);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      max-width: 400px;
+    }
+    .callback-card .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: authSpin 0.6s linear infinite;
+      margin: 0 auto 16px;
+    }
+    .callback-card p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="callback-page">
+    <div class="callback-card">
+      <div class="spinner"></div>
+      <p>Completing authentication...</p>
+    </div>
+  </div>
+
+  <script>
+    (async () => {
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+      const queryParams = new URLSearchParams(window.location.search);
+      const type = queryParams.get('type') || hashParams.get('type');
+
+      const { data, error } = await SUPABASE.auth.getSession();
+
+      if (error) {
+        console.error('Auth callback error:', error);
+        window.location.href = '/login?error=auth_failed';
+        return;
+      }
+
+      if (type === 'recovery' || data?.session) {
+        window.location.href = '/reset-password?type=recovery';
+      } else if (data?.session) {
+        window.location.href = '/dashboard';
+      } else {
+        const redirectTo = queryParams.get('redirect') || '/dashboard';
+        window.location.href = redirectTo;
+      }
+    })();
+  </script>
+</body>
+</html>

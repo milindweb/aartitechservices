@@ -86,6 +86,18 @@
   <div id="employeeDetails"></div>
 
 <script>
+// Auth guard
+(function() {
+  try {
+    var sd = localStorage.getItem('supabase.auth.token');
+    if (!sd || !JSON.parse(sd).currentSession) {
+      window.location.href = '/login?redirect=' + encodeURIComponent(window.location.pathname);
+    }
+  } catch(e) {
+    window.location.href = '/login';
+  }
+})();
+
 // Links to published CSV exports
 const sheet1URL = "https://docs.google.com/spreadsheets/d/1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo/export?format=csv&gid=0";
 const sheet2URL = "https://docs.google.com/spreadsheets/d/1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo/export?format=csv&gid=378290522";

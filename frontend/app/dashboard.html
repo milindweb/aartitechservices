@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Dashboard - Aarti Tech Services</title>
+  <script src="/shared/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Dashboard', description: 'User dashboard for Aarti Tech Services', canonical: '/dashboard', brandTitle: false };</script>
+  <script src="/shared/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="/shared/css/style.css" />
+  <link rel="stylesheet" href="/shared/css/headerfooter.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/config/supabase.js"></script>
+  <script src="/shared/js/headerfooter.js" defer></script>
+  <script src="/shared/js/auth.js"></script>
+  <style>
+    .dashboard {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .dashboard-header h1 {
+      font-size: 1.6rem;
+      color: var(--text-primary);
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .user-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .user-details h3 {
+      font-size: 0.95rem;
+      color: var(--text-primary);
+    }
+    .user-details span {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+    .logout-btn {
+      padding: 8px 18px;
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .logout-btn:hover {
+      background: rgba(220, 38, 38, 0.08);
+      border-color: #dc2626;
+      color: #dc2626;
+    }
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    .module-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+    .module-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+    .module-card .icon {
+      font-size: 1.6rem;
+      margin-bottom: 12px;
+      color: var(--accent);
+    }
+    .module-card h3 {
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+    .module-card p {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+    @media (max-width: 600px) {
+      .dashboard-header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+
+  <div class="dashboard">
+    <div class="dashboard-header">
+      <h1>Dashboard</h1>
+      <div id="userSection">
+        <div class="user-info">
+          <div id="userAvatar" class="user-avatar">U</div>
+          <div class="user-details">
+            <h3 id="userName">Loading...</h3>
+            <span id="userRole">Loading...</span>
+          </div>
+          <button class="logout-btn" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-grid" id="moduleGrid">
+      <a href="/app/seniority" class="module-card">
+        <div class="icon"><i class="fas fa-ranking-star"></i></div>
+        <h3>Seniority Manager</h3>
+        <p>Track employee seniority and promotions</p>
+      </a>
+      <a href="/blog" class="module-card">
+        <div class="icon"><i class="fas fa-blog"></i></div>
+        <h3>Blog</h3>
+        <p>Read and manage blog posts</p>
+      </a>
+      <a href="/app/profile" class="module-card" id="profileCard">
+        <div class="icon"><i class="fas fa-user-cog"></i></div>
+        <h3>Profile Settings</h3>
+        <p>Update your account information</p>
+      </a>
+      <a href="/" class="module-card">
+        <div class="icon"><i class="fas fa-globe"></i></div>
+        <h3>Website</h3>
+        <p>Go to the public homepage</p>
+      </a>
+    </div>
+  </div>
+
+  <div id="footer"></div>
+
+  <script>
+    (async () => {
+      const session = await AUTH.requireAuth();
+      if (!session) return;
+
+      const user = await AUTH.getUser();
+      if (!user) {
+        window.location.href = '/login';
+        return;
+      }
+
+      const name = user.profile?.full_name || user.email?.split('@')[0] || 'User';
+      const role = user.profile?.role || 'user';
+      const initial = name.charAt(0).toUpperCase();
+
+      document.getElementById('userName').textContent = name;
+      document.getElementById('userRole').textContent = role.charAt(0).toUpperCase() + role.slice(1);
+      document.getElementById('userAvatar').textContent = initial;
+    })();
+
+    async function handleLogout() {
+      await AUTH.signOut();
+    }
+  </script>
+</body>
+</html>

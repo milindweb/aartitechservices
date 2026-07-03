@@ -9,8 +9,10 @@ const SITE_CONFIG = {
     copyright: '\u00A9 2026 AartiTechServices. All rights reserved.',
   },
 
-  domain: 'mk9.in',
-  url: 'https://mk9.in',
+  domain: 'aartitechsevices.pages.dev',
+  url: 'https://aartitechsevices.pages.dev',
+  primaryDomain: 'mk9.in',
+  primaryUrl: 'https://mk9.in',
 
   contact: {
     phone: '+91-9869787575',

@@ -1,5 +1,35 @@
 # Changelog
 
+## v1.2.0 — 2026-07-03 — Supabase Auth system with login, register, password reset, and dashboard
+
+### Added
+- `frontend/config/supabase.js` — Supabase client initialization with anon key
+- `frontend/shared/js/auth.js` — Auth module: signIn, signUp, signOut, resetPassword, getUser, getUserRole, requireAuth, onAuthChange
+- `frontend/shared/css/auth.css` — Auth page styles (cards, forms, alerts, spinners, password toggle)
+- `frontend/app/auth/login.html` — Email/password login with redirect support
+- `frontend/app/auth/register.html` — Registration with name, email, phone, password (min 6 chars), terms checkbox
+- `frontend/app/auth/reset-password.html` — Two-step: request reset link → set new password
+- `frontend/app/auth/callback.html` — Handles Supabase Auth redirects (email confirmation, password reset)
+- `frontend/app/auth/SETUP.md` — Auth system setup guide
+- `frontend/app/dashboard.html` — Post-login dashboard with user profile avatar, role badge, module cards, logout
+- `backend/schema/auth-trigger.sql` — PostgreSQL trigger to auto-create `users_profile` on auth signup
+
+### Changed
+- `frontend/_redirects` — Added `/login`, `/register`, `/reset-password`, `/auth/callback`, `/dashboard` clean URLs
+- `frontend/shared/components/header.html` — Added dynamic SIGN IN / DASHBOARD nav link (desktop + mobile)
+- `frontend/shared/js/headerfooter.js` — Nav link dynamically updates based on Supabase session in localStorage
+- `frontend/shared/js/config.js` — Default domain changed to `aartitechsevices.pages.dev` (permanent), mk9.in kept as `primaryDomain`
+- `frontend/services/blogService.js` — Switched from ES module import to global `SUPABASE` object
+- `frontend/app/seniority/seniority-list.html` — Added auth guard (redirects to `/login` if unauthenticated)
+- `frontend/app/seniority/seniority-management.html` — Added auth guard
+- `supabase/config.toml` — site_url set to `aartitechsevices.pages.dev`, redirect URLs configured for both domains + localhost
+
+### Documentation
+- `structure.md` — added auth files, updated architecture, redirects, diagram, and config sections
+- `CHANGELOG.md` — added this entry
+
+---
+
 ## v1.1.0 — 2026-07-03 — Static blog engine with 20 posts
 
 ### Added

@@ -42,15 +42,19 @@ Multi-service business portal with static HTML/CSS/JS frontend, Supabase backend
 │   │       ├── electrical.html
 │   │       └── automotive.html
 │   ├── app/               # Login-required (noindex)
+│   │   ├── auth/          # Login, register, password-reset, callback pages
+│   │   ├── dashboard.html # Post-login dashboard
 │   │   └── seniority/     # Seniority management
 │   ├── shared/            # Shared components, CSS, JS, assets
 │   │   ├── components/    # header.html, footer.html
-│   │   ├── css/           # style.css, headerfooter.css, nadstyle.css
-│   │   ├── js/            # config.js, seo-injector.js, headerfooter.js, blog.js, form-handler.js
+│   │   ├── css/           # style.css, headerfooter.css, auth.css, nadstyle.css
+│   │   ├── js/            # config.js, seo-injector.js, headerfooter.js, auth.js, blog.js, form-handler.js
 │   │   └── assets/img/    # Logo, favicon, OG image, icons
+│   ├── config/            # Runtime config
+│   │   └── supabase.js    # Supabase client initialization
 │   └── services/          # API service classes
 ├── backend/               # Database schema & configuration
-│   ├── schema/            # schema.sql, rls-policies.sql, database-design.md
+│   ├── schema/            # schema.sql, rls-policies.sql, auth-trigger.sql, database-design.md
 │   └── seed/              # seed.sql
 ├── supabase/
 │   └── functions/         # Edge Functions
@@ -67,6 +71,10 @@ Multi-service business portal with static HTML/CSS/JS frontend, Supabase backend
 - **Dynamic SEO Injection** — titles, meta, OG/Twitter tags, JSON-LD generated from config at runtime
 - **Blog System** — static JSON-driven engine with search, category/tag filtering, pagination, and clean `/blog/:slug` URLs
 - **Seniority Management** module with CSV/Excel/PDF export
+- **Authentication** — Supabase Auth with email/password login, registration, password reset, auth callback handling, and session management
+- **User Dashboard** — post-login landing page with user profile info, role badge, and module navigation
+- **Auth Guard** — protected pages redirect unauthenticated users to login
+- **Auth-Aware Navigation** — header dynamically shows SIGN IN or DASHBOARD based on session
 - **Contact Form** integrated with Google Apps Script, dynamically loaded per-page (no labels, placeholders only)
 - **Shared component classes** (`p-*`) in `style.css` — consistent dark gradient hero, white cards, blue gradient icons across all service pages
 - **Dark/Light Theme** toggle with localStorage persistence
@@ -78,15 +86,16 @@ Multi-service business portal with static HTML/CSS/JS frontend, Supabase backend
 - Hospital management (departments, doctors, appointments)
 - Society management (groups, members, events)
 - Admin panel (settings, audit logs, user management)
-- Authentication (login, register, password reset)
-- Additional Supabase Edge Functions (auth, comments, hospital, society, etc.)
+- Additional Supabase Edge Functions (comments, hospital, society, etc.)
 - Automated sitemap generation
 
 ## Getting Started
 
 1. Clone the repo
 2. Edit `frontend/shared/js/config.js` with your brand name, domain, and contact info
-3. Configure `backend/.env.example` with your Supabase project credentials
-4. Run `backend/schema/schema.sql` against your Supabase database
-5. Deploy the `frontend/` directory to Cloudflare Pages
-6. Deploy Edge Functions from `supabase/functions/`
+3. Configure `frontend/config/supabase.js` with your Supabase project URL and anon key
+4. Configure `backend/.env.example` with your Supabase project credentials
+5. Run `backend/schema/schema.sql` and `backend/schema/auth-trigger.sql` against your Supabase database
+6. Deploy the `frontend/` directory to Cloudflare Pages
+7. Deploy Edge Functions from `supabase/functions/`
+8. Set `site_url` and redirect URLs in Supabase Auth settings

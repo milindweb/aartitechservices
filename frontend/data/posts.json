@@ -81,13 +81,13 @@
   },
   {
     "id": "ats-012",
-    "title": "Hands-On Electronics Workshop for Engineering Students",
-    "slug": "electronics-workshop-students",
-    "date": "2026-03-18",
+    "title": "Hands on Arduino ESP32 Workshop",
+    "slug": "arduino-esp32-workshop",
+    "date": "2026-07-05",
     "category": "Training & Workshops",
-    "tags": ["Workshops", "Training", "Electronics", "Students"],
-    "excerpt": "A look at our recent hands-on electronics workshop covering Arduino, sensors, PCB design, and real-world project building for engineering students.",
-    "url": "/blog/electronics-workshop-students"
+    "tags": ["Arduino", "ESP32", "IoT", "Workshops", "Training"],
+    "excerpt": "A comprehensive hands-on workshop covering Arduino programming, ESP32 IoT projects, sensor interfacing, and real-world embedded system development.",
+    "url": "/blog/arduino-esp32-workshop"
   },
   {
     "id": "ats-013",
@@ -148,5 +148,25 @@
     "tags": ["Tools", "Productivity", "Business", "Software"],
     "excerpt": "A curated list of essential digital tools for small businesses — project management, accounting, CRM, communication, and marketing automation.",
     "url": "/blog/digital-tools-small-business-2026"
+  },
+  {
+    "id": "ats-019",
+    "title": "Why Internships Are No Longer Optional: A Guide to Maharashtra\u2019s Engineering & Diploma Rules",
+    "slug": "internship-rules-maharashtra-engineering",
+    "date": "2026-07-06",
+    "category": "Learning & Innovation",
+    "tags": ["Internship", "MSBTE", "AICTE", "Engineering", "Diploma", "Maharashtra"],
+    "excerpt": "Complete guide to mandatory internship rules for Maharashtra engineering degree and polytechnic diploma students under NEP and K-Scheme — duration, credits, compliance.",
+    "url": "/blog/internship-rules-maharashtra-engineering"
+  },
+  {
+    "id": "ats-020",
+    "title": "Ready-to-Submit Projects for Engineering, Diploma, BSc & BCA Students",
+    "slug": "readymade-projects-all-branches",
+    "date": "2026-07-07",
+    "category": "Learning & Innovation",
+    "tags": ["Projects", "Mini Projects", "Engineering", "BCA", "BSc", "Diploma", "Reports", "Final Year"],
+    "excerpt": "Get complete ready-to-submit projects for Electrical, Electronics, Computer, Instrumentation, Mechanical, AI branches — with reports, PPT, and viva support.",
+    "url": "/blog/readymade-projects-all-branches"
   }
 ]

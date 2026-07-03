@@ -25,8 +25,12 @@
 /partners/electrical      /pages/partners/electrical.html                                 200
 /partners/automotive      /pages/partners/automotive.html                                 200
 
-# Login
-/login               /app/seniority/seniority-list.html                                     200
+# Auth pages
+/login               /app/auth/login.html                                                   200
+/register            /app/auth/register.html                                                200
+/reset-password      /app/auth/reset-password.html                                          200
+/auth/callback       /app/auth/callback.html                                                200
+/dashboard           /app/dashboard.html                                                    200
 
 # Seniority
 /app/seniority           /app/seniority/seniority-list.html                                    200
@@ -64,13 +68,15 @@
 /blog/industrial-electrical-maintenance       /blog/posts/industrial-electrical-maintenance.html       200
 /blog/automotive-diagnostics-guide            /blog/posts/automotive-diagnostics-guide.html            200
 /blog/chatgpt-business-ai                     /blog/posts/chatgpt-business-ai.html                     200
-/blog/electronics-workshop-students           /blog/posts/electronics-workshop-students.html           200
+/blog/arduino-esp32-workshop                  /blog/posts/arduino-esp32-workshop.html                  200
 /blog/engineering-project-ideas-final-year     /blog/posts/engineering-project-ideas-final-year.html     200
 /blog/industrial-training-college-industry     /blog/posts/industrial-training-college-industry.html     200
 /blog/pcb-design-workshop                      /blog/posts/pcb-design-workshop.html                      200
 /blog/workplace-safety-small-business           /blog/posts/workplace-safety-small-business.html           200
 /blog/build-professional-network-freelancer     /blog/posts/build-professional-network-freelancer.html     200
 /blog/digital-tools-small-business-2026         /blog/posts/digital-tools-small-business-2026.html         200
+/blog/internship-rules-maharashtra-engineering    /blog/posts/internship-rules-maharashtra-engineering.html  200
+/blog/readymade-projects-all-branches             /blog/posts/readymade-projects-all-branches.html           200
 
 # Catch site assets
 # /assets/*               /assets/:splat                                            200

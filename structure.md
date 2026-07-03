@@ -2,14 +2,14 @@
 
 ## Architecture
 
-Frontend : Cloudflare Pages + mk9.in
+Frontend : Cloudflare Pages (aartitechsevices.pages.dev / mk9.in)
 Backend  : Supabase Edge Functions (JavaScript/TypeScript)
 Database : Supabase PostgreSQL (via `backend/schema/`)
 Storage  : Supabase Storage (via client SDK)
-Auth     : Supabase Auth (Login / Registration / Forgot Password / Reset Password)
+Auth     : Supabase Auth (Login / Registration / Forgot Password / Reset Password) ✅
 
 ## Repository
-Local only — no remote configured
+GitHub: https://github.com/milindweb/aartitechservices.git
 
 ## Future Subdomains
 
@@ -52,6 +52,10 @@ mk9/
 │   ├── sitemap.xml                  ↤ XML sitemap (manual updates required)
 │   ├── index.html                   ⭐ SEO — fully indexed
 │   │
+│   ├── config/
+│   │   │
+│   │   └── supabase.js              ↤ Supabase client init (URL + anon key)
+│   │
 │   ├── data/
 │   │   │
 │   │   └── posts.json               ⭐ Blog posts data (JSON-driven)
@@ -83,11 +87,20 @@ mk9/
 │   │       ├── electrical.html
 │   │       └── automotive.html
 │   │
-│   ├── app/                         ⭐ Login required — NOINDEX, NOFOLLOW
+│       ├── app/                         ⭐ Login required — NOINDEX, NOFOLLOW
+│   │   │
+│   │   ├── auth/                    ↤ Authentication pages
+│   │   │   ├── login.html
+│   │   │   ├── register.html
+│   │   │   ├── reset-password.html
+│   │   │   ├── callback.html        ↤ Handles Supabase Auth redirects
+│   │   │   └── SETUP.md             ↤ Auth setup guide
+│   │   │
+│   │   ├── dashboard.html           ⭐ Post-login landing page
 │   │   │
 │   │   └── seniority/
-│   │       ├── seniority-list.html
-│   │       └── seniority-management.html
+│   │       ├── seniority-list.html       ↤ Auth-guarded
+│   │       └── seniority-management.html ↤ Auth-guarded
 │   │
 │   ├── shared/
 │   │   │
@@ -98,12 +111,14 @@ mk9/
 │   │   ├── css/
 │   │   │   ├── style.css             # Shared base styles
 │   │   │   ├── headerfooter.css
+│   │   │   ├── auth.css              # Auth page styles (cards, forms, alerts, spinner)
 │   │   │   └── nadstyle.css
 │   │   │
-│   │   ├── js/
+│   │   │   ├── js/
 │   │   │   ├── config.js             # Centralized site config (brand, domain, contact, social)
 │   │   │   ├── seo-injector.js       # Reads config + PAGE_CONFIG; injects meta/OG/Twitter/JSON-LD
-│   │   │   ├── headerfooter.js       # Loads header/footer HTML + replaces {{PLACEHOLDERS}}
+│   │   │   ├── headerfooter.js       # Loads header/footer HTML + replaces {{PLACEHOLDERS}}; auth-aware nav
+│   │   │   ├── auth.js               # Auth module — signIn, signUp, signOut, requireAuth, getUser, getUserRole
 │   │   │   ├── blog.js               ⭐ Blog engine — search, categories, tags, pagination
 │   │   │   └── form-handler.js
 │   │   │
@@ -123,7 +138,9 @@ mk9/
 │   │   │
 │   │   └── blogService.js
 │   │
-│   └── config/                      (empty — reserved for future use)
+│   └── config/                      ↤ Runtime configuration
+│       │
+│       └── supabase.js              ↤ Supabase client (URL + anon key)
 │
 ├── backend/
 │   │
@@ -132,7 +149,8 @@ mk9/
 │   ├── schema/
 │   │   ├── schema.sql
 │   │   ├── database-design.md
-│   │   └── rls-policies.sql
+│   │   ├── rls-policies.sql
+│   │   └── auth-trigger.sql          ↤ Auto-create users_profile on signup
 │   │
 │   ├── seed/
 │   │   └── seed.sql
@@ -217,6 +235,15 @@ Blog (dynamic listing + clean URLs):
 /blog/:slug               /blog/posts/:slug.html                                             200
 ```
 
+Auth (clean URL rewrites):
+```
+/login               /app/auth/login.html                                                   200
+/register            /app/auth/register.html                                                200
+/reset-password      /app/auth/reset-password.html                                          200
+/auth/callback       /app/auth/callback.html                                                200
+/dashboard           /app/dashboard.html                                                    200
+```
+
 Seniority (clean URL rewrites):
 ```
 /app/seniority           /app/seniority/seniority-list.html                                 200
@@ -260,10 +287,10 @@ Legacy redirects (301):
             │     /         │         │    /app/      │
             │  (SEO: ✓)     │         │ (noindex)     │
             │               │         │               │
-            │ index.html    │         │ seniority/    │
-            │ pages/        │         │               │
-            │ expertise/    │         │               │
-            │ partners/     │         │               │
+             │ index.html    │         │ auth/          │
+             │ pages/        │         │ dashboard.html │
+             │ expertise/    │         │ seniority/     │
+             │ partners/     │         │               │
             └───────────────┘         └───────────────┘
 ```
 
@@ -294,6 +321,17 @@ Legacy redirects (301):
 
 ### Frontend Config
 - **frontend/shared/js/config.js** — All site config (brand, domain, contact, social)
+- **frontend/config/supabase.js** — Supabase client initialization (URL + anon key)
+
+### Auth System
+- **Supabase Auth** — Email/password authentication with session management
+- **frontend/shared/js/auth.js** — Auth module: `signIn`, `signUp`, `signOut`, `resetPassword`, `requireAuth`, `getUser`, `getUserRole`
+- **frontend/shared/css/auth.css** — Auth page styles
+- **frontend/app/auth/** — Login, register, reset-password, callback pages
+- **frontend/app/dashboard.html** — Post-login dashboard with user profile and module links
+- **backend/schema/auth-trigger.sql** — PostgreSQL trigger to auto-create `users_profile` on signup
+- **Auth guard** — Seniority pages and dashboard redirect unauthenticated users to `/login`
+- **Auth-aware nav** — Header dynamically shows SIGN IN or DASHBOARD based on session
 
 ### Backend Schema
 - **backend/schema/schema.sql** — Core tables, indexes, RLS policies

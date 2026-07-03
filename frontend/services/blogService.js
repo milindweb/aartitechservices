@@ -2,9 +2,7 @@
 // Frontend service for consuming blog-related APIs and functions
 // Path: frontend/services/blogService.js
 
-import { supabase } from '../config/supabase';
-
-const API_BASE = process.env.API_BASE_URL || 'http://localhost:3000/api';
+const supabase = typeof SUPABASE !== 'undefined' ? SUPABASE : null;
 
 class BlogService {
   // ============================================================

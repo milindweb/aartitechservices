@@ -540,6 +540,18 @@
     </div>
 
     <script>
+        // Auth guard
+        (function() {
+          try {
+            var sd = localStorage.getItem('supabase.auth.token');
+            if (!sd || !JSON.parse(sd).currentSession) {
+              window.location.href = '/login?redirect=' + encodeURIComponent(window.location.pathname);
+            }
+          } catch(e) {
+            window.location.href = '/login';
+          }
+        })();
+
         // Configuration
         const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo/export?format=csv";
         
