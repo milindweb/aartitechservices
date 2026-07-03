@@ -59,6 +59,13 @@
         <a href="/register">Create an account</a> &middot;
         <a href="/reset-password">Forgot password?</a>
       </div>
+
+      <div class="auth-divider">OR</div>
+
+      <button class="auth-btn auth-btn-google" id="googleLoginBtn" onclick="handleGoogleSignIn()">
+        <i class="fab fa-google"></i>
+        <span class="btn-text">Sign in with Google</span>
+      </button>
     </div>
   </div>
 
@@ -91,6 +98,14 @@
         btn.disabled = false;
       }
     });
+
+    async function handleGoogleSignIn() {
+      try {
+        await AUTH.signInWithGoogle();
+      } catch (err) {
+        showError(err.message || 'Google sign-in failed');
+      }
+    }
 
     function togglePassword(id, btn) {
       const input = document.getElementById(id);

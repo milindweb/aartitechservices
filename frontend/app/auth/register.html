@@ -75,12 +75,27 @@
       <div class="auth-links">
         Already have an account? <a href="/login">Sign in</a>
       </div>
+
+      <div class="auth-divider">OR</div>
+
+      <button class="auth-btn auth-btn-google" id="googleRegisterBtn" onclick="handleGoogleSignIn()">
+        <i class="fab fa-google"></i>
+        <span class="btn-text">Sign up with Google</span>
+      </button>
     </div>
   </div>
 
   <div id="footer"></div>
 
   <script>
+    async function handleGoogleSignIn() {
+      try {
+        await AUTH.signInWithGoogle();
+      } catch (err) {
+        showError(err.message || 'Google sign-in failed');
+      }
+    }
+
     document.getElementById('registerForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = document.getElementById('registerBtn');

@@ -207,6 +207,21 @@
   margin-top: 2px;
 }
 
+.auth-btn-google {
+  background: var(--primary-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.auth-btn-google:hover {
+  background: var(--secondary-bg);
+  opacity: 1;
+}
+
+.auth-btn-google i {
+  font-size: 1.1rem;
+}
+
 @media (max-width: 480px) {
   .auth-card { padding: 28px 20px; }
 }

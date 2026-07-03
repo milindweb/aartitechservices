@@ -37,6 +37,17 @@ const AUTH = {
     return data;
   },
 
+  async signInWithGoogle() {
+    const { data, error } = await SUPABASE.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
+    if (error) throw error;
+    return data;
+  },
+
   async signUp(email, password, metadata = {}) {
     const { data, error } = await SUPABASE.auth.signUp({
       email: email.trim().toLowerCase(),
