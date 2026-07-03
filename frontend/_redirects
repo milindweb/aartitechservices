@@ -10,6 +10,8 @@
 /contact           /pages/contact.html                                   200
 /blog              /pages/blog.html                                      200
 /links             /pages/links.html                                     200
+/terms             /pages/terms.html                                      200
+/privacy           /pages/privacy.html                                    200
 
 # Expertise pages
 /expertise/digital-engineering     /pages/expertise/digital-engineering.html               200
