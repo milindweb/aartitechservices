@@ -52,7 +52,7 @@ const AUTH = {
   async signOut() {
     const { error } = await SUPABASE.auth.signOut();
     if (error) throw error;
-    window.location.href = '/login';
+    window.location.href = '/';
   },
 
   async resetPassword(email) {
