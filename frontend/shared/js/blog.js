@@ -22,8 +22,38 @@
     .then(function (data) {
       allPosts = data.sort(function (a, b) { return new Date(b.date) - new Date(a.date); });
       filteredPosts = allPosts.slice();
+
+      // Apply URL params if present
+      var params = new URLSearchParams(window.location.search);
+      var catParam = params.get('category');
+      var tagParam = params.get('tag');
+      var searchParam = params.get('search');
+
+      if (catParam) {
+        filteredPosts = allPosts.filter(function (p) { return p.category === catParam; });
+      } else if (tagParam) {
+        filteredPosts = allPosts.filter(function (p) { return p.tags && p.tags.indexOf(tagParam) !== -1; });
+      } else if (searchParam) {
+        var q = searchParam.toLowerCase();
+        filteredPosts = allPosts.filter(function (p) {
+          return p.title.toLowerCase().indexOf(q) !== -1 ||
+            (p.excerpt && p.excerpt.toLowerCase().indexOf(q) !== -1) ||
+            (p.tags && p.tags.join(' ').toLowerCase().indexOf(q) !== -1);
+        });
+      }
+
       render();
       renderSidebar();
+
+      // Highlight active filter category in sidebar
+      if (catParam && containers.categories) {
+        containers.categories.querySelectorAll('a').forEach(function (a) {
+          if (a.dataset.blCat === catParam) {
+            a.style.fontWeight = '700';
+            a.style.color = 'var(--accent)';
+          }
+        });
+      }
     })
     .catch(function () {
       containers.posts.innerHTML = '<p style="text-align:center;color:var(--text-secondary);padding:2rem;">No posts yet.</p>';
@@ -77,7 +107,7 @@
     containers.categories.innerHTML = '';
     sortedCats.forEach(function (cat) {
       var li = document.createElement('li');
-      li.innerHTML = '<a href="#" data-bl-cat="' + escapeHtml(cat) + '">' + escapeHtml(cat) + ' <span class="bl-count">(' + categories[cat] + ')</span></a>';
+      li.innerHTML = '<a href="/blog?category=' + encodeURIComponent(cat) + '" data-bl-cat="' + escapeHtml(cat) + '">' + escapeHtml(cat) + ' <span class="bl-count">(' + categories[cat] + ')</span></a>';
       containers.categories.appendChild(li);
     });
 
@@ -100,17 +130,30 @@
 
     containers.categories.addEventListener('click', function (e) {
       var cat = e.target.closest('[data-bl-cat]');
-      if (cat) { e.preventDefault(); filterByCategory(cat.dataset.blCat); }
+      if (cat) {
+        e.preventDefault();
+        filterByCategory(cat.dataset.blCat);
+        history.pushState(null, '', '/blog?category=' + encodeURIComponent(cat.dataset.blCat));
+      }
     });
 
     containers.tags.addEventListener('click', function (e) {
       var tag = e.target.closest('[data-tag]');
-      if (tag) filterByTag(tag.dataset.tag);
+      if (tag) {
+        filterByTag(tag.dataset.tag);
+        history.pushState(null, '', '/blog?tag=' + encodeURIComponent(tag.dataset.tag));
+      }
     });
 
     if (containers.search) {
       containers.search.addEventListener('input', function () {
         filterBySearch(containers.search.value.trim().toLowerCase());
+        var q = containers.search.value.trim();
+        if (q) {
+          history.pushState(null, '', '/blog?search=' + encodeURIComponent(q));
+        } else {
+          history.pushState(null, '', '/blog');
+        }
       });
     }
   }
