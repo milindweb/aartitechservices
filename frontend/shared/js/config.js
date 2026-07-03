@@ -9,8 +9,8 @@ const SITE_CONFIG = {
     copyright: '\u00A9 2026 AartiTechServices. All rights reserved.',
   },
 
-  domain: 'aartitechsevices.pages.dev',
-  url: 'https://aartitechsevices.pages.dev',
+  domain: 'aartitechservices.pages.dev',
+  url: 'https://aartitechservices.pages.dev',
   primaryDomain: 'mk9.in',
   primaryUrl: 'https://mk9.in',
   locale: 'en_IN',

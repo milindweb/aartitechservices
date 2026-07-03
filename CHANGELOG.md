@@ -38,11 +38,11 @@
 - `frontend/_redirects` — Added `/login`, `/register`, `/reset-password`, `/auth/callback`, `/dashboard` clean URLs
 - `frontend/shared/components/header.html` — Added dynamic SIGN IN / DASHBOARD nav link (desktop + mobile)
 - `frontend/shared/js/headerfooter.js` — Nav link dynamically updates based on Supabase session in localStorage
-- `frontend/shared/js/config.js` — Default domain changed to `aartitechsevices.pages.dev` (permanent), mk9.in kept as `primaryDomain`
+- `frontend/shared/js/config.js` — Default domain changed to `aartitechservices.pages.dev` (permanent), mk9.in kept as `primaryDomain`
 - `frontend/services/blogService.js` — Switched from ES module import to global `SUPABASE` object
 - `frontend/app/seniority/seniority-list.html` — Added auth guard (redirects to `/login` if unauthenticated)
 - `frontend/app/seniority/seniority-management.html` — Added auth guard
-- `supabase/config.toml` — site_url set to `aartitechsevices.pages.dev`, redirect URLs configured for both domains + localhost
+- `supabase/config.toml` — site_url set to `aartitechservices.pages.dev`, redirect URLs configured for both domains + localhost
 
 ### Documentation
 - `structure.md` — added auth files, updated architecture, redirects, diagram, and config sections

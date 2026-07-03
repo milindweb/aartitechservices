@@ -2,7 +2,7 @@
 
 ## Architecture
 
-Frontend : Cloudflare Pages (aartitechsevices.pages.dev / mk9.in)
+Frontend : Cloudflare Pages (aartitechservices.pages.dev / mk9.in)
 Backend  : Supabase Edge Functions (JavaScript/TypeScript)
 Database : Supabase PostgreSQL (via `backend/schema/`)
 Storage  : Supabase Storage (via client SDK)
