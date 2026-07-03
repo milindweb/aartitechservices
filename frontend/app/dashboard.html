@@ -138,6 +138,11 @@
         <h3>Blog</h3>
         <p>Read and manage blog posts</p>
       </a>
+      <a href="/app/admin" class="module-card" id="adminCard" style="display:none">
+        <div class="icon"><i class="fas fa-shield-halved"></i></div>
+        <h3>User Management</h3>
+        <p>Manage users and roles (Admin)</p>
+      </a>
       <a href="/app/profile" class="module-card" id="profileCard">
         <div class="icon"><i class="fas fa-user-cog"></i></div>
         <h3>Profile Settings</h3>
@@ -171,6 +176,11 @@
       document.getElementById('userName').textContent = name;
       document.getElementById('userRole').textContent = role.charAt(0).toUpperCase() + role.slice(1);
       document.getElementById('userAvatar').textContent = initial;
+
+      if (role === 'admin' || role === 'senior_admin') {
+        var adminCard = document.getElementById('adminCard');
+        if (adminCard) adminCard.style.display = '';
+      }
     })();
 
     async function handleLogout() {

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>User Management - Admin - Aarti Tech Services</title>
+  <script src="/shared/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'User Management', description: 'Manage user roles and profiles', canonical: '/app/admin', brandTitle: false };</script>
+  <script src="/shared/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="/shared/css/style.css" />
+  <link rel="stylesheet" href="/shared/css/headerfooter.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/config/supabase.js"></script>
+  <script src="/shared/js/auth.js"></script>
+  <script src="/shared/js/headerfooter.js" defer></script>
+  <style>
+    .admin-page { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+    .admin-page h1 { font-size: 1.6rem; color: var(--text-primary); margin-bottom: 8px; }
+    .admin-page .subtitle { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 24px; }
+    .admin-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 12px; padding: 24px; box-shadow: var(--shadow);
+      overflow-x: auto;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
+    th { font-weight: 600; color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; }
+    td { color: var(--text-primary); }
+    tr:last-child td { border-bottom: none; }
+    .user-avatar-sm {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--accent); color: #fff;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; margin-right: 8px;
+    }
+    .user-cell { display: flex; align-items: center; }
+    .user-cell .user-name { display: flex; flex-direction: column; }
+    .user-cell .user-name span:first-child { font-weight: 500; }
+    .user-cell .user-name span:last-child { font-size: 0.75rem; color: var(--text-secondary); }
+    select.role-select {
+      padding: 4px 8px; border: 1px solid var(--border); border-radius: 6px;
+      font-size: 0.82rem; background: var(--secondary-bg); color: var(--text-primary);
+      cursor: pointer;
+    }
+    select.role-select:focus { outline: none; border-color: var(--accent); }
+    .role-badge-sm {
+      display: inline-block; padding: 2px 8px; border-radius: 12px;
+      font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+    }
+    .role-admin { background: #e74c3c; color: #fff; }
+    .role-user { background: var(--accent); color: #fff; }
+    .role-senior_admin { background: #8e44ad; color: #fff; }
+    .role-blogger { background: #27ae60; color: #fff; }
+    .msg {
+      padding: 12px 16px; border-radius: 8px; font-size: 0.85rem;
+      margin-bottom: 16px; display: none;
+    }
+    .msg.visible { display: block; }
+    .msg-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .msg-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    .loading-row td { text-align: center; padding: 40px; color: var(--text-secondary); }
+    .back-link { display: inline-block; margin-bottom: 16px; color: var(--accent); text-decoration: none; font-size: 0.85rem; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+
+  <div class="admin-page">
+    <a href="/dashboard" class="back-link"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+    <h1>User Management</h1>
+    <p class="subtitle">View all users and manage their roles</p>
+    <div id="msg" class="msg"></div>
+    <div class="admin-card">
+      <table>
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Status</th>
+            <th>Role</th>
+            <th>Joined</th>
+          </tr>
+        </thead>
+        <tbody id="usersBody">
+          <tr class="loading-row"><td colspan="6">Loading users...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="footer"></div>
+
+  <script>
+    var currentUserId = null;
+
+    (async function() {
+      try {
+        if (typeof AUTH !== 'undefined' && AUTH.requireAuth) {
+          var session = await AUTH.requireAuth();
+          if (!session) return;
+          var user = await AUTH.getUser();
+          if (!user || user.profile?.role !== 'admin') {
+            window.location.href = '/dashboard';
+            return;
+          }
+          currentUserId = user.id;
+          await loadUsers();
+        } else {
+          window.location.href = '/login';
+        }
+      } catch (e) {
+        window.location.href = '/login';
+      }
+    })();
+
+    async function loadUsers() {
+      var tbody = document.getElementById('usersBody');
+
+      try {
+        var { data, error } = await SUPABASE
+          .from('users_profile')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+          tbody.innerHTML = '<tr class="loading-row"><td colspan="6">No users found.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = data.map(function(u) {
+          var initial = (u.full_name || u.email || 'U').charAt(0).toUpperCase();
+          var name = u.full_name || '(no name)';
+          var joined = u.created_at ? new Date(u.created_at).toLocaleDateString() : '-';
+          var disabled = u.id === currentUserId ? 'disabled' : '';
+          return '<tr>' +
+            '<td><div class="user-cell"><span class="user-avatar-sm">' + initial + '</span>' +
+            '<div class="user-name"><span>' + escapeHtml(name) + '</span></div></div></td>' +
+            '<td>' + escapeHtml(u.email || '') + '</td>' +
+            '<td>' + escapeHtml(u.phone || '-') + '</td>' +
+            '<td><span class="role-badge-sm role-' + u.status + '">' + escapeHtml(u.status) + '</span></td>' +
+            '<td>' +
+            '<select class="role-select" data-user-id="' + u.id + '" onchange="changeRole(this)" ' + disabled + '>' +
+            '  <option value="user"' + (u.role === 'user' ? ' selected' : '') + '>User</option>' +
+            '  <option value="blogger"' + (u.role === 'blogger' ? ' selected' : '') + '>Blogger</option>' +
+            '  <option value="admin"' + (u.role === 'admin' ? ' selected' : '') + '>Admin</option>' +
+            '  <option value="senior_admin"' + (u.role === 'senior_admin' ? ' selected' : '') + '>Senior Admin</option>' +
+            '</select>' +
+            (disabled ? '<div style="font-size:0.7rem;color:var(--text-secondary);margin-top:2px;">(cannot change own role)</div>' : '') +
+            '</td>' +
+            '<td>' + joined + '</td>' +
+            '</tr>';
+        }).join('');
+      } catch (err) {
+        tbody.innerHTML = '<tr class="loading-row"><td colspan="6">Error loading users: ' + escapeHtml(err.message) + '</td></tr>';
+      }
+    }
+
+    async function changeRole(select) {
+      var userId = select.getAttribute('data-user-id');
+      var newRole = select.value;
+      var oldRole = select.querySelector('option:not([selected])') ? null : null;
+      var original = select.dataset.originalRole;
+
+      select.disabled = true;
+
+      try {
+        var { error } = await SUPABASE
+          .from('users_profile')
+          .update({ role: newRole, updated_at: new Date().toISOString() })
+          .eq('id', userId);
+
+        if (error) throw error;
+
+        select.dataset.originalRole = newRole;
+        showMsg('Role updated successfully!', 'success');
+      } catch (err) {
+        select.value = select.dataset.originalRole || 'user';
+        showMsg(err.message || 'Failed to update role.', 'error');
+      } finally {
+        select.disabled = false;
+      }
+    }
+
+    function showMsg(text, type) {
+      var el = document.getElementById('msg');
+      el.textContent = text;
+      el.className = 'msg visible msg-' + type;
+      if (type === 'success') setTimeout(function() { el.classList.remove('visible'); }, 3000);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+  </script>
+</body>
+</html>
