@@ -82,3 +82,6 @@
 
 # Catch site assets
 # /assets/*               /assets/:splat                                            200
+
+# Favicon
+/favicon.ico             /shared/assets/img/favicon.png                             200

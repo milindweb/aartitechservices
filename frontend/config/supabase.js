@@ -7,8 +7,8 @@ let SUPABASE = null;
 
 function initSupabase() {
   if (SUPABASE) return SUPABASE;
-  if (typeof supabaseClient !== 'undefined') {
-    SUPABASE = supabaseClient.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey, {
+  if (typeof supabase !== 'undefined') {
+    SUPABASE = supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey, {
       auth: { autoRefreshToken: true, persistSession: true, detectSessionInUrl: true },
     });
     return SUPABASE;
@@ -17,6 +17,6 @@ function initSupabase() {
   return null;
 }
 
-if (typeof supabaseClient !== 'undefined') {
+if (typeof supabase !== 'undefined') {
   SUPABASE = initSupabase();
 }
