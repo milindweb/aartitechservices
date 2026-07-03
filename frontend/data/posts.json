@@ -1,5 +1,35 @@
 [
   {
+    "id": "ats-029",
+    "title": "Drone Regulations in India: DGCA Rules, Registration & Guidelines",
+    "slug": "drone-regulations-india-dgca",
+    "date": "2026-07-26",
+    "category": "Photography & Branding",
+    "tags": ["Drone", "DGCA", "Regulations", "DigitalSky", "India"],
+    "excerpt": "Complete guide to drone regulations in India. DGCA categories, DigitalSky registration, NPNT compliance, no-fly zones, remote pilot license, insurance, and penalties for violation.",
+    "url": "/blog/drone-regulations-india-dgca"
+  },
+  {
+    "id": "ats-028",
+    "title": "Drones for Photo & Video Shoots: Types, Features & Cost in India",
+    "slug": "drone-types-cost-india",
+    "date": "2026-07-24",
+    "category": "Photography & Branding",
+    "tags": ["Drone", "Photography", "Videography", "Aerial", "DJI"],
+    "excerpt": "Complete guide to drones for photography and videography in India. Mini, consumer, and professional drone types, DJI lineup, camera specs, approximate costs, and what to buy for your shoot.",
+    "url": "/blog/drone-types-cost-india"
+  },
+  {
+    "id": "ats-027",
+    "title": "Cameras for Photography & Videography: A Complete Buying Guide (2026)",
+    "slug": "camera-buying-guide-2026",
+    "date": "2026-07-22",
+    "category": "Photography & Branding",
+    "tags": ["Camera", "Photography", "Videography", "Buying Guide", "Mirrorless"],
+    "excerpt": "Complete guide to choosing a camera for photography and videography in 2026. DSLR vs mirrorless vs cinema cameras, sensor sizes, budget ranges from ₹30K to ₹2.5L, and best models for every need.",
+    "url": "/blog/camera-buying-guide-2026"
+  },
+  {
     "id": "ats-026",
     "title": "Building a Real-Time Task Management App with React and Node.js",
     "slug": "real-time-task-manager-react-nodejs",
