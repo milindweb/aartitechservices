@@ -71,6 +71,24 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://aartitechservices.pages.dev/blog/full-stack-beginners-guide</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aartitechservices.pages.dev/blog/build-rest-api-nodejs-postgresql</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aartitechservices.pages.dev/blog/real-time-task-manager-react-nodejs</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://aartitechservices.pages.dev/blog/gbp-optimization-navi-mumbai</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>

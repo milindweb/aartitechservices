@@ -33,10 +33,7 @@
 /reset-password      /app/auth/reset-password.html                                          200
 /auth/callback       /app/auth/callback.html                                                200
 /dashboard           /app/dashboard.html                                                    200
-/app/profile         /app/profile.html                                                      200
 /app/admin           /app/admin/users.html                                                   200
-/app/admin/users     /app/admin/users.html                                                   200
-/app/admin/audit     /app/admin/audit.html                                                   200
 
 # Seniority
 /app/seniority           /app/seniority/seniority-list.html                                    200
@@ -66,6 +63,9 @@
 /modules/seniority/pages/seniority-management     /app/seniority/seniority-management.html        301
 
 # Blog posts — clean /blog/:slug URLs
+/blog/full-stack-beginners-guide              /blog/posts/full-stack-beginners-guide.html                200
+/blog/build-rest-api-nodejs-postgresql        /blog/posts/build-rest-api-nodejs-postgresql.html          200
+/blog/real-time-task-manager-react-nodejs     /blog/posts/real-time-task-manager-react-nodejs.html       200
 /blog/gbp-optimization-navi-mumbai            /blog/posts/gbp-optimization-navi-mumbai.html            200
 /blog/zero-budget-content-marketing           /blog/posts/zero-budget-content-marketing.html           200
 /blog/seo-vs-google-ads                       /blog/posts/seo-vs-google-ads.html                       200

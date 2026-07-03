@@ -1,5 +1,35 @@
 [
   {
+    "id": "ats-026",
+    "title": "Building a Real-Time Task Management App with React and Node.js",
+    "slug": "real-time-task-manager-react-nodejs",
+    "date": "2026-07-20",
+    "category": "Full Stack Development",
+    "tags": ["React", "Node.js", "Project", "Full Stack", "Web App"],
+    "excerpt": "Complete project tutorial for building a task management app with React frontend, Node.js backend, PostgreSQL database, and real-time updates using WebSockets.",
+    "url": "/blog/real-time-task-manager-react-nodejs"
+  },
+  {
+    "id": "ats-025",
+    "title": "How to Build a REST API with Node.js, Express and PostgreSQL",
+    "slug": "build-rest-api-nodejs-postgresql",
+    "date": "2026-07-18",
+    "category": "Full Stack Development",
+    "tags": ["Node.js", "Express", "PostgreSQL", "API", "Backend"],
+    "excerpt": "Step-by-step tutorial on building a production-ready REST API using Node.js, Express, and PostgreSQL. Covers CRUD, authentication, error handling, and deployment.",
+    "url": "/blog/build-rest-api-nodejs-postgresql"
+  },
+  {
+    "id": "ats-024",
+    "title": "Full Stack Web Development: A Complete Beginner's Guide",
+    "slug": "full-stack-beginners-guide",
+    "date": "2026-07-16",
+    "category": "Full Stack Development",
+    "tags": ["Full Stack", "Web Development", "JavaScript", "React", "Node.js"],
+    "excerpt": "Learn full stack web development from scratch. Covers frontend, backend, database, API integration, and deployment. A complete roadmap for engineering students and aspiring developers.",
+    "url": "/blog/full-stack-beginners-guide"
+  },
+  {
     "id": "ats-023",
     "title": "SEO vs Google Ads: Where Should a Small Business Invest in 2026?",
     "slug": "seo-vs-google-ads",
