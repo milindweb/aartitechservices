@@ -7,6 +7,7 @@
   var desc = page.description || cfg.defaults.description;
   var canonical = page.canonical || '/';
   var fullUrl = cfg.url + canonical;
+  var isArticle = page.type === 'article' || canonical.indexOf('/blog/') === 0;
   var ogImageUrl = page.ogImage || cfg.url + cfg.ogImage;
 
   function setTag(tag, attrs, parent) {
@@ -41,16 +42,40 @@
     document.head.appendChild(link);
   }
 
+  setMeta('theme-color', '#0f172a');
+  setMeta('og:site_name', cfg.brand.name, true);
+  setMeta('og:locale', cfg.locale || 'en_US', true);
   setMeta('og:title', fullTitle, true);
   setMeta('og:description', desc, true);
-  setMeta('og:type', 'website', true);
+  setMeta('og:type', isArticle ? 'article' : 'website', true);
   setMeta('og:url', fullUrl, true);
   setMeta('og:image', ogImageUrl, true);
+
+  if (isArticle) {
+    if (page.date) setMeta('article:published_time', page.date, true);
+    if (page.author) setMeta('article:author', page.author, true);
+    if (page.tags) {
+      var tags = Array.isArray(page.tags) ? page.tags : page.tags.split(',');
+      tags.forEach(function (t) { setMeta('article:tag', t.trim(), true); });
+    }
+  }
 
   setMeta('twitter:card', 'summary_large_image');
   setMeta('twitter:title', fullTitle);
   setMeta('twitter:description', desc);
   setMeta('twitter:image', ogImageUrl);
+  if (cfg.social.twitter) {
+    var twitterHandle = cfg.social.twitter.replace(/https?:\/\/(x|twitter)\.com\//, '');
+    setMeta('twitter:site', '@' + twitterHandle);
+  }
+
+  var sameAs = [
+    cfg.social.whatsapp,
+    cfg.social.instagram,
+    cfg.social.facebook,
+    cfg.social.twitter,
+    cfg.social.linkedin
+  ].filter(function (url) { return url && url !== '#'; });
 
   var orgSchema = {
     '@context': 'https://schema.org',
@@ -65,11 +90,7 @@
       'areaServed': cfg.organization.areaServed,
       'availableLanguage': 'English'
     },
-    'sameAs': [
-      cfg.social.whatsapp,
-      cfg.social.instagram,
-      cfg.social.facebook
-    ]
+    'sameAs': sameAs
   };
 
   var breadcrumbSchema = {
@@ -79,6 +100,39 @@
       { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': cfg.url + '/' }
     ]
   };
+
+  if (isArticle) {
+    var articleSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      'headline': page.title || cfg.defaults.title,
+      'description': desc,
+      'image': ogImageUrl,
+      'datePublished': page.date || new Date().toISOString().split('T')[0],
+      'dateModified': page.modified || page.date || new Date().toISOString().split('T')[0],
+      'author': {
+        '@type': 'Organization',
+        'name': cfg.brand.name,
+        'url': cfg.url
+      },
+      'publisher': {
+        '@type': 'Organization',
+        'name': cfg.brand.name,
+        'logo': {
+          '@type': 'ImageObject',
+          'url': cfg.url + cfg.ogImage
+        }
+      },
+      'mainEntityOfPage': {
+        '@type': 'WebPage',
+        '@id': fullUrl
+      }
+    };
+    var articleScript = document.createElement('script');
+    articleScript.type = 'application/ld+json';
+    articleScript.textContent = JSON.stringify(articleSchema);
+    document.head.appendChild(articleScript);
+  }
 
   var orgScript = document.createElement('script');
   orgScript.type = 'application/ld+json';

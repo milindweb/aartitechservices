@@ -13,6 +13,7 @@ const SITE_CONFIG = {
   url: 'https://aartitechsevices.pages.dev',
   primaryDomain: 'mk9.in',
   primaryUrl: 'https://mk9.in',
+  locale: 'en_IN',
 
   contact: {
     phone: '+91-9869787575',
@@ -28,8 +29,8 @@ const SITE_CONFIG = {
     telegram: 'https://t.me/itsmakk',
     instagram: 'https://instagram.com/aartitechservices',
     facebook: 'https://fb.me/AartiTechServices',
-    twitter: '#',
-    linkedin: '#',
+    twitter: 'https://x.com/aartitechservic',
+    linkedin: 'https://linkedin.com/company/aartitechservices',
   },
 
   ogImage: '/shared/assets/img/og-default.svg',

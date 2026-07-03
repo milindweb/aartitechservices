@@ -1,74 +1,175 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Update domain in shared/js/config.js and all URLs below when changing domain -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://mk9.in/</loc>
+    <loc>https://aartitechsevices.pages.dev/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://mk9.in/about</loc>
+    <loc>https://aartitechsevices.pages.dev/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://mk9.in/portfolio</loc>
+    <loc>https://aartitechsevices.pages.dev/portfolio</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://mk9.in/contact</loc>
+    <loc>https://aartitechsevices.pages.dev/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://mk9.in/blog</loc>
+    <loc>https://aartitechsevices.pages.dev/blog</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mk9.in/links</loc>
+    <loc>https://aartitechsevices.pages.dev/links</loc>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://mk9.in/seo-digital-marketing</loc>
+    <loc>https://aartitechsevices.pages.dev/terms</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://aartitechsevices.pages.dev/privacy</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://aartitechsevices.pages.dev/expertise/digital-engineering</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mk9.in/website-development</loc>
+    <loc>https://aartitechsevices.pages.dev/expertise/digital-marketing-seo</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mk9.in/project-training</loc>
+    <loc>https://aartitechsevices.pages.dev/expertise/learning-innovation</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mk9.in/graphics-branding</loc>
+    <loc>https://aartitechsevices.pages.dev/partners/graphics</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://mk9.in/electrical</loc>
+    <loc>https://aartitechsevices.pages.dev/partners/electrical</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://mk9.in/automotive</loc>
+    <loc>https://aartitechsevices.pages.dev/partners/automotive</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://mk9.in/seniority</loc>
+    <loc>https://aartitechsevices.pages.dev/blog/modern-portfolio-cloudflare-pages</loc>
+    <lastmod>2026-06-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://mk9.in/seniority/manage</loc>
+    <loc>https://aartitechsevices.pages.dev/blog/digitizing-society-management</loc>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aartitechsevices.pages.dev/blog/local-seo-navi-mumbai</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aartitechsevices.pages.dev/blog/drone-photography-real-estate</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aartitechsevices.pages.dev/blog/brand-identity-design</loc>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aartitechsevices.pages.dev/blog/industrial-electrical-maintenance</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aartitechsevices.pages.dev/blog/automotive-diagnostics-guide</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aartitechsevices.pages.dev/blog/chatgpt-business-ai</loc>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aartitechsevices.pages.dev/blog/arduino-esp32-workshop</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aartitechsevices.pages.dev/blog/engineering-project-ideas-final-year</loc>
+    <lastmod>2026-07-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aartitechsevices.pages.dev/blog/industrial-training-college-industry</loc>
+    <lastmod>2026-06-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aartitechsevices.pages.dev/blog/pcb-design-workshop</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aartitechsevices.pages.dev/blog/workplace-safety-small-business</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aartitechsevices.pages.dev/blog/build-professional-network-freelancer</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aartitechsevices.pages.dev/blog/digital-tools-small-business-2026</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aartitechsevices.pages.dev/blog/internship-rules-maharashtra-engineering</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aartitechsevices.pages.dev/blog/readymade-projects-all-branches</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>
