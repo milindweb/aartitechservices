@@ -70,6 +70,10 @@
 
   <div class="admin-page">
     <a href="/dashboard" class="back-link"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+    <div style="display:flex;gap:16px;margin-bottom:16px;">
+      <a href="/app/admin" style="font-weight:600;color:var(--accent);text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:4px;">Users</a>
+      <a href="/app/admin/audit" style="color:var(--text-secondary);text-decoration:none;padding-bottom:4px;">Audit Logs</a>
+    </div>
     <h1>User Management</h1>
     <p class="subtitle">View all users and manage their roles</p>
     <div id="msg" class="msg"></div>
@@ -145,7 +149,7 @@
             '<td>' + escapeHtml(u.phone || '-') + '</td>' +
             '<td><span class="role-badge-sm role-' + u.status + '">' + escapeHtml(u.status) + '</span></td>' +
             '<td>' +
-            '<select class="role-select" data-user-id="' + u.id + '" onchange="changeRole(this)" ' + disabled + '>' +
+            '<select class="role-select" data-user-id="' + u.id + '" data-original-role="' + u.role + '" onchange="changeRole(this)" ' + disabled + '>' +
             '  <option value="user"' + (u.role === 'user' ? ' selected' : '') + '>User</option>' +
             '  <option value="blogger"' + (u.role === 'blogger' ? ' selected' : '') + '>Blogger</option>' +
             '  <option value="admin"' + (u.role === 'admin' ? ' selected' : '') + '>Admin</option>' +
@@ -161,21 +165,34 @@
       }
     }
 
+    async function logAudit(module, action, tableName, recordId, oldValues, newValues) {
+      try {
+        await SUPABASE.from('audit_logs').insert({
+          user_id: currentUserId, module: module, action: action,
+          table_name: tableName, record_id: recordId,
+          old_values: oldValues, new_values: newValues,
+        });
+      } catch (e) { console.error('Audit log error:', e); }
+    }
+
     async function changeRole(select) {
       var userId = select.getAttribute('data-user-id');
       var newRole = select.value;
-      var oldRole = select.querySelector('option:not([selected])') ? null : null;
+      var oldRole = select.dataset.originalRole || select.querySelector('option[selected]')?.value || 'user';
       var original = select.dataset.originalRole;
 
       select.disabled = true;
 
       try {
-        var { error } = await SUPABASE
+        var { error: updateError } = await SUPABASE
           .from('users_profile')
           .update({ role: newRole, updated_at: new Date().toISOString() })
           .eq('id', userId);
 
-        if (error) throw error;
+        if (updateError) throw updateError;
+
+        await logAudit('admin', 'role_change', 'users_profile', userId,
+          { role: oldRole }, { role: newRole });
 
         select.dataset.originalRole = newRole;
         showMsg('Role updated successfully!', 'success');

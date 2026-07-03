@@ -36,6 +36,7 @@
 /app/profile         /app/profile.html                                                      200
 /app/admin           /app/admin/users.html                                                   200
 /app/admin/users     /app/admin/users.html                                                   200
+/app/admin/audit     /app/admin/audit.html                                                   200
 
 # Seniority
 /app/seniority           /app/seniority/seniority-list.html                                    200

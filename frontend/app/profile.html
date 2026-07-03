@@ -267,6 +267,22 @@
 
     var originalEmail = '';
 
+    async function logAudit(module, action, tableName, recordId, oldValues, newValues) {
+      try {
+        await SUPABASE.from('audit_logs').insert({
+          user_id: currentUser.id,
+          module: module,
+          action: action,
+          table_name: tableName,
+          record_id: recordId,
+          old_values: oldValues,
+          new_values: newValues,
+        });
+      } catch (e) {
+        console.error('Audit log error:', e);
+      }
+    }
+
     function renderProfile(user) {
       var profile = user.profile || {};
       var name = profile.full_name || user.email?.split('@')[0] || 'User';
@@ -316,8 +332,10 @@
           var { error: authError } = await SUPABASE.auth.updateUser({ email: email });
           if (authError) throw authError;
           showMsg('Profile saved! Check your new email for a confirmation link to complete the email change.', 'success');
+          await logAudit('profile', 'email_change', 'users_profile', currentUser.id, { email: originalEmail }, { email: email });
         } else {
           showMsg('Profile updated successfully!', 'success');
+          await logAudit('profile', 'profile_update', 'users_profile', currentUser.id, null, { full_name: fullName, phone: phone });
         }
 
         currentUser = await AUTH.getUser();
