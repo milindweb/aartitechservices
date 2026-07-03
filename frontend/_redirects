@@ -63,6 +63,7 @@
 /modules/seniority/pages/seniority-management     /app/seniority/seniority-management.html        301
 
 # Blog posts — clean /blog/:slug URLs
+/blog/opencode-zen-free-models-vscode         /blog/posts/opencode-zen-free-models-vscode.html           200
 /blog/petrol-vs-e20-vs-ev-2wheeler-guide       /blog/posts/petrol-vs-e20-vs-ev-2wheeler-guide.html         200
 /blog/camera-buying-guide-2026                /blog/posts/camera-buying-guide-2026.html                  200
 /blog/drone-types-cost-india                  /blog/posts/drone-types-cost-india.html                    200

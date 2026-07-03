@@ -1,5 +1,15 @@
 [
   {
+    "id": "ats-031",
+    "title": "How to Use OpenCode with Free Zen Models in VS Code",
+    "slug": "opencode-zen-free-models-vscode",
+    "date": "2026-07-30",
+    "category": "AI & Technology",
+    "tags": ["OpenCode", "AI", "VS Code", "Free Models", "Coding"],
+    "excerpt": "Complete guide to setting up OpenCode AI coding agent with free Zen models and integrating it with VS Code. Install, configure, and start coding with AI assistance for free.",
+    "url": "/blog/opencode-zen-free-models-vscode"
+  },
+  {
     "id": "ats-030",
     "title": "Petrol vs E20 vs EV: 2-Wheeler Buying Guide for India (2026)",
     "slug": "petrol-vs-e20-vs-ev-2wheeler-guide",

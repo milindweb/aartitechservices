@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/shared/js/config.js"></script>
+  <script>
+    const PAGE_CONFIG = {
+      type: 'article',
+      title: 'How to Use OpenCode with Free Zen Models in VS Code',
+      description: 'Complete guide to setting up OpenCode AI coding agent with free Zen models and integrating it with VS Code. Install, configure, and start coding with AI assistance for free.',
+      canonical: '/blog/opencode-zen-free-models-vscode',
+      date: '2026-07-30',
+      author: 'Aarti Tech Services',
+      tags: ["OpenCode", "AI", "VS Code", "Free Models", "Coding"],
+    };
+  </script>
+  <script src="/shared/js/seo-injector.js"></script>
+
+  <link rel="icon" type="image/png" href="/shared/assets/img/favicon.png">
+  <link rel="stylesheet" href="/shared/css/style.css" />
+  <link rel="stylesheet" href="/shared/css/headerfooter.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="/shared/css/blog-sidebar.css">
+
+  <style>
+    .bp-container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+    .bp-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+    .bp-meta .bp-badge { background: var(--gradient); color: #fff; padding: 0.2rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+    .bp-container h1 { font-size: 2rem; font-weight: 800; margin: 0 0 1.5rem; color: var(--text-primary); line-height: 1.3; }
+    .bp-container h2 { font-size: 1.4rem; font-weight: 700; margin: 2rem 0 0.75rem; color: var(--text-primary); }
+    .bp-container h3 { font-size: 1.15rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    .bp-container p { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin: 0 0 1rem; }
+    .bp-container ul, .bp-container ol { color: var(--text-secondary); line-height: 1.8; margin: 0 0 1rem; padding-left: 1.5rem; }
+    .bp-container li { margin-bottom: 0.3rem; }
+    .bp-container img { max-width: 100%; border-radius: 12px; margin: 1.5rem 0; }
+    .bp-container code { background: var(--secondary-bg); padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.9em; }
+    .bp-container pre { background: #1e293b; padding: 1rem; border-radius: 10px; overflow-x: auto; border: 1px solid var(--border); margin: 1rem 0; }
+    .bp-container pre code { background: none; padding: 0; color: #e2e8f0; font-size: 0.9rem; }
+    .bp-container blockquote { border-left: 4px solid var(--accent); padding: 0.5rem 1rem; margin: 1rem 0; background: var(--secondary-bg); border-radius: 0 8px 8px 0; color: var(--text-secondary); }
+    .bp-back { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); text-decoration: none; font-weight: 600; margin-bottom: 2rem; transition: var(--transition); }
+    .bp-back:hover { gap: 10px; }
+    .bp-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .bp-tags span { font-size: 0.8rem; padding: 0.3rem 0.7rem; background: var(--secondary-bg); border-radius: 20px; color: var(--text-secondary); border: 1px solid var(--border); }
+    .bp-tip { background: var(--secondary-bg); border-left: 4px solid var(--accent); padding: 1rem 1.25rem; border-radius: 0 10px 10px 0; margin: 1rem 0; }
+    .bp-tip p { margin: 0; font-size: 0.95rem; }
+    @media (max-width: 600px) {
+      .bp-container h1 { font-size: 1.5rem; }
+      .bp-container { padding: 1.5rem 1rem 3rem; }
+    }
+  </style>
+
+  <script src="/shared/js/headerfooter.js" defer></script>
+  <script src="/shared/js/blog-sidebar.js" defer></script>
+</head>
+<body>
+
+  <div id="header"></div>
+
+  <main class="bp-layout">
+    <div class="bp-container">
+    <a href="/blog" class="bp-back"><i class="bi bi-arrow-left"></i> Back to Blog</a>
+
+    <div class="bp-meta">
+      <span><i class="bi bi-calendar3"></i> <time datetime="2026-07-30">July 30, 2026</time></span>
+      <span class="bp-badge">AI &amp; Technology</span>
+    </div>
+
+    <h1>How to Use OpenCode with Free Zen Models in VS Code</h1>
+
+    <p>OpenCode is an open-source AI coding agent that runs in your terminal. It connects to 75+ AI providers, understands your entire project context, and can read, edit, and create files across your codebase. The best part? It comes with free built-in models through OpenCode Zen &mdash; no credit card required.</p>
+
+    <p>In this guide, you will learn how to install OpenCode, connect to free Zen models, and integrate it seamlessly with VS Code for an AI-powered development workflow.</p>
+
+    <h2>What is OpenCode?</h2>
+
+    <p>OpenCode is a free, open-source AI coding agent built by the team behind SST (Serverless Stack). It has over 45,000 GitHub stars and is one of the most popular terminal-based AI coding tools available. Unlike Copilot or Cursor which are proprietary, OpenCode is fully open source, provider-agnostic, and privacy-first &mdash; your code never gets stored on their servers.</p>
+
+    <p>Key features:</p>
+    <ul>
+      <li>Works with any LLM provider &mdash; Claude, GPT, Gemini, Groq, Ollama (local models), and more</li>
+      <li>Free built-in models via OpenCode Zen &mdash; no API keys needed</li>
+      <li>Beautiful terminal UI (TUI) with Plan and Build modes</li>
+      <li>Project-wide understanding &mdash; reads your entire codebase</li>
+      <li>Undo/redo for AI changes</li>
+      <li>IDE integration &mdash; works with VS Code, Cursor, Neovim, and any editor</li>
+      <li>Share conversations with your team</li>
+    </ul>
+
+    <h2>What are OpenCode Zen Free Models?</h2>
+
+    <p>OpenCode Zen is a curated list of free AI models hosted and verified by the OpenCode team. You can use them without providing any API key or payment method. The free tier is throttled per IP, but it is generous enough for daily development use.</p>
+
+    <p>Available free Zen models include:</p>
+    <ul>
+      <li><strong>Kimi K2.5</strong> &mdash; Excellent for frontend development, React/Vue components, and UI generation. Matches paid models on most coding tasks.</li>
+      <li><strong>MiniMax M2.1</strong> &mdash; Good general-purpose coding model with strong reasoning.</li>
+      <li><strong>Trinity-Large-Preview</strong> &mdash; Solid for repository audits, code review, and architecture analysis.</li>
+      <li><strong>Grok Code Fast</strong> &mdash; Fast inference for quick edits and simple tasks.</li>
+      <li><strong>GLM 4.7</strong> &mdash; Strong for structured tasks and technical writing.</li>
+    </ul>
+
+    <p>You can also bring your own API keys for Claude, GPT-4, Gemini, or any other provider if you need more power. OpenCode switches between them seamlessly.</p>
+
+    <h2>Step 1: Install OpenCode</h2>
+
+    <p>OpenCode runs on macOS, Linux, and Windows (via WSL). The easiest way to install is with the install script:</p>
+
+    <pre><code>curl -fsSL https://opencode.ai/install | bash</code></pre>
+
+    <p>Or install via npm:</p>
+
+    <pre><code>npm install -g opencode-ai</code></pre>
+
+    <p>On macOS, you can use Homebrew:</p>
+
+    <pre><code>brew install opencode</code></pre>
+
+    <p>Verify the installation:</p>
+
+    <pre><code>opencode --version</code></pre>
+
+    <h2>Step 2: Connect to Free Zen Models</h2>
+
+    <p>OpenCode needs a provider to work. To use the free Zen models, run the <code>/connect</code> command inside the OpenCode TUI:</p>
+
+    <pre><code>opencode
+/connect</code></pre>
+
+    <p>Select <strong>opencode</strong> from the provider list. This will prompt you to visit <a href="https://opencode.ai/auth" target="_blank">opencode.ai/auth</a> to sign in and get an API key. Sign in with your GitHub or Google account &mdash; no credit card is required.</p>
+
+    <p>Once you have your API key, paste it into the terminal prompt. OpenCode will now use the free Zen model tier by default.</p>
+
+    <p>To see which free models are available:</p>
+
+    <pre><code>opencode models opencode</code></pre>
+
+    <h2>Step 3: Initialize OpenCode in Your Project</h2>
+
+    <p>Navigate to your project directory and start OpenCode:</p>
+
+    <pre><code>cd /path/to/your/project
+opencode</code></pre>
+
+    <p>Run the init command to let OpenCode analyse your project:</p>
+
+    <pre><code>/init</code></pre>
+
+    <p>This creates an <code>AGENTS.md</code> file in your project root with instructions about your project structure, coding patterns, and conventions. Commit this file to Git &mdash; it helps OpenCode understand your project every time you work on it.</p>
+
+    <h2>Step 4: Integrate OpenCode with VS Code</h2>
+
+    <p>OpenCode integrates with VS Code in two ways: the <strong>IDE Quick Launch</strong> feature and the <strong>VS Code extension</strong>.</p>
+
+    <h3>Method 1: IDE Quick Launch (Built-in, No Extension Needed)</h3>
+
+    <p>OpenCode has a built-in IDE Quick Launch feature. While using OpenCode in your terminal, press:</p>
+
+    <pre><code>Cmd+Esc  (macOS)
+Ctrl+Esc (Windows/Linux)</code></pre>
+
+    <p>This opens VS Code (or Cursor, if installed) in a split view alongside your OpenCode terminal. OpenCode will open the relevant files in VS Code as it works on them, so you can see edits happening in real time.</p>
+
+    <p>You can configure which editor opens in the <code>opencode.json</code> config file:</p>
+
+    <pre><code>{
+  "ide": {
+    "editor": "code",
+    "openOn": "start"
+  }
+}</code></pre>
+
+    <p>Set <code>editor</code> to <code>"code"</code> for VS Code, <code>"cursor"</code> for Cursor, or the path to your editor binary.</p>
+
+    <h3>Method 2: VS Code Extension</h3>
+
+    <p>Install the official OpenCode extension from the VS Code marketplace:</p>
+
+    <ol>
+      <li>Open VS Code, go to the Extensions panel (Cmd+Shift+X)</li>
+      <li>Search for "OpenCode"</li>
+      <li>Install the extension by Anomaly</li>
+    </ol>
+
+    <p>Once installed, you can:</p>
+    <ul>
+      <li>Open a new OpenCode session directly from VS Code (Cmd+Shift+P &rarr; "OpenCode: Start Session")</li>
+      <li>View AI suggestions inline as you type</li>
+      <li>See OpenCode's changes highlighted in the editor</li>
+      <li>Toggle between Plan and Build modes from the VS Code status bar</li>
+    </ul>
+
+    <h3>Method 3: Split Terminal Workflow</h3>
+
+    <p>If you prefer a simpler setup, just run OpenCode in a VS Code integrated terminal:</p>
+
+    <ol>
+      <li>Open your project in VS Code</li>
+      <li>Open the integrated terminal (Ctrl+`)</li>
+      <li>Run <code>opencode</code></li>
+      <li>Keep the terminal on one side and your code on the other</li>
+    </ol>
+
+    <p>As OpenCode makes changes, the file explorer will update, and you can click on filenames OpenCode mentions to jump directly to the changed code.</p>
+
+    <h2>Step 5: Basic Usage & Commands</h2>
+
+    <p>Here are the essential commands to get productive:</p>
+
+    <h3>Ask Questions</h3>
+    <p>Use the <code>@</code> key to fuzzy-search for files in your project:</p>
+
+    <pre><code>How is authentication handled in @src/utils/auth.ts</code></pre>
+
+    <h3>Plan Mode (Safe Exploration)</h3>
+    <p>Press Tab to switch to Plan mode. OpenCode will explain how it will implement your request without making any changes.</p>
+
+    <pre><code>[Tab to Plan mode]
+Add a dark mode toggle to the settings page</code></pre>
+
+    <h3>Build Mode (Make Changes)</h3>
+    <p>Press Tab again to switch back to Build mode and let OpenCode implement the changes:</p>
+
+    <pre><code>[Tab to Build mode]
+Now implement the dark mode toggle</code></pre>
+
+    <h3>Undo Changes</h3>
+    <p>If OpenCode makes a change you do not like:</p>
+
+    <pre><code>/undo</code></pre>
+
+    <h3>Switch Models Mid-Session</h3>
+    <p>You can switch between different models without restarting:</p>
+
+    <pre><code>/model kimi-k2.5</code></pre>
+
+    <h3>Start with a Specific Model</h3>
+    <pre><code>opencode --model opencode/kimi-k2.5</code></pre>
+
+    <h2>Step 6: Configure for Your Workflow</h2>
+
+    <p>OpenCode is highly customisable. Create a <code>opencode.json</code> file in your project root:</p>
+
+    <pre><code>{
+  "provider": {
+    "default": "opencode/kimi-k2.5",
+    "fallback": "opencode/minimax-m2.1"
+  },
+  "agent": {
+    "build": {
+      "model": "opencode/kimi-k2.5"
+    },
+    "plan": {
+      "model": "opencode/trinity-large-preview"
+    }
+  },
+  "ide": {
+    "editor": "code",
+    "openOn": "start"
+  },
+  "keybindings": {
+    "plan": "ctrl+shift+p",
+    "build": "ctrl+shift+b"
+  }
+}</code></pre>
+
+    <p>This configuration uses Kimi K2.5 for building code and Trinity for planning, with VS Code integration enabled.</p>
+
+    <h2>Tips for the Best Experience</h2>
+
+    <ul>
+      <li><strong>Give context</strong> &mdash; Talk to OpenCode like you would to a junior developer. Provide examples, reference files with <code>@filename</code>, and describe the desired outcome clearly.</li>
+      <li><strong>Use images</strong> &mdash; Drag and drop screenshots or mockups into the terminal. OpenCode can see images and use them as reference.</li>
+      <li><strong>Model chaining</strong> &mdash; Use one model for planning (Trinity, Gemini) and another for implementation (Kimi, MiniMax). Open two terminals with different models in parallel.</li>
+      <li><strong>Commit often</strong> &mdash; Before asking OpenCode to make changes, commit your current work. This way you can always <code>/undo</code> or use Git to revert.</li>
+      <li><strong>Try different models</strong> &mdash; Each free model has different strengths. If one is not giving good results, switch to another with <code>/model</code>.</li>
+    </ul>
+
+    <h2>Limitations of Free Models</h2>
+
+    <p>The free Zen models are powerful, but they have some limitations:</p>
+    <ul>
+      <li><strong>Rate limited</strong> &mdash; Throttled per IP address. For heavy daily use, consider adding your own API key.</li>
+      <li><strong>Context window</strong> &mdash; Smaller than premium models like Claude or GPT-4. Very large files may need to be referenced selectively.</li>
+      <li><strong>Speed</strong> &mdash; Free models run on shared infrastructure and can be slower during peak hours.</li>
+    </ul>
+
+    <p>If you need more power, you can add your own API keys from Anthropic (Claude), OpenAI (GPT), Google (Gemini), or any other provider at any time. OpenCode will use your key automatically when available and fall back to free models for simple tasks.</p>
+
+    <h2>Conclusion</h2>
+
+    <p>OpenCode with free Zen models gives you a powerful AI coding assistant at zero cost. Combined with VS Code integration, it creates a seamless development workflow where you can ask questions, plan features, and generate code &mdash; all without leaving your editor. The open-source nature means no vendor lock-in, no subscription fees, and full control over your data.</p>
+
+    <p>Whether you are a student learning to code, a freelancer building client projects, or a professional developer looking to boost productivity, OpenCode's free tier is a great place to start. Install it, connect to Zen, and start coding with AI assistance today.</p>
+
+    <div class="bp-tags">
+      <span>OpenCode</span>
+      <span>AI</span>
+      <span>VS Code</span>
+      <span>Free Models</span>
+      <span>Coding</span>
+    </div>
+    </div>
+    <aside class="bp-sidebar" id="bp-sidebar"></aside>
+  </main>
+
+  <div id="footer"></div>
+
+</body>
+</html>
