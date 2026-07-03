@@ -74,12 +74,12 @@ Multi-service business portal with static HTML/CSS/JS frontend, Supabase backend
 - **Authentication** — Supabase Auth with email/password login, registration, password reset, auth callback handling, and session management
 - **User Dashboard** — post-login landing page with user profile info, role badge, and module navigation
 - **Auth Guard** — protected pages redirect unauthenticated users to login
-- **Auth-Aware Navigation** — header dynamically shows SIGN IN or DASHBOARD based on session
+- **Auth-Aware Navigation** — header shows DASHBOARD link only when logged in; no SIGN IN link (accessible via footer)
 - **Contact Form** integrated with Google Apps Script, dynamically loaded per-page (no labels, placeholders only)
 - **Shared component classes** (`p-*`) in `style.css` — consistent dark gradient hero, white cards, blue gradient icons across all service pages
 - **Dark/Light Theme** toggle with localStorage persistence
 - **Responsive Design** with mobile hamburger navigation
-- **SEO:** robots.txt, sitemap.xml, dynamic Open Graph / JSON-LD
+- **SEO:** robots.txt, sitemap.xml, favicon, dynamic Open Graph / JSON-LD
 
 ### Planned
 - Full blog CRUD with comments

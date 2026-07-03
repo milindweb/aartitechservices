@@ -1,5 +1,25 @@
 # Changelog
 
+## v1.3.0 — 2026-07-03 — Auth fixes, header reorder, sign-out redirect, favicon
+
+### Fixed
+- `frontend/config/supabase.js` — Corrected global variable name from `supabaseClient` to `supabase` (CDN exposes `supabase`, not `supabaseClient`); SUPABASE was always null
+- `frontend/app/auth/callback.html` — Fixed broken redirect logic: `type === 'recovery' || data?.session` always sent logged-in users to `/reset-password` regardless of type
+- `frontend/app/auth/register.html` — Auto-redirect to `/dashboard` when session exists immediately (email confirmations disabled)
+- `frontend/shared/js/auth.js` — Redirect to homepage (`/`) on sign-out instead of `/login` (no SIGN IN link in header)
+- `backend/schema/auth-trigger.sql` — Created `users_profile` table, trigger function, and RLS policies on Supabase project
+
+### Changed
+- `frontend/shared/components/header.html` — Desktop nav reordered: EXPERTISE → PORTFOLIO → BLOG → ABOUT → CONTACT; SIGN IN link replaced with hidden DASHBOARD link (shown only when session exists)
+- `frontend/shared/components/footer.html` — Added Dashboard link to Quick Links alongside Login
+- `frontend/shared/js/headerfooter.js` — `updateAuthNavLink` now shows/hides the dashboard item instead of toggling SIGN IN ↔ DASHBOARD
+- `frontend/_redirects` — Added `/favicon.ico` → `/shared/assets/img/favicon.png` redirect
+
+### Documentation
+- `CHANGELOG.md` — added this entry
+
+---
+
 ## v1.2.0 — 2026-07-03 — Supabase Auth system with login, register, password reset, and dashboard
 
 ### Added

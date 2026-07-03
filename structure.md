@@ -138,9 +138,6 @@ mk9/
 │   │   │
 │   │   └── blogService.js
 │   │
-│   └── config/                      ↤ Runtime configuration
-│       │
-│       └── supabase.js              ↤ Supabase client (URL + anon key)
 │
 ├── backend/
 │   │
@@ -171,7 +168,6 @@ mk9/
 
 ## Navigation
 
-About
 Expertise
     ├── Digital Engineering
     ├── Digital Marketing & SEO
@@ -182,6 +178,7 @@ Expertise
         └── Automotive Services (partners/automotive)
 Portfolio
 Blog
+About
 Contact
 
 ---
@@ -331,7 +328,7 @@ Legacy redirects (301):
 - **frontend/app/dashboard.html** — Post-login dashboard with user profile and module links
 - **backend/schema/auth-trigger.sql** — PostgreSQL trigger to auto-create `users_profile` on signup
 - **Auth guard** — Seniority pages and dashboard redirect unauthenticated users to `/login`
-- **Auth-aware nav** — Header dynamically shows SIGN IN or DASHBOARD based on session
+- **Auth-aware nav** — Header shows DASHBOARD link only when logged in; no SIGN IN link in header (accessible via footer)
 
 ### Backend Schema
 - **backend/schema/schema.sql** — Core tables, indexes, RLS policies
