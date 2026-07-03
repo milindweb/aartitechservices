@@ -1,5 +1,28 @@
 # Changelog
 
+## v1.1.0 — 2026-07-03 — Static blog engine with 20 posts
+
+### Added
+- `frontend/data/posts.json` — All 20 blog post entries with metadata (title, date, category, tags, excerpt, image)
+- `frontend/shared/js/blog.js` — Blog engine: fetches JSON, renders cards, search, category/tag filtering, pagination
+- `frontend/pages/blog.html` — Dynamic blog listing replacing hardcoded articles; contact form moved inside `<main>`
+- `frontend/blog/posts/_template.html` — Duplicatable post template
+- 20 full HTML blog posts across 10 categories (Web Development, Full Stack Development, Digital Marketing & SEO, Photography & Branding, Electrical Services, Automotive Services, AI & Technology, Training & Workshops, Learning & Innovation, Others)
+
+### Changed
+- `frontend/_redirects` — `/blog` → `/pages/blog.html` + `/blog/:slug` → `/blog/posts/:slug.html` for all 20 posts
+- Category "Business Automation" renamed to "Full Stack Development"
+- Removed categories "IoT & Engineering", "Cloud & DevOps", "Tips & Tutorials"
+- Added categories "Learning & Innovation", "Others"
+- "Hands-On Electronics Workshop" → "Hands on Arduino ESP32 Workshop" with new content
+
+### Documentation
+- `README.md` — added `data/`, `blog/posts/`, `blog.js` to file tree; updated Features with static JSON-driven blog
+- `structure.md` — added `data/`, `blog/posts/`, `blog.js` to file tree; added blog redirect rules
+- `CHANGELOG.md` — added this entry
+
+---
+
 ## v1.0.12 — 2026-06-28 — Digital engineering page overhaul
 
 ### Changed

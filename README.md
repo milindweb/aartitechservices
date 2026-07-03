@@ -22,10 +22,14 @@ Multi-service business portal with static HTML/CSS/JS frontend, Supabase backend
 │   ├── robots.txt         # Crawler rules
 │   ├── sitemap.xml        # XML sitemap
 │   ├── index.html         # Homepage (SEO indexed)
+│   ├── data/              # Static data files
+│   │   └── posts.json     # Blog posts data (JSON-driven)
+│   ├── blog/              # Blog module
+│   │   └── posts/         # Individual blog post HTML files
 │   ├── pages/             # SEO-indexed public pages
 │   │   ├── about.html     # About page
 │   │   ├── contact.html   # Contact page
-│   │   ├── blog.html      # Blog page
+│   │   ├── blog.html      # Blog listing (dynamic, JS-driven)
 │   │   ├── links.html     # Links page
 │   │   ├── portfolio.html # Portfolio page
 │   │   ├── expertise/     # Service pages
@@ -42,7 +46,7 @@ Multi-service business portal with static HTML/CSS/JS frontend, Supabase backend
 │   ├── shared/            # Shared components, CSS, JS, assets
 │   │   ├── components/    # header.html, footer.html
 │   │   ├── css/           # style.css, headerfooter.css, nadstyle.css
-│   │   ├── js/            # config.js, seo-injector.js, headerfooter.js, form-handler.js
+│   │   ├── js/            # config.js, seo-injector.js, headerfooter.js, blog.js, form-handler.js
 │   │   └── assets/img/    # Logo, favicon, OG image, icons
 │   └── services/          # API service classes
 ├── backend/               # Database schema & configuration
@@ -61,7 +65,7 @@ Multi-service business portal with static HTML/CSS/JS frontend, Supabase backend
 - **6 Service Pages:** Digital Marketing & SEO, Web & Software Development, College Projects & Training, Graphics/Photography & Branding, Electrical, Automotive
 - **Centralized Configuration** (`shared/js/config.js`) — brand name, domain, contact, social links in one file
 - **Dynamic SEO Injection** — titles, meta, OG/Twitter tags, JSON-LD generated from config at runtime
-- **Blog System** with Supabase-powered listing, search, categories, tags
+- **Blog System** — static JSON-driven engine with search, category/tag filtering, pagination, and clean `/blog/:slug` URLs
 - **Seniority Management** module with CSV/Excel/PDF export
 - **Contact Form** integrated with Google Apps Script, dynamically loaded per-page (no labels, placeholders only)
 - **Shared component classes** (`p-*`) in `style.css` — consistent dark gradient hero, white cards, blue gradient icons across all service pages

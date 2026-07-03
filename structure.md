@@ -52,11 +52,25 @@ mk9/
 │   ├── sitemap.xml                  ↤ XML sitemap (manual updates required)
 │   ├── index.html                   ⭐ SEO — fully indexed
 │   │
+│   ├── data/
+│   │   │
+│   │   └── posts.json               ⭐ Blog posts data (JSON-driven)
+│   │
+│   ├── blog/
+│   │   │
+│   │   └── posts/                   ⭐ Individual blog post HTML files
+│   │       ├── _template.html
+│   │       ├── modern-portfolio-cloudflare-pages.html
+│   │       ├── digitizing-society-management.html
+│   │       ├── local-seo-navi-mumbai.html
+│   │       ├── ... (20 posts)
+│   │       └── readymade-projects-all-branches.html
+│   │
 │   ├── pages/
 │   │   │
 │   │   ├── contact.html
 │   │   ├── contactform.html
-│   │   ├── blog.html
+│   │   ├── blog.html                ⭐ Dynamic blog listing (JS-driven)
 │   │   ├── links.html
 │   │   │
 │   │   ├── expertise/
@@ -90,6 +104,7 @@ mk9/
 │   │   │   ├── config.js             # Centralized site config (brand, domain, contact, social)
 │   │   │   ├── seo-injector.js       # Reads config + PAGE_CONFIG; injects meta/OG/Twitter/JSON-LD
 │   │   │   ├── headerfooter.js       # Loads header/footer HTML + replaces {{PLACEHOLDERS}}
+│   │   │   ├── blog.js               ⭐ Blog engine — search, categories, tags, pagination
 │   │   │   └── form-handler.js
 │   │   │
 │   │   └── assets/
@@ -196,6 +211,10 @@ Public pages:
 /partners/graphics        /pages/partners/graphics.html                                      200
 /partners/electrical      /pages/partners/electrical.html                                    200
 /partners/automotive      /pages/partners/automotive.html                                    200
+
+Blog (dynamic listing + clean URLs):
+/blog                     /pages/blog.html                                                   200
+/blog/:slug               /blog/posts/:slug.html                                             200
 ```
 
 Seniority (clean URL rewrites):
