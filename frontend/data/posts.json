@@ -1,0 +1,152 @@
+[
+  {
+    "id": "ats-001",
+    "title": "Building a Modern Portfolio Website with Cloudflare Pages & Vanilla JS",
+    "slug": "modern-portfolio-cloudflare-pages",
+    "date": "2026-06-10",
+    "category": "Web Development",
+    "tags": ["HTML", "CSS", "JavaScript", "Cloudflare"],
+    "excerpt": "Learn how to build and deploy a fast, SEO-friendly portfolio website using vanilla HTML, CSS, and JavaScript on Cloudflare Pages — no build tools needed.",
+    "url": "/blog/modern-portfolio-cloudflare-pages"
+  },
+  {
+    "id": "ats-002",
+    "title": "Digitizing Society Management: A Complete Guide",
+    "slug": "digitizing-society-management",
+    "date": "2026-06-05",
+    "category": "Full Stack Development",
+    "tags": ["Automation", "Management", "Software", "Digital Transformation"],
+    "excerpt": "A practical guide to moving from manual society management to a digital platform — member directories, complaint tracking, committee management, and more.",
+    "url": "/blog/digitizing-society-management"
+  },
+  {
+    "id": "ats-003",
+    "title": "Local SEO Strategies for Small Businesses in Navi Mumbai",
+    "slug": "local-seo-navi-mumbai",
+    "date": "2026-05-28",
+    "category": "Digital Marketing & SEO",
+    "tags": ["SEO", "Local Business", "Google", "Digital Marketing"],
+    "excerpt": "Boost your local online presence with proven SEO strategies — Google Business Profile optimization, local keywords, map listings, and review management.",
+    "url": "/blog/local-seo-navi-mumbai"
+  },
+  {
+    "id": "ats-005",
+    "title": "Drone Photography Tips for Real Estate Listings",
+    "slug": "drone-photography-real-estate",
+    "date": "2026-05-12",
+    "category": "Photography & Branding",
+    "tags": ["Drone", "Photography", "Real Estate", "Aerial"],
+    "excerpt": "How aerial photography and videography can transform your real estate listings — tips on angles, lighting, composition, and editing for stunning property visuals.",
+    "url": "/blog/drone-photography-real-estate"
+  },
+  {
+    "id": "ats-006",
+    "title": "Brand Identity Design: From Logo to Complete Visual System",
+    "slug": "brand-identity-design",
+    "date": "2026-05-05",
+    "category": "Photography & Branding",
+    "tags": ["Branding", "Design", "Logo", "Visual Identity"],
+    "excerpt": "Explore the process of building a cohesive brand identity — from logo design and color palettes to typography, business cards, and social media creatives.",
+    "url": "/blog/brand-identity-design"
+  },
+  {
+    "id": "ats-008",
+    "title": "Industrial Electrical Maintenance Best Practices",
+    "slug": "industrial-electrical-maintenance",
+    "date": "2026-04-18",
+    "category": "Electrical Services",
+    "tags": ["Electrical", "Maintenance", "Industrial", "Safety"],
+    "excerpt": "Essential maintenance practices for industrial electrical systems — troubleshooting tips, safety protocols, and preventive maintenance schedules.",
+    "url": "/blog/industrial-electrical-maintenance"
+  },
+  {
+    "id": "ats-009",
+    "title": "Automotive Diagnostics: A Beginner's Guide",
+    "slug": "automotive-diagnostics-guide",
+    "date": "2026-04-10",
+    "category": "Automotive Services",
+    "tags": ["Automotive", "Diagnostics", "Maintenance", "Repair"],
+    "excerpt": "Understand modern automotive diagnostic tools and techniques — from OBD scanners to common fault code analysis and practical troubleshooting.",
+    "url": "/blog/automotive-diagnostics-guide"
+  },
+  {
+    "id": "ats-011",
+    "title": "What is ChatGPT and How Businesses Can Use AI",
+    "slug": "chatgpt-business-ai",
+    "date": "2026-03-25",
+    "category": "AI & Technology",
+    "tags": ["AI", "ChatGPT", "Business", "Automation"],
+    "excerpt": "Explore how businesses can leverage ChatGPT and AI tools for customer support, content creation, data analysis, and workflow automation.",
+    "url": "/blog/chatgpt-business-ai"
+  },
+  {
+    "id": "ats-012",
+    "title": "Hands-On Electronics Workshop for Engineering Students",
+    "slug": "electronics-workshop-students",
+    "date": "2026-03-18",
+    "category": "Training & Workshops",
+    "tags": ["Workshops", "Training", "Electronics", "Students"],
+    "excerpt": "A look at our recent hands-on electronics workshop covering Arduino, sensors, PCB design, and real-world project building for engineering students.",
+    "url": "/blog/electronics-workshop-students"
+  },
+  {
+    "id": "ats-013",
+    "title": "Engineering Project Ideas for Final Year Students",
+    "slug": "engineering-project-ideas-final-year",
+    "date": "2026-07-03",
+    "category": "Learning & Innovation",
+    "tags": ["Projects", "Engineering", "Students", "DIY", "Final Year"],
+    "excerpt": "Explore innovative final year engineering project ideas across electrical, electronics, computer, and mechanical domains with complete guidance and documentation.",
+    "url": "/blog/engineering-project-ideas-final-year"
+  },
+  {
+    "id": "ats-014",
+    "title": "Industrial Training: Bridging the Gap Between College and Industry",
+    "slug": "industrial-training-college-industry",
+    "date": "2026-06-28",
+    "category": "Learning & Innovation",
+    "tags": ["Training", "Internship", "Industry", "Career", "Skills"],
+    "excerpt": "How industrial training programs help engineering students gain practical skills, real-world exposure, and career readiness before graduation.",
+    "url": "/blog/industrial-training-college-industry"
+  },
+  {
+    "id": "ats-015",
+    "title": "Hands-On PCB Design Workshop: From Schematic to Fabrication",
+    "slug": "pcb-design-workshop",
+    "date": "2026-06-20",
+    "category": "Learning & Innovation",
+    "tags": ["Workshops", "PCB", "Electronics", "Design", "Hands-On"],
+    "excerpt": "A detailed recap of our PCB design workshop where participants learned schematic design, layout routing, Gerber generation, and PCB ordering.",
+    "url": "/blog/pcb-design-workshop"
+  },
+  {
+    "id": "ats-016",
+    "title": "Workplace Safety Tips Every Small Business Should Follow",
+    "slug": "workplace-safety-small-business",
+    "date": "2026-07-01",
+    "category": "Others",
+    "tags": ["Safety", "Workplace", "Business", "Compliance"],
+    "excerpt": "Essential workplace safety guidelines for small businesses — from fire safety and ergonomics to emergency preparedness and employee training.",
+    "url": "/blog/workplace-safety-small-business"
+  },
+  {
+    "id": "ats-017",
+    "title": "How to Build a Professional Network as a Freelancer",
+    "slug": "build-professional-network-freelancer",
+    "date": "2026-06-15",
+    "category": "Others",
+    "tags": ["Freelancing", "Networking", "Career", "Growth"],
+    "excerpt": "Practical strategies for freelancers to build a strong professional network — online presence, client referrals, industry events, and social media.",
+    "url": "/blog/build-professional-network-freelancer"
+  },
+  {
+    "id": "ats-018",
+    "title": "Digital Tools Every Small Business Should Use in 2026",
+    "slug": "digital-tools-small-business-2026",
+    "date": "2026-06-08",
+    "category": "Others",
+    "tags": ["Tools", "Productivity", "Business", "Software"],
+    "excerpt": "A curated list of essential digital tools for small businesses — project management, accounting, CRM, communication, and marketing automation.",
+    "url": "/blog/digital-tools-small-business-2026"
+  }
+]

@@ -55,5 +55,22 @@
 /modules/seniority/pages/seniority-list          /app/seniority/seniority-list.html              301
 /modules/seniority/pages/seniority-management     /app/seniority/seniority-management.html        301
 
+# Blog posts — clean /blog/:slug URLs
+/blog/modern-portfolio-cloudflare-pages       /blog/posts/modern-portfolio-cloudflare-pages.html       200
+/blog/digitizing-society-management           /blog/posts/digitizing-society-management.html           200
+/blog/local-seo-navi-mumbai                   /blog/posts/local-seo-navi-mumbai.html                   200
+/blog/drone-photography-real-estate           /blog/posts/drone-photography-real-estate.html           200
+/blog/brand-identity-design                   /blog/posts/brand-identity-design.html                   200
+/blog/industrial-electrical-maintenance       /blog/posts/industrial-electrical-maintenance.html       200
+/blog/automotive-diagnostics-guide            /blog/posts/automotive-diagnostics-guide.html            200
+/blog/chatgpt-business-ai                     /blog/posts/chatgpt-business-ai.html                     200
+/blog/electronics-workshop-students           /blog/posts/electronics-workshop-students.html           200
+/blog/engineering-project-ideas-final-year     /blog/posts/engineering-project-ideas-final-year.html     200
+/blog/industrial-training-college-industry     /blog/posts/industrial-training-college-industry.html     200
+/blog/pcb-design-workshop                      /blog/posts/pcb-design-workshop.html                      200
+/blog/workplace-safety-small-business           /blog/posts/workplace-safety-small-business.html           200
+/blog/build-professional-network-freelancer     /blog/posts/build-professional-network-freelancer.html     200
+/blog/digital-tools-small-business-2026         /blog/posts/digital-tools-small-business-2026.html         200
+
 # Catch site assets
 # /assets/*               /assets/:splat                                            200
