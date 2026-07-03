@@ -88,6 +88,18 @@
   <div id="footer"></div>
 
   <script>
+    (async function() {
+      try {
+        if (typeof AUTH !== 'undefined' && AUTH.getSession) {
+          var existingSession = await AUTH.getSession();
+          if (existingSession) {
+            window.location.href = '/dashboard';
+            return;
+          }
+        }
+      } catch (e) {}
+    })();
+
     async function handleGoogleSignIn() {
       try {
         await AUTH.signInWithGoogle();

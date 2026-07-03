@@ -37,12 +37,12 @@ const AUTH = {
     return data;
   },
 
-  async signInWithGoogle() {
+  async signInWithGoogle(redirect) {
+    var dest = `${window.location.origin}/auth/callback`;
+    if (redirect) dest += '?redirect=' + encodeURIComponent(redirect);
     const { data, error } = await SUPABASE.auth.signInWithOAuth({
       provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
+      options: { redirectTo: dest },
     });
     if (error) throw error;
     return data;

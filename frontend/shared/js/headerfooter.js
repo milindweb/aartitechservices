@@ -93,6 +93,29 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /**
+   * Check if user has an active session from localStorage
+   * (works for both Supabase v1 and v2 storage keys)
+   */
+  function hasAuthSession() {
+    try {
+      // Supabase v2: sb-<project_ref>-auth-token
+      var v2Key = 'sb-ywnqqvebqzsohlwbtpiz-auth-token';
+      var v2Data = localStorage.getItem(v2Key);
+      if (v2Data) {
+        var parsed = JSON.parse(v2Data);
+        if (parsed && (parsed.access_token || parsed.currentSession)) return true;
+      }
+      // Supabase v1 legacy key
+      var v1Data = localStorage.getItem('supabase.auth.token');
+      if (v1Data) {
+        var parsed = JSON.parse(v1Data);
+        if (parsed && parsed.currentSession) return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
+  /**
    * Show dashboard link only when user has an active session
    */
   function updateAuthNavLink(headerRoot) {
@@ -100,20 +123,13 @@ document.addEventListener("DOMContentLoaded", () => {
     var mobileItem = document.getElementById('mobileDashboardItem');
     if (!desktopItem) return;
 
-    try {
-      var sessionData = localStorage.getItem('supabase.auth.token');
-      if (sessionData) {
-        var parsed = JSON.parse(sessionData);
-        if (parsed && parsed.currentSession) {
-          desktopItem.style.display = '';
-          if (mobileItem) mobileItem.style.display = '';
-          return;
-        }
-      }
-    } catch (e) {}
-
-    desktopItem.style.display = 'none';
-    if (mobileItem) mobileItem.style.display = 'none';
+    if (hasAuthSession()) {
+      desktopItem.style.display = '';
+      if (mobileItem) mobileItem.style.display = '';
+    } else {
+      desktopItem.style.display = 'none';
+      if (mobileItem) mobileItem.style.display = 'none';
+    }
   }
 
   /**
@@ -186,7 +202,34 @@ document.addEventListener("DOMContentLoaded", () => {
   /**
    * Initialize Footer Functionality
    */
+  function updateFooterAuthLinks() {
+    var hasSession = hasAuthSession();
+
+    var dashItem = document.getElementById('footerDashboardItem');
+    var loginItem = document.getElementById('footerLoginItem');
+    var logoutItem = document.getElementById('footerLogoutItem');
+
+    if (dashItem) dashItem.style.display = hasSession ? '' : 'none';
+    if (loginItem) loginItem.style.display = hasSession ? 'none' : '';
+    if (logoutItem) {
+      logoutItem.style.display = hasSession ? '' : 'none';
+      var logoutLink = logoutItem.querySelector('a');
+      if (logoutLink) {
+        logoutLink.onclick = function(e) {
+          e.preventDefault();
+          if (typeof AUTH !== 'undefined' && AUTH.signOut) {
+            AUTH.signOut();
+          } else {
+            window.location.href = '/login';
+          }
+        };
+      }
+    }
+  }
+
   function initFooter(footerRoot) {
+    updateFooterAuthLinks();
+
     footerRoot.querySelectorAll(".hf-footer-links a[href^='#']").forEach((link) => {
       link.addEventListener("click", function (e) {
         const target = document.querySelector(this.getAttribute("href"));

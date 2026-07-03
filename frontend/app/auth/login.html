@@ -72,6 +72,19 @@
   <div id="footer"></div>
 
   <script>
+    (async function() {
+      try {
+        if (typeof AUTH !== 'undefined' && AUTH.getSession) {
+          var existingSession = await AUTH.getSession();
+          if (existingSession) {
+            var r = new URLSearchParams(window.location.search).get('redirect') || '/dashboard';
+            window.location.href = r;
+            return;
+          }
+        }
+      } catch (e) {}
+    })();
+
     const urlParams = new URLSearchParams(window.location.search);
     const redirectTo = urlParams.get('redirect') || '/dashboard';
 
@@ -101,7 +114,7 @@
 
     async function handleGoogleSignIn() {
       try {
-        await AUTH.signInWithGoogle();
+        await AUTH.signInWithGoogle(redirectTo !== '/dashboard' ? redirectTo : null);
       } catch (err) {
         showError(err.message || 'Google sign-in failed');
       }

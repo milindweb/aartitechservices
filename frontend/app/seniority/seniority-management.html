@@ -11,6 +11,10 @@
   <link rel="stylesheet" href="/shared/css/headerfooter.css">
   <!-- Font Awesome (for icons in footer) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Supabase + Auth -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/config/supabase.js"></script>
+  <script src="/shared/js/auth.js"></script>
     <!-- JS to load header/footer -->
   <script src="/shared/js/headerfooter.js" defer></script>
 
@@ -87,11 +91,21 @@
 
 <script>
 // Auth guard
-(function() {
+(async function() {
   try {
-    var sd = localStorage.getItem('supabase.auth.token');
-    if (!sd || !JSON.parse(sd).currentSession) {
-      window.location.href = '/login?redirect=' + encodeURIComponent(window.location.pathname);
+    if (typeof AUTH !== 'undefined' && AUTH.requireAuth) {
+      var session = await AUTH.requireAuth();
+      if (!session) return;
+    } else {
+      var sd = localStorage.getItem('sb-ywnqqvebqzsohlwbtpiz-auth-token') || localStorage.getItem('supabase.auth.token');
+      if (!sd) {
+        window.location.href = '/login?redirect=' + encodeURIComponent(window.location.pathname);
+      } else {
+        var parsed = JSON.parse(sd);
+        if (!parsed || !(parsed.access_token || parsed.currentSession)) {
+          window.location.href = '/login?redirect=' + encodeURIComponent(window.location.pathname);
+        }
+      }
     }
   } catch(e) {
     window.location.href = '/login';

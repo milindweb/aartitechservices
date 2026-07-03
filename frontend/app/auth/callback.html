@@ -58,6 +58,12 @@
       const queryParams = new URLSearchParams(window.location.search);
       const type = queryParams.get('type') || hashParams.get('type');
 
+      if (!SUPABASE) {
+        console.error('Supabase not initialized');
+        window.location.href = '/login?error=config_error';
+        return;
+      }
+
       const { data, error } = await SUPABASE.auth.getSession();
 
       if (error) {
