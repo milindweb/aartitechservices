@@ -20,7 +20,7 @@ const AUTH = {
         .from('users_profile')
         .select('*')
         .eq('id', authData.user.id)
-        .single();
+        .maybeSingle();
       return { ...authData.user, profile: profile || null };
     } catch (err) {
       console.error('getUser error:', err);
