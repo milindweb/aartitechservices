@@ -115,6 +115,11 @@
           return;
         }
 
+        if (data?.session) {
+          window.location.href = '/dashboard';
+          return;
+        }
+
         showSuccess('Account created! Check your email for a confirmation link.');
         document.getElementById('registerForm').reset();
         btn.classList.remove('loading');

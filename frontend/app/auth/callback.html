@@ -66,7 +66,7 @@
         return;
       }
 
-      if (type === 'recovery' || data?.session) {
+      if (type === 'recovery') {
         window.location.href = '/reset-password?type=recovery';
       } else if (data?.session) {
         window.location.href = '/dashboard';
