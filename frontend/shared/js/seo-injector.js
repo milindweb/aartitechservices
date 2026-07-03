@@ -10,10 +10,14 @@
   var isArticle = page.type === 'article' || canonical.indexOf('/blog/') === 0;
   var ogImageUrl = page.ogImage || cfg.url + cfg.ogImage;
 
-  function setTag(tag, attrs, parent) {
-    var el = document.createElement(tag);
-    for (var k in attrs) el.setAttribute(k, attrs[k]);
-    (parent || document.head).appendChild(el);
+  function setLink(rel, href, extra) {
+    var existing = document.querySelector('link[rel="' + rel + '"][href="' + href + '"]');
+    if (existing) return;
+    var el = document.createElement('link');
+    el.setAttribute('rel', rel);
+    el.setAttribute('href', href);
+    if (extra) for (var k in extra) el.setAttribute(k, extra[k]);
+    document.head.appendChild(el);
   }
 
   function setMeta(name, content, prop) {
@@ -41,6 +45,11 @@
     link.setAttribute('href', fullUrl);
     document.head.appendChild(link);
   }
+
+  setLink('icon', '/shared/assets/img/favicon.png', { type: 'image/png' });
+  setLink('apple-touch-icon', '/shared/assets/img/favicon.png');
+  setLink('preconnect', 'https://cdnjs.cloudflare.com');
+  setLink('preconnect', 'https://cdn.jsdelivr.net');
 
   setMeta('theme-color', '#0f172a');
   setMeta('og:site_name', cfg.brand.name, true);
