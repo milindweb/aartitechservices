@@ -66,6 +66,9 @@
 /modules/seniority/pages/seniority-management     /app/seniority/seniority-management.html        301
 
 # Blog posts — clean /blog/:slug URLs
+/blog/gbp-optimization-navi-mumbai            /blog/posts/gbp-optimization-navi-mumbai.html            200
+/blog/zero-budget-content-marketing           /blog/posts/zero-budget-content-marketing.html           200
+/blog/seo-vs-google-ads                       /blog/posts/seo-vs-google-ads.html                       200
 /blog/modern-portfolio-cloudflare-pages       /blog/posts/modern-portfolio-cloudflare-pages.html       200
 /blog/digitizing-society-management           /blog/posts/digitizing-society-management.html           200
 /blog/local-seo-navi-mumbai                   /blog/posts/local-seo-navi-mumbai.html                   200

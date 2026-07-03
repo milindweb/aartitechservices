@@ -1,5 +1,35 @@
 [
   {
+    "id": "ats-023",
+    "title": "SEO vs Google Ads: Where Should a Small Business Invest in 2026?",
+    "slug": "seo-vs-google-ads",
+    "date": "2026-07-14",
+    "category": "Digital Marketing & SEO",
+    "tags": ["SEO", "Google Ads", "PPC", "Digital Marketing", "Small Business"],
+    "excerpt": "Compare SEO and Google Ads for Indian small businesses. Realistic costs, timelines, ROI, and a decision framework to choose the right strategy for your Navi Mumbai business.",
+    "url": "/blog/seo-vs-google-ads"
+  },
+  {
+    "id": "ats-022",
+    "title": "Content Marketing on a Zero Rupee Budget: A Guide for Indian Small Businesses",
+    "slug": "zero-budget-content-marketing",
+    "date": "2026-07-12",
+    "category": "Digital Marketing & SEO",
+    "tags": ["Content Marketing", "Social Media", "Small Business", "Budget Marketing"],
+    "excerpt": "Practical content marketing strategies that cost nothing but deliver real results. Blog, WhatsApp, Instagram, and local collaborations for Navi Mumbai small businesses and freelancers.",
+    "url": "/blog/zero-budget-content-marketing"
+  },
+  {
+    "id": "ats-021",
+    "title": "Google Business Profile Optimization for Navi Mumbai Businesses",
+    "slug": "gbp-optimization-navi-mumbai",
+    "date": "2026-07-10",
+    "category": "Digital Marketing & SEO",
+    "tags": ["Google Business Profile", "Local SEO", "Navi Mumbai", "Small Business"],
+    "excerpt": "Complete guide to optimizing your Google Business Profile for Navi Mumbai local search. GBP setup, category selection, posts, reviews, and ranking tips for Uran, Panvel, CBD Belapur, and beyond.",
+    "url": "/blog/gbp-optimization-navi-mumbai"
+  },
+  {
     "id": "ats-001",
     "title": "Building a Modern Portfolio Website with Cloudflare Pages & Vanilla JS",
     "slug": "modern-portfolio-cloudflare-pages",
