@@ -33,6 +33,7 @@
 /reset-password      /app/auth/reset-password.html                                          200
 /auth/callback       /app/auth/callback.html                                                200
 /dashboard           /app/dashboard.html                                                    200
+/app/profile         /app/profile.html                                                      200
 
 # Seniority
 /app/seniority           /app/seniority/seniority-list.html                                    200
