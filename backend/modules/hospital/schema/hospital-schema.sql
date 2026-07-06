@@ -329,17 +329,57 @@ ALTER TABLE public.hospital_billing_summary ENABLE ROW LEVEL SECURITY;
 -- INDEXES
 -- ============================================================
 
-CREATE INDEX idx_hospital_patients_uhid ON public.hospital_patients(uhid);
-CREATE INDEX idx_hospital_patients_mobile ON public.hospital_patients(mobile);
-CREATE INDEX idx_hospital_patients_name ON public.hospital_patients(full_name);
-CREATE INDEX idx_hospital_visits_patient ON public.hospital_visits(patient_id);
-CREATE INDEX idx_hospital_visits_date ON public.hospital_visits(visit_date DESC);
-CREATE INDEX idx_hospital_visits_opd ON public.hospital_visits(opd_number);
-CREATE INDEX idx_hospital_visits_status ON public.hospital_visits(visit_status);
-CREATE INDEX idx_hospital_prescriptions_visit ON public.hospital_prescriptions(visit_id);
-CREATE INDEX idx_hospital_investigations_visit ON public.hospital_investigation_results(visit_id);
-CREATE INDEX idx_hospital_billing_visit ON public.hospital_billing_items(visit_id);
-CREATE INDEX idx_hospital_followups_visit ON public.hospital_followups(visit_id);
-CREATE INDEX idx_hospital_opd_appts_patient ON public.hospital_opd_appointments(patient_id);
-CREATE INDEX idx_hospital_opd_appts_date ON public.hospital_opd_appointments(appointment_date DESC);
-CREATE INDEX idx_hospital_opd_appts_status ON public.hospital_opd_appointments(status);
+CREATE INDEX IF NOT EXISTS idx_hospital_patients_uhid ON public.hospital_patients(uhid);
+CREATE INDEX IF NOT EXISTS idx_hospital_patients_mobile ON public.hospital_patients(mobile);
+CREATE INDEX IF NOT EXISTS idx_hospital_patients_name ON public.hospital_patients(full_name);
+CREATE INDEX IF NOT EXISTS idx_hospital_visits_patient ON public.hospital_visits(patient_id);
+CREATE INDEX IF NOT EXISTS idx_hospital_visits_date ON public.hospital_visits(visit_date DESC);
+CREATE INDEX IF NOT EXISTS idx_hospital_visits_opd ON public.hospital_visits(opd_number);
+CREATE INDEX IF NOT EXISTS idx_hospital_visits_status ON public.hospital_visits(visit_status);
+CREATE INDEX IF NOT EXISTS idx_hospital_prescriptions_visit ON public.hospital_prescriptions(visit_id);
+CREATE INDEX IF NOT EXISTS idx_hospital_investigations_visit ON public.hospital_investigation_results(visit_id);
+CREATE INDEX IF NOT EXISTS idx_hospital_billing_visit ON public.hospital_billing_items(visit_id);
+CREATE INDEX IF NOT EXISTS idx_hospital_followups_visit ON public.hospital_followups(visit_id);
+CREATE INDEX IF NOT EXISTS idx_hospital_opd_appts_patient ON public.hospital_opd_appointments(patient_id);
+CREATE INDEX IF NOT EXISTS idx_hospital_opd_appts_date ON public.hospital_opd_appointments(appointment_date DESC);
+CREATE INDEX IF NOT EXISTS idx_hospital_opd_appts_status ON public.hospital_opd_appointments(status);
+
+-- ============================================================
+-- RLS POLICIES
+-- ============================================================
+
+-- All authenticated users can read/write OPD data
+DO $$
+DECLARE
+  tbl TEXT;
+  tables TEXT[] := ARRAY[
+    'hospital_patients', 'hospital_visits', 'hospital_vitals',
+    'hospital_chief_complaints', 'hospital_histories', 'hospital_examinations',
+    'hospital_investigation_results', 'hospital_diagnoses', 'hospital_prescriptions',
+    'hospital_procedures', 'hospital_advice', 'hospital_special_instructions',
+    'hospital_followups', 'hospital_doctor_notes', 'hospital_billing_items',
+    'hospital_billing_summary', 'hospital_opd_appointments', 'hospital_doctor_master'
+  ];
+BEGIN
+  FOREACH tbl IN ARRAY tables LOOP
+    EXECUTE format('DROP POLICY IF EXISTS "All auth users can view %s" ON %I', tbl, tbl);
+    EXECUTE format('DROP POLICY IF EXISTS "All auth users can insert %s" ON %I', tbl, tbl);
+    EXECUTE format('DROP POLICY IF EXISTS "All auth users can update %s" ON %I', tbl, tbl);
+
+    EXECUTE format('
+      CREATE POLICY "All auth users can view %s"
+        ON %I FOR SELECT
+        USING (auth.role() = ''authenticated'')', tbl, tbl);
+
+    EXECUTE format('
+      CREATE POLICY "All auth users can insert %s"
+        ON %I FOR INSERT
+        WITH CHECK (auth.role() = ''authenticated'')', tbl, tbl);
+
+    EXECUTE format('
+      CREATE POLICY "All auth users can update %s"
+        ON %I FOR UPDATE
+        USING (auth.role() = ''authenticated'')
+        WITH CHECK (auth.role() = ''authenticated'')', tbl, tbl);
+  END LOOP;
+END $$;

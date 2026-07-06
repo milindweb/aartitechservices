@@ -48,8 +48,12 @@
     (async function() {
       if (!patientId) { document.getElementById('profileContent').innerHTML = '<p style="color:var(--danger);">No patient ID provided.</p>'; return; }
 
-      // Load patient
-      const { data: patient } = await SUPABASE.from('hospital_patients').select('*').or(`uhid.eq.${patientId},id.eq.${patientId}`).maybeSingle();
+      // Load patient (try by UHID first, then by ID — .or() fails because id is UUID type)
+      let { data: patient } = await SUPABASE.from('hospital_patients').select('*').eq('uhid', patientId).maybeSingle();
+      if (!patient) {
+        const result = await SUPABASE.from('hospital_patients').select('*').eq('id', patientId).maybeSingle();
+        patient = result.data;
+      }
       if (!patient) { document.getElementById('profileContent').innerHTML = '<p style="color:var(--danger);">Patient not found.</p>'; return; }
 
       // Load visits
