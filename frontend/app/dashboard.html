@@ -208,7 +208,7 @@
       }
 
       const name = user.profile?.full_name || user.email?.split('@')[0] || 'User';
-      const role = user.profile?.role || 'user';
+      const role = (user.profile?.role || 'user').toLowerCase().trim();
       const initial = name.charAt(0).toUpperCase();
 
       document.getElementById('userName').textContent = name;
@@ -216,28 +216,26 @@
       document.getElementById('userAvatar').textContent = initial;
 
       var titleEl = document.getElementById('dashboardTitle');
+      var devAdminCard = document.getElementById('devAdminCard');
 
       if (role === 'developer') {
-        // Developer: full dashboard with all modules
         titleEl.innerHTML = 'Developer Dashboard<small>Full access — manage all modules</small>';
         document.getElementById('devModules').style.display = '';
+        if (devAdminCard) devAdminCard.style.display = '';
       } else if (role === 'admin') {
-        // Admin: simpler dashboard
         titleEl.innerHTML = 'Admin Dashboard<small>User &amp; system management</small>';
         document.getElementById('adminModules').style.display = '';
       } else if (role === 'hospital_admin') {
         titleEl.innerHTML = 'Hospital Dashboard<small>Hospital management</small>';
         document.getElementById('devModules').style.display = '';
-        var devAdminCard = document.getElementById('devAdminCard');
         if (devAdminCard) devAdminCard.style.display = 'none';
       } else if (role === 'senior_admin') {
         titleEl.innerHTML = 'Dashboard<small>Senior Admin</small>';
         document.getElementById('devModules').style.display = '';
+        if (devAdminCard) devAdminCard.style.display = '';
       } else {
-        // Regular user
         titleEl.innerHTML = 'Dashboard';
         document.getElementById('devModules').style.display = '';
-        var devAdminCard = document.getElementById('devAdminCard');
         if (devAdminCard) devAdminCard.style.display = 'none';
       }
     })();
