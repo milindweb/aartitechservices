@@ -7,7 +7,7 @@
 -- ============================================================
 
 -- Doctor Master (local clinics/hospitals — NOT linked to auth users)
-CREATE TABLE public.hospital_doctor_master (
+CREATE TABLE IF NOT EXISTS public.hospital_doctor_master (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name VARCHAR(255) NOT NULL,
   department_id UUID REFERENCES public.hospital_departments(id),
@@ -23,37 +23,14 @@ ALTER TABLE public.hospital_doctor_master ENABLE ROW LEVEL SECURITY;
 -- OPD / PATIENT MANAGEMENT TABLES
 -- ============================================================
 
--- OPD Appointments (for hospital module — separate from main hospital_appointments)
-CREATE TABLE public.hospital_opd_appointments (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  patient_id UUID NOT NULL REFERENCES public.hospital_patients(id) ON DELETE CASCADE,
-  doctor_id UUID REFERENCES public.hospital_doctor_master(id),
-  doctor_name VARCHAR(255),
-  department_id UUID REFERENCES public.hospital_departments(id),
-  appointment_date TIMESTAMP NOT NULL DEFAULT NOW(),
-  duration_minutes INT DEFAULT 15,
-  status VARCHAR(20) DEFAULT 'scheduled' CHECK (status IN ('scheduled', 'confirmed', 'completed', 'cancelled')),
-  notes TEXT,
-  created_by UUID REFERENCES auth.users(id),
-  created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW()
-);
-
-ALTER TABLE public.hospital_opd_appointments ENABLE ROW LEVEL SECURITY;
-
--- Patients
-CREATE TABLE public.hospital_patients (
+-- Patients (must be created before hospital_opd_appointments)
+CREATE TABLE IF NOT EXISTS public.hospital_patients (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   uhid VARCHAR(50) UNIQUE NOT NULL,
   full_name VARCHAR(255) NOT NULL,
   gender VARCHAR(10),
   date_of_birth DATE,
-  age INT GENERATED ALWAYS AS (
-    CASE
-      WHEN date_of_birth IS NOT NULL THEN EXTRACT(YEAR FROM AGE(CURRENT_DATE, date_of_birth))::INT
-      ELSE NULL
-    END
-  ) STORED,
+  age INT,
   mobile VARCHAR(20),
   email VARCHAR(255),
   address TEXT,
@@ -92,10 +69,29 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS trg_hospital_patients_uhid ON public.hospital_patients;
 CREATE TRIGGER trg_hospital_patients_uhid
   BEFORE INSERT ON public.hospital_patients
   FOR EACH ROW
   EXECUTE FUNCTION public.generate_uhid();
+
+-- OPD Appointments (for hospital module — separate from main hospital_appointments)
+CREATE TABLE IF NOT EXISTS public.hospital_opd_appointments (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  patient_id UUID NOT NULL REFERENCES public.hospital_patients(id) ON DELETE CASCADE,
+  doctor_id UUID REFERENCES public.hospital_doctor_master(id),
+  doctor_name VARCHAR(255),
+  department_id UUID REFERENCES public.hospital_departments(id),
+  appointment_date TIMESTAMP NOT NULL DEFAULT NOW(),
+  duration_minutes INT DEFAULT 15,
+  status VARCHAR(20) DEFAULT 'scheduled' CHECK (status IN ('scheduled', 'confirmed', 'completed', 'cancelled')),
+  notes TEXT,
+  created_by UUID REFERENCES auth.users(id),
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+
+ALTER TABLE public.hospital_opd_appointments ENABLE ROW LEVEL SECURITY;
 
 -- OPD Visits
 CREATE TABLE public.hospital_visits (

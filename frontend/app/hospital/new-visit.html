@@ -24,15 +24,21 @@
 <body>
   <div id="header"></div>
   <div class="visit-form" id="app">
-    <h1 style="margin-bottom:16px;"><i class="fas fa-plus-circle"></i> New OPD Visit</h1>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
+      <h1 style="margin:0;"><i class="fas fa-plus-circle"></i> New OPD Visit</h1>
+      <div>
+        <span id="draftIndicator" style="display:none;font-size:0.85rem;margin-right:12px;color:var(--success);"><i class="fas fa-check-circle"></i> <span></span></span>
+        <button class="hosp-btn" style="font-size:0.8rem;padding:4px 10px;" onclick="clearDraft()"><i class="fas fa-trash-alt"></i> Clear Draft</button>
+      </div>
+    </div>
     <div class="hosp-steps" id="navSteps">
-      <span class="hosp-step active" data-step="1">1. Patient</span>
-      <span class="hosp-step" data-step="2">2. Doctor</span>
-      <span class="hosp-step" data-step="3">3. Vitals</span>
-      <span class="hosp-step" data-step="4">4. Clinical</span>
-      <span class="hosp-step" data-step="5">5. Prescription</span>
-      <span class="hosp-step" data-step="6">6. Billing</span>
-      <span class="hosp-step" data-step="7">7. Review & Save</span>
+      <span class="hosp-step active" data-step="1" onclick="goToStep(1)">1. Patient</span>
+      <span class="hosp-step" data-step="2" onclick="goToStep(2)">2. Doctor</span>
+      <span class="hosp-step" data-step="3" onclick="goToStep(3)">3. Vitals</span>
+      <span class="hosp-step" data-step="4" onclick="goToStep(4)">4. Clinical</span>
+      <span class="hosp-step" data-step="5" onclick="goToStep(5)">5. Prescription</span>
+      <span class="hosp-step" data-step="6" onclick="goToStep(6)">6. Billing</span>
+      <span class="hosp-step" data-step="7" onclick="goToStep(7)">7. Review & Save</span>
     </div>
 
     <!-- Step 1: Patient Info -->
@@ -64,7 +70,10 @@
       <div class="hosp-row">
         <div class="hosp-group"><label>Address</label><textarea id="address" rows="2"></textarea></div>
       </div>
-      <div style="text-align:right;margin-top:12px;"><button class="hosp-btn hosp-btn-primary" onclick="nextStep(2)">Next <i class="fas fa-arrow-right"></i></button></div>
+      <div style="display:flex;justify-content:space-between;margin-top:12px;">
+        <span></span>
+        <button class="hosp-btn hosp-btn-primary" onclick="nextStep()">Next <i class="fas fa-arrow-right"></i></button>
+      </div>
     </div>
 
     <!-- Step 2: Doctor Info -->
@@ -76,8 +85,8 @@
         <div class="hosp-group"><label>Referred By</label><input type="text" id="referredBy"></div>
       </div>
       <div style="display:flex;justify-content:space-between;margin-top:12px;">
-        <button class="hosp-btn" onclick="prevStep(1)"><i class="fas fa-arrow-left"></i> Back</button>
-        <button class="hosp-btn hosp-btn-primary" onclick="nextStep(3)">Next <i class="fas fa-arrow-right"></i></button>
+        <button class="hosp-btn" onclick="prevStep()"><i class="fas fa-arrow-left"></i> Back</button>
+        <button class="hosp-btn hosp-btn-primary" onclick="nextStep()">Next <i class="fas fa-arrow-right"></i></button>
       </div>
     </div>
 
@@ -104,8 +113,8 @@
         <div class="hosp-group"><label>Blood Sugar Type</label><select id="bloodSugarType"><option value="">Select</option><option>Fasting</option><option>Post Prandial</option><option>Random</option><option>HbA1c</option></select></div>
       </div>
       <div style="display:flex;justify-content:space-between;margin-top:12px;">
-        <button class="hosp-btn" onclick="prevStep(2)"><i class="fas fa-arrow-left"></i> Back</button>
-        <button class="hosp-btn hosp-btn-primary" onclick="nextStep(4)">Next <i class="fas fa-arrow-right"></i></button>
+        <button class="hosp-btn" onclick="prevStep()"><i class="fas fa-arrow-left"></i> Back</button>
+        <button class="hosp-btn hosp-btn-primary" onclick="nextStep()">Next <i class="fas fa-arrow-right"></i></button>
       </div>
     </div>
 
@@ -189,8 +198,8 @@
       </div>
 
       <div style="display:flex;justify-content:space-between;margin-top:12px;">
-        <button class="hosp-btn" onclick="prevStep(3)"><i class="fas fa-arrow-left"></i> Back</button>
-        <button class="hosp-btn hosp-btn-primary" onclick="nextStep(5)">Next <i class="fas fa-arrow-right"></i></button>
+        <button class="hosp-btn" onclick="prevStep()"><i class="fas fa-arrow-left"></i> Back</button>
+        <button class="hosp-btn hosp-btn-primary" onclick="nextStep()">Next <i class="fas fa-arrow-right"></i></button>
       </div>
     </div>
 
@@ -200,8 +209,8 @@
       <div id="prescriptionsList"></div>
       <div class="hosp-add-row" onclick="addPrescription()"><i class="fas fa-plus"></i> Add Medicine</div>
       <div style="display:flex;justify-content:space-between;margin-top:12px;">
-        <button class="hosp-btn" onclick="prevStep(4)"><i class="fas fa-arrow-left"></i> Back</button>
-        <button class="hosp-btn hosp-btn-primary" onclick="nextStep(6)">Next <i class="fas fa-arrow-right"></i></button>
+        <button class="hosp-btn" onclick="prevStep()"><i class="fas fa-arrow-left"></i> Back</button>
+        <button class="hosp-btn hosp-btn-primary" onclick="nextStep()">Next <i class="fas fa-arrow-right"></i></button>
       </div>
     </div>
 
@@ -219,8 +228,8 @@
         <div class="hosp-grand">Grand Total: ₹<span id="billGrandTotal">0.00</span></div>
       </div>
       <div style="display:flex;justify-content:space-between;margin-top:12px;">
-        <button class="hosp-btn" onclick="prevStep(5)"><i class="fas fa-arrow-left"></i> Back</button>
-        <button class="hosp-btn hosp-btn-primary" onclick="nextStep(7)">Next <i class="fas fa-arrow-right"></i></button>
+        <button class="hosp-btn" onclick="prevStep()"><i class="fas fa-arrow-left"></i> Back</button>
+        <button class="hosp-btn hosp-btn-primary" onclick="nextStep()">Next <i class="fas fa-arrow-right"></i></button>
       </div>
     </div>
 
@@ -229,7 +238,7 @@
       <h3><i class="fas fa-check-circle"></i> Review & Save</h3>
       <div id="reviewContent"></div>
       <div style="display:flex;justify-content:space-between;margin-top:16px;">
-        <button class="hosp-btn" onclick="prevStep(6)"><i class="fas fa-arrow-left"></i> Back</button>
+        <button class="hosp-btn" onclick="prevStep()"><i class="fas fa-arrow-left"></i> Back</button>
         <button class="hosp-btn hosp-btn-success" onclick="saveVisit()" id="saveBtn"><i class="fas fa-save"></i> Save Visit</button>
       </div>
     </div>
@@ -243,9 +252,11 @@
     let complaintCount = 0, investigationCount = 0, prescriptionCount = 0, billingCount = 0;
     let selectedPatientId = null;
     let searchTimer;
+    const DRAFT_KEY = 'newVisitDraft';
 
-    // Navigation
+    // ----- Navigation with auto-save -----
     function showStep(n) {
+      saveDraft();
       for (let i = 1; i <= 7; i++) {
         document.getElementById('step' + i).style.display = i === n ? 'block' : 'none';
         const nav = document.querySelector(`.hosp-step[data-step="${i}"]`);
@@ -255,8 +266,106 @@
       if (n === 5) loadMedicineAutocomplete();
       if (n === 7) buildReview();
     }
-    function nextStep(n) { showStep(n); }
-    function prevStep(n) { showStep(n); }
+    function goToStep(n) { if (n >= 1 && n <= 7) showStep(n); }
+    function nextStep() { if (currentStep < 7) showStep(currentStep + 1); }
+    function prevStep() { if (currentStep > 1) showStep(currentStep - 1); }
+
+    // ----- Draft auto-save / restore -----
+    function collectDraft() {
+      const data = {};
+      document.querySelectorAll('#app input, #app select, #app textarea').forEach(el => {
+        if (el.id) data[el.id] = el.value;
+      });
+      data._complaints = [...document.querySelectorAll('#complaintsList .hosp-item-row')].map(el => ({
+        symptom: el.querySelector('.complaint-symptom')?.value || '',
+        duration: el.querySelector('.complaint-duration')?.value || '',
+      }));
+      data._investigations = [...document.querySelectorAll('#investigationsList .hosp-item-row')].map(el => ({
+        test: el.querySelector('.inv-test')?.value || '',
+        result: el.querySelector('.inv-result')?.value || '',
+        range: el.querySelector('.inv-range')?.value || '',
+        remark: el.querySelector('.inv-remark')?.value || '',
+      }));
+      data._prescriptions = [...document.querySelectorAll('.prescription-entry')].map(el => ({
+        medicine: el.querySelector('.rx-medicine')?.value || '',
+        route: el.querySelector('.rx-route')?.value || 'Tablet',
+        frequency: el.querySelector('.rx-frequency')?.value || 'OD',
+        food: el.querySelector('.rx-food')?.value || 'After Food',
+        duration: el.querySelector('.rx-duration')?.value || '',
+        instructions: el.querySelector('.rx-instructions')?.value || '',
+      }));
+      data._billing = [...document.querySelectorAll('.billing-entry')].map(el => ({
+        desc: el.querySelector('.bill-desc')?.value || '',
+        qty: el.querySelector('.bill-qty')?.value || '1',
+        rate: el.querySelector('.bill-rate')?.value || '0',
+      }));
+      data._selectedPatientId = selectedPatientId;
+      data._step = currentStep;
+      return data;
+    }
+
+    function saveDraft() {
+      try {
+        localStorage.setItem(DRAFT_KEY, JSON.stringify(collectDraft()));
+        showDraftIndicator('saved');
+      } catch (e) { console.warn('Draft save failed:', e); }
+    }
+
+    function loadDraft() {
+      const raw = localStorage.getItem(DRAFT_KEY);
+      if (!raw) return false;
+      try {
+        const data = JSON.parse(raw);
+        // Restore simple fields
+        Object.entries(data).forEach(([key, val]) => {
+          if (key.startsWith('_')) return;
+          const el = document.getElementById(key);
+          if (el) el.value = val;
+        });
+        // Restore dynamic items
+        if (data._complaints) {
+          document.getElementById('complaintsList').innerHTML = '';
+          complaintCount = 0;
+          data._complaints.forEach(c => { addComplaint(); const rows = document.querySelectorAll('#complaintsList .hosp-item-row'); const last = rows[rows.length - 1]; if (last) { last.querySelector('.complaint-symptom').value = c.symptom; last.querySelector('.complaint-duration').value = c.duration; } });
+        }
+        if (data._investigations) {
+          document.getElementById('investigationsList').innerHTML = '';
+          investigationCount = 0;
+          data._investigations.forEach(inv => { addInvestigation(); const rows = document.querySelectorAll('#investigationsList .hosp-item-row'); const last = rows[rows.length - 1]; if (last) { last.querySelector('.inv-test').value = inv.test; last.querySelector('.inv-result').value = inv.result; last.querySelector('.inv-range').value = inv.range; last.querySelector('.inv-remark').value = inv.remark; } });
+        }
+        if (data._prescriptions) {
+          document.getElementById('prescriptionsList').innerHTML = '';
+          prescriptionCount = 0;
+          data._prescriptions.forEach(p => { addPrescription(); const rows = document.querySelectorAll('.prescription-entry'); const last = rows[rows.length - 1]; if (last) { last.querySelector('.rx-medicine').value = p.medicine; last.querySelector('.rx-route').value = p.route; last.querySelector('.rx-frequency').value = p.frequency; last.querySelector('.rx-food').value = p.food; last.querySelector('.rx-duration').value = p.duration; last.querySelector('.rx-instructions').value = p.instructions; } });
+        }
+        if (data._billing) {
+          document.getElementById('billingList').innerHTML = '';
+          billingCount = 0;
+          data._billing.forEach(b => { addBillingItem(); const rows = document.querySelectorAll('.billing-entry'); const last = rows[rows.length - 1]; if (last) { last.querySelector('.bill-desc').value = b.desc; last.querySelector('.bill-qty').value = b.qty; last.querySelector('.bill-rate').value = b.rate; } });
+          calcBillSummary();
+        }
+        selectedPatientId = data._selectedPatientId || null;
+        showDraftIndicator('restored');
+        return true;
+      } catch (e) { console.warn('Draft load failed:', e); return false; }
+    }
+
+    function clearDraft() {
+      if (!confirm('Clear saved draft? Unsaved data will be lost.')) return;
+      localStorage.removeItem(DRAFT_KEY);
+      location.reload();
+    }
+
+    let draftTimer;
+    function showDraftIndicator(type) {
+      const el = document.getElementById('draftIndicator');
+      if (!el) return;
+      const txt = el.querySelector('span');
+      if (txt) txt.textContent = type === 'saved' ? 'Draft auto-saved' : 'Draft restored';
+      el.style.display = 'inline';
+      clearTimeout(draftTimer);
+      draftTimer = setTimeout(() => { el.style.display = 'none'; }, 3000);
+    }
 
     // Patient search (debounced)
     function searchPatient() {
@@ -686,11 +795,15 @@
       }
     }
 
-    // Initialize first complaint & investigation
-    addComplaint();
-    addInvestigation();
-    addPrescription();
-    addBillingItem('Consultation Fee', 1, 300);
+    // ----- Init -----
+    (function initDefaults() {
+      if (!loadDraft()) {
+        addComplaint();
+        addInvestigation();
+        addPrescription();
+        addBillingItem('Consultation Fee', 1, 300);
+      }
+    })();
   </script>
 </body>
 </html>
