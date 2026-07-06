@@ -170,6 +170,7 @@ mk9/
 │   │   │   ├── patient-list.html
 │   │   │   ├── patient-profile.html
 │   │   │   ├── appointments.html
+│   │   │   ├── department-list.html (masters reference: depts & doctors)
 │   │   │   ├── components/
 │   │   │   │   └── hospital-nav.html    (sub-navigation: back, home, quick links)
 │   │   │   ├── css/

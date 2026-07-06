@@ -409,20 +409,19 @@
 
     // Load departments on init
     const FALLBACK_DEPARTMENTS = [
-      'General Medicine', 'Cardiology', 'Dermatology', 'ENT', 'Ophthalmology',
-      'Orthopedics', 'Pediatrics', 'Obstetrics & Gynecology', 'Neurology',
-      'Psychiatry', 'Gastroenterology', 'Pulmonology', 'Urology', 'Nephrology',
-      'Endocrinology', 'Dental', 'General Surgery', 'Physiotherapy',
-      'Emergency / Casualty', 'Oncology'
+      'General Medicine', 'Cardiology', 'Emergency / Casualty', 'Pulmonology',
+      'Dental', 'Dermatology', 'Endocrinology', 'Ear, Nose & Throat',
+      'Ophthalmology', 'Gastroenterology', 'Nephrology', 'Neurology',
+      'Neurosurgery', 'Obstetrics & Gynecology', 'Oncology', 'Orthopedics',
+      'Pediatrics', 'Physical Medicine & Rehabilitation', 'Psychiatry',
+      'General Surgery', 'Urology', 'Physiotherapy'
     ];
-    const FALLBACK_DOCTORS = {
-      'General Medicine': ['Dr. Girkar', 'Dr. Nerekar', 'Dr. Sathe', 'Dr. Hajari'],
-      'Cardiology': ['Dr. Sharma', 'Dr. Patil'],
-      'Pediatrics': ['Dr. Mehta', 'Dr. Joshi'],
-      'Orthopedics': ['Dr. Desai', 'Dr. Kulkarni'],
-      'ENT': ['Dr. Shah', 'Dr. Rao'],
-      'Ophthalmology': ['Dr. Iyer', 'Dr. Menon'],
-    };
+    const FALLBACK_DOCTORS = [
+      'Dr. Girkar', 'Dr. Nerekar', 'Dr. Sathe', 'Dr. Hajari',
+      'Dr. Gargi Hospital', 'Dr. Gitai Hospital', 'Dr. Shyamnagar Hospital',
+      'Dr. INHS Sandhani', 'Dr. Terna Hospital', 'Dr. JJ Hospital',
+      'Dr. KEM Hospital', 'Dr. Unknown'
+    ];
 
     (async function init() {
       try {
@@ -461,9 +460,7 @@
         }
       } catch (e) {
         console.warn('Using fallback doctors:', e);
-        const all = new Set();
-        Object.values(FALLBACK_DOCTORS).forEach(list => list.forEach(dr => all.add(dr)));
-        all.forEach(dr => { docSelect.innerHTML += `<option value="${dr}">${dr}</option>`; });
+        FALLBACK_DOCTORS.forEach(dr => { docSelect.innerHTML += `<option value="${dr}">${dr}</option>`; });
       }
       docSelect.innerHTML += '<option value="other">Other</option>';
     }

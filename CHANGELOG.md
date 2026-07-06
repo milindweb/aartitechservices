@@ -1,5 +1,21 @@
 # Changelog
 
+## v1.7.0 — 2026-07-06 — Hospital masters reference page
+
+### Added
+- `frontend/app/hospital/department-list.html` — Masters page with searchable departments (22) and doctors (12) reference lists; loads from Supabase with exact fallback data
+- `/app/hospital/masters` clean URL in `frontend/_redirects`
+
+### Changed
+- `frontend/app/hospital/components/hospital-nav.html` — added "Masters" nav link (fa-book)
+- `frontend/app/hospital/new-visit.html` — fallback lists updated to match exact department codes and doctor registry (flat list: 4 doctors + 7 hospitals + Dr. Unknown)
+
+### Documentation
+- `structure.md`, `README.md`, `SRS-Hospital.md` — updated with new masters page
+- `CHANGELOG.md` — added this entry
+
+---
+
 ## v1.6.0 — 2026-07-06 — Hospital sub-navigation component
 
 ### Added

@@ -35,6 +35,9 @@
 /dashboard           /app/dashboard.html                                                    200
 /app/admin           /app/admin/users.html                                                   200
 
+# Hospital
+/app/hospital/masters             /app/hospital/department-list.html                             200
+
 # Seniority
 /app/seniority           /app/seniority/seniority-list.html                                    200
 /app/seniority/manage    /app/seniority/seniority-management.html                              200
