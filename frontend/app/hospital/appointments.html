@@ -168,7 +168,6 @@
         patientId = existing.id;
       } else {
         const { data: np } = await SUPABASE.from('hospital_patients').insert({
-          uhid: 'APPT-' + Date.now(),
           full_name: name,
           mobile: document.getElementById('newApptMobile').value || null,
         }).select().single();

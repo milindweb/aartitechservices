@@ -204,7 +204,7 @@ These 17 tables store all clinical and administrative data for each OPD visit. T
 | Column | Type | Example Value | Data Source | How It's Used |
 |--------|------|---------------|-------------|---------------|
 | `id` | UUID (auto) | `uuid-v4` | Auto-generated | Primary key, linked from all other tables |
-| `uhid` | VARCHAR(50) UNIQUE | `"PT-20260705-001"` | **User input** (Step 1) or auto-generated | The unique patient ID displayed everywhere — profile URL parameter (`/patient-profile?id=PT-...`), visit cards, search |
+| `uhid` | VARCHAR(50) UNIQUE | `"250705-01"` | **Auto** — DB trigger (`generate_uhid()`), format `YYMMDD-NN`, daily-resetting counter | The unique patient ID displayed everywhere — profile URL parameter (`/patient-profile?id=250705-01...`), visit cards, search |
 | `full_name` | VARCHAR(255) | `"Ramesh Sharma"` | **User input** (Step 1) | Displayed in all patient-facing UIs |
 | `gender` | VARCHAR(10) | `"Male"` | **User input** (Step 1) | Filter in patient list, display in profile |
 | `date_of_birth` | DATE | `"1985-03-15"` | **User input** (Step 1) | Used to auto-calculate age |
@@ -219,7 +219,7 @@ These 17 tables store all clinical and administrative data for each OPD visit. T
 | `updated_at` | TIMESTAMP | auto | Auto | Last modification time |
 
 **Design choices explained:**
-- `uhid` is manually entered (clinic can use their own numbering) OR auto-generated as `APPT-{timestamp}` when created from the appointments modal.
+- `uhid` is **always auto-generated** by a PostgreSQL `BEFORE INSERT` trigger (`trg_hospital_patients_uhid`). Format: `YYMMDD-NN` (e.g., `250705-01`). A daily counter table (`uhid_daily_counter`) resets each day, so sequence restarts from `01` daily. No manual input needed.
 - `age` is a GENERATED column — it recalculates every time you query it based on `date_of_birth` and `CURRENT_DATE`. No need to update it manually.
 - `drug_allergies` is an array (`TEXT[]`) — multiple allergies stored in a single field for simplicity; displayed as individual badge pills in the profile.
 
