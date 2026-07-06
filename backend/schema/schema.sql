@@ -288,19 +288,19 @@ CREATE POLICY "Users can update their own profile"
 CREATE POLICY "Published posts are viewable by all"
   ON public.blog_posts FOR SELECT
   USING (status = 'published' OR author_id = auth.uid() OR EXISTS (
-    SELECT 1 FROM public.users_profile WHERE id = auth.uid() AND role = 'admin'
+    SELECT 1 FROM public.users_profile WHERE id = auth.uid() AND role IN ('admin', 'developer')
   ));
 
 CREATE POLICY "Users can create blog posts"
   ON public.blog_posts FOR INSERT
   WITH CHECK (author_id = auth.uid() OR EXISTS (
-    SELECT 1 FROM public.users_profile WHERE id = auth.uid() AND role IN ('admin', 'blogger')
+    SELECT 1 FROM public.users_profile WHERE id = auth.uid() AND role IN ('admin', 'developer', 'blogger')
   ));
 
 CREATE POLICY "Users can update their own posts"
   ON public.blog_posts FOR UPDATE
   USING (author_id = auth.uid() OR EXISTS (
-    SELECT 1 FROM public.users_profile WHERE id = auth.uid() AND role = 'admin'
+    SELECT 1 FROM public.users_profile WHERE id = auth.uid() AND role IN ('admin', 'developer')
   ));
 
 -- Blog Comments Policies
@@ -309,7 +309,7 @@ CREATE POLICY "Comments on published posts are viewable"
   USING (
     EXISTS (SELECT 1 FROM public.blog_posts WHERE id = post_id AND status = 'published')
     OR user_id = auth.uid()
-    OR EXISTS (SELECT 1 FROM public.users_profile WHERE id = auth.uid() AND role = 'admin')
+    OR EXISTS (SELECT 1 FROM public.users_profile WHERE id = auth.uid() AND role IN ('admin', 'developer'))
   );
 
 CREATE POLICY "Authenticated users can comment"
@@ -325,7 +325,7 @@ CREATE POLICY "Users can view their own appointments"
       SELECT 1 FROM public.hospital_doctors hd 
       WHERE hd.id = doctor_id AND hd.user_id = auth.uid()
     )
-    OR EXISTS (SELECT 1 FROM public.users_profile WHERE id = auth.uid() AND role = 'admin')
+    OR EXISTS (SELECT 1 FROM public.users_profile WHERE id = auth.uid() AND role IN ('admin', 'developer'))
   );
 
 CREATE POLICY "Patients can book appointments"
@@ -340,7 +340,7 @@ CREATE POLICY "Group members can view posts"
       SELECT 1 FROM public.society_members 
       WHERE group_id = society_posts.group_id AND user_id = auth.uid()
     )
-    OR EXISTS (SELECT 1 FROM public.users_profile WHERE id = auth.uid() AND role = 'admin')
+    OR EXISTS (SELECT 1 FROM public.users_profile WHERE id = auth.uid() AND role IN ('admin', 'developer'))
   );
 
 CREATE POLICY "Group members can create posts"
@@ -356,14 +356,14 @@ CREATE POLICY "Group members can create posts"
 CREATE POLICY "Users can view their own seniority record"
   ON public.seniority_records FOR SELECT
   USING (user_id = auth.uid() OR EXISTS (
-    SELECT 1 FROM public.users_profile WHERE id = auth.uid() AND role IN ('admin', 'senior_admin')
+    SELECT 1 FROM public.users_profile WHERE id = auth.uid() AND role IN ('admin', 'developer', 'senior_admin')
   ));
 
 -- Audit Logs Policies (Admin only)
 CREATE POLICY "Only admins can view audit logs"
   ON public.audit_logs FOR SELECT
   USING (EXISTS (
-    SELECT 1 FROM public.users_profile WHERE id = auth.uid() AND role = 'admin'
+    SELECT 1 FROM public.users_profile WHERE id = auth.uid() AND role IN ('admin', 'developer')
   ));
 
 -- ============================================================

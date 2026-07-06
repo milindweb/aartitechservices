@@ -18,6 +18,7 @@ Multi-service business portal with static HTML/CSS/JS frontend, Supabase backend
 ├── frontend/              # Static website (Cloudflare Pages)
 │   ├── _headers           # Cloudflare headers & caching
 │   ├── _redirects         # Cloudflare URL rewrites
+│   ├── .htaccess          # Apache security & caching
 │   ├── 404.html           # Custom 404 page
 │   ├── robots.txt         # Crawler rules
 │   ├── sitemap.xml        # XML sitemap
@@ -25,17 +26,19 @@ Multi-service business portal with static HTML/CSS/JS frontend, Supabase backend
 │   ├── data/              # Static data files
 │   │   └── posts.json     # Blog posts data (JSON-driven)
 │   ├── blog/              # Blog module
-│   │   └── posts/         # Individual blog post HTML files
+│   │   └── posts/         # 29 individual blog post HTML files
 │   ├── pages/             # SEO-indexed public pages
 │   │   ├── about.html     # About page
 │   │   ├── contact.html   # Contact page
 │   │   ├── blog.html      # Blog listing (dynamic, JS-driven)
-│   │   ├── links.html     # Links page
 │   │   ├── portfolio.html # Portfolio page
+│   │   ├── links.html     # Links page
+│   │   ├── privacy.html   # Privacy policy
+│   │   ├── terms.html     # Terms of service
 │   │   ├── expertise/     # Service pages
 │   │   │   ├── digital-engineering.html
 │   │   │   ├── freelance-digital-marketing-seo.html
-│   │   │   └── learning-innovation.html  # Tabbed: Projects, Training, Workshops
+│   │   │   └── learning-innovation.html
 │   │   └── partners/      # Partner pages
 │   │       ├── index.html
 │   │       ├── graphics.html
@@ -43,23 +46,33 @@ Multi-service business portal with static HTML/CSS/JS frontend, Supabase backend
 │   │       └── automotive.html
 │   ├── app/               # Login-required (noindex)
 │   │   ├── auth/          # Login, register, password-reset, callback pages
+│   │   ├── admin/         # Admin: user management, audit logs
 │   │   ├── dashboard.html # Post-login dashboard
-│   │   └── seniority/     # Seniority management
+│   │   ├── profile.html   # User profile
+│   │   ├── seniority/     # Seniority management
+│   │   ├── hospital/      # (placeholder)
+│   │   ├── society/       # (placeholder)
+│   │   ├── future-apps/   # (placeholder)
+│   │   └── ticket-manager/ # (placeholder)
 │   ├── shared/            # Shared components, CSS, JS, assets
 │   │   ├── components/    # header.html, footer.html
-│   │   ├── css/           # style.css, headerfooter.css, auth.css, nadstyle.css
-│   │   ├── js/            # config.js, seo-injector.js, headerfooter.js, auth.js, blog.js, form-handler.js
-│   │   └── assets/img/    # Logo, favicon, OG image, icons
+│   │   ├── css/           # style.css, headerfooter.css, auth.css, blog-sidebar.css, nadstyle.css
+│   │   ├── js/            # config.js, seo-injector.js, headerfooter.js, auth.js, blog.js, blog-sidebar.js, form-handler.js
+│   │   └── assets/img/    # Logo, favicon, OG image, icons, social calendar images
 │   ├── config/            # Runtime config
 │   │   └── supabase.js    # Supabase client initialization
 │   └── services/          # API service classes
 ├── backend/               # Database schema & configuration
-│   ├── schema/            # schema.sql, rls-policies.sql, auth-trigger.sql, database-design.md
-│   └── seed/              # seed.sql
+│   ├── schema/            # schema.sql, rls-policies.sql, auth-trigger.sql, admin-rls-policy.sql, database-design.md
+│   ├── seed/              # seed.sql
+│   └── modules/           # Module-specific schema (blog/)
 ├── supabase/
+│   ├── config.toml        # Supabase project config
 │   └── functions/         # Edge Functions
 │       └── blog-posts/    # Blog CRUD API
-└── docs/                  # DEPLOYMENT.md, ROADMAP.md
+├── docs/                  # DEPLOYMENT.md, ROADMAP.md
+├── Future/                # Module placeholders (CRM, ERP, HRMS, Inventory, School)
+└── VScode/                # (empty)
 ```
 
 ## Features
@@ -69,10 +82,12 @@ Multi-service business portal with static HTML/CSS/JS frontend, Supabase backend
 - **6 Service Pages:** Digital Marketing & SEO, Web & Software Development, College Projects & Training, Graphics/Photography & Branding, Electrical, Automotive
 - **Centralized Configuration** (`shared/js/config.js`) — brand name, domain, contact, social links in one file
 - **Dynamic SEO Injection** — titles, meta, OG/Twitter tags, JSON-LD generated from config at runtime
-- **Blog System** — static JSON-driven engine with search, category/tag filtering, pagination, and clean `/blog/:slug` URLs
+- **Blog System** — static JSON-driven engine with 29 posts, search, category/tag filtering, pagination, and clean `/blog/:slug` URLs
 - **Seniority Management** module with CSV/Excel/PDF export
 - **Authentication** — Supabase Auth with email/password login, registration, password reset, auth callback handling, and session management
 - **User Dashboard** — post-login landing page with user profile info, role badge, and module navigation
+- **User Profile** page
+- **Admin Module** — user management and audit logs
 - **Auth Guard** — protected pages redirect unauthenticated users to login
 - **Auth-Aware Navigation** — header shows DASHBOARD link only when logged in; no SIGN IN link (accessible via footer)
 - **Contact Form** integrated with Google Apps Script, dynamically loaded per-page (no labels, placeholders only)
@@ -85,7 +100,7 @@ Multi-service business portal with static HTML/CSS/JS frontend, Supabase backend
 - Full blog CRUD with comments
 - Hospital management (departments, doctors, appointments)
 - Society management (groups, members, events)
-- Admin panel (settings, audit logs, user management)
+- Ticket manager
 - Additional Supabase Edge Functions (comments, hospital, society, etc.)
 - Automated sitemap generation
 

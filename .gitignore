@@ -5,3 +5,5 @@ backend/.env.local
 *.log
 .DS_Store
 structure copy.md
+Hospital data raw/
+supabase/.temp/

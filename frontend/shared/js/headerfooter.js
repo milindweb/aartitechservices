@@ -116,20 +116,39 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /**
-   * Show dashboard link only when user has an active session
+   * Show dashboard + logout links only when user has an active session
    */
   function updateAuthNavLink(headerRoot) {
-    var desktopItem = document.getElementById('headerDashboardItem');
-    var mobileItem = document.getElementById('mobileDashboardItem');
-    if (!desktopItem) return;
+    var dashDesktop = document.getElementById('headerDashboardItem');
+    var dashMobile = document.getElementById('mobileDashboardItem');
+    var logoutDesktop = document.getElementById('headerLogoutItem');
+    var logoutMobile = document.getElementById('mobileLogoutItem');
 
     if (hasAuthSession()) {
-      desktopItem.style.display = '';
-      if (mobileItem) mobileItem.style.display = '';
+      if (dashDesktop) dashDesktop.style.display = '';
+      if (dashMobile) dashMobile.style.display = '';
+      if (logoutDesktop) logoutDesktop.style.display = '';
+      if (logoutMobile) logoutMobile.style.display = '';
     } else {
-      desktopItem.style.display = 'none';
-      if (mobileItem) mobileItem.style.display = 'none';
+      if (dashDesktop) dashDesktop.style.display = 'none';
+      if (dashMobile) dashMobile.style.display = 'none';
+      if (logoutDesktop) logoutDesktop.style.display = 'none';
+      if (logoutMobile) logoutMobile.style.display = 'none';
     }
+
+    // Bind logout click handlers
+    var desktopLink = document.getElementById('headerLogoutLink');
+    var mobileLink = document.getElementById('mobileLogoutLink');
+    var doLogout = function(e) {
+      e.preventDefault();
+      if (typeof AUTH !== 'undefined' && AUTH.signOut) {
+        AUTH.signOut();
+      } else {
+        window.location.href = '/login';
+      }
+    };
+    if (desktopLink) desktopLink.onclick = doLogout;
+    if (mobileLink) mobileLink.onclick = doLogout;
   }
 
   /**
@@ -201,29 +220,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /**
    * Initialize Footer Functionality
+   * When logged in: no nav links in footer
+   * When logged out: only show Login link
    */
   function updateFooterAuthLinks() {
-    var hasSession = hasAuthSession();
-
-    var dashItem = document.getElementById('footerDashboardItem');
     var loginItem = document.getElementById('footerLoginItem');
-    var logoutItem = document.getElementById('footerLogoutItem');
 
-    if (dashItem) dashItem.style.display = hasSession ? '' : 'none';
-    if (loginItem) loginItem.style.display = hasSession ? 'none' : '';
-    if (logoutItem) {
-      logoutItem.style.display = hasSession ? '' : 'none';
-      var logoutLink = logoutItem.querySelector('a');
-      if (logoutLink) {
-        logoutLink.onclick = function(e) {
-          e.preventDefault();
-          if (typeof AUTH !== 'undefined' && AUTH.signOut) {
-            AUTH.signOut();
-          } else {
-            window.location.href = '/login';
-          }
-        };
-      }
+    if (hasAuthSession()) {
+      if (loginItem) loginItem.style.display = 'none';
+    } else {
+      if (loginItem) loginItem.style.display = '';
     }
   }
 

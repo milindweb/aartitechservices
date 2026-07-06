@@ -107,7 +107,7 @@
           var session = await AUTH.requireAuth();
           if (!session) return;
           var user = await AUTH.getUser();
-          if (!user || user.profile?.role !== 'admin') {
+          if (!user || (user.profile?.role !== 'admin' && user.profile?.role !== 'developer')) {
             window.location.href = '/dashboard';
             return;
           }
@@ -152,6 +152,7 @@
             '<select class="role-select" data-user-id="' + u.id + '" data-original-role="' + u.role + '" onchange="changeRole(this)" ' + disabled + '>' +
             '  <option value="user"' + (u.role === 'user' ? ' selected' : '') + '>User</option>' +
             '  <option value="blogger"' + (u.role === 'blogger' ? ' selected' : '') + '>Blogger</option>' +
+            '  <option value="developer"' + (u.role === 'developer' ? ' selected' : '') + '>Developer</option>' +
             '  <option value="admin"' + (u.role === 'admin' ? ' selected' : '') + '>Admin</option>' +
             '  <option value="senior_admin"' + (u.role === 'senior_admin' ? ' selected' : '') + '>Senior Admin</option>' +
             '</select>' +

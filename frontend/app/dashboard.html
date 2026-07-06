@@ -33,6 +33,14 @@
       font-size: 1.6rem;
       color: var(--text-primary);
     }
+    .dashboard-header h1 small {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      display: block;
+      margin-top: 4px;
+    }
+
     .user-info {
       display: flex;
       align-items: center;
@@ -112,9 +120,9 @@
 <body>
   <div id="header"></div>
 
-  <div class="dashboard">
+  <div class="dashboard" id="dashboardMain">
     <div class="dashboard-header">
-      <h1>Dashboard</h1>
+      <h1 id="dashboardTitle">Dashboard</h1>
       <div id="userSection">
         <div class="user-info">
           <div id="userAvatar" class="user-avatar">U</div>
@@ -127,7 +135,8 @@
       </div>
     </div>
 
-    <div class="module-grid" id="moduleGrid">
+    <!-- Developer Modules (full dashboard) -->
+    <div class="module-grid" id="devModules">
       <a href="/app/seniority" class="module-card">
         <div class="icon"><i class="fas fa-ranking-star"></i></div>
         <h3>Seniority Manager</h3>
@@ -138,12 +147,36 @@
         <h3>Blog</h3>
         <p>Read and manage blog posts</p>
       </a>
-      <a href="/app/admin" class="module-card" id="adminCard" style="display:none">
+      <a href="/app/admin" class="module-card" id="devAdminCard">
         <div class="icon"><i class="fas fa-shield-halved"></i></div>
         <h3>User Management</h3>
-        <p>Manage users and roles (Admin)</p>
+        <p>Manage users and roles</p>
       </a>
-      <a href="/app/profile" class="module-card" id="profileCard">
+      <a href="/app/profile" class="module-card">
+        <div class="icon"><i class="fas fa-user-cog"></i></div>
+        <h3>Profile Settings</h3>
+        <p>Update your account information</p>
+      </a>
+      <a href="/" class="module-card">
+        <div class="icon"><i class="fas fa-globe"></i></div>
+        <h3>Website</h3>
+        <p>Go to the public homepage</p>
+      </a>
+    </div>
+
+    <!-- Admin Modules (simpler dashboard) -->
+    <div class="module-grid" id="adminModules" style="display:none">
+      <a href="/app/admin" class="module-card">
+        <div class="icon"><i class="fas fa-users-gear"></i></div>
+        <h3>User Management</h3>
+        <p>Manage users and roles</p>
+      </a>
+      <a href="/app/admin/audit" class="module-card">
+        <div class="icon"><i class="fas fa-clipboard-list"></i></div>
+        <h3>Audit Logs</h3>
+        <p>View system audit trail</p>
+      </a>
+      <a href="/app/profile" class="module-card">
         <div class="icon"><i class="fas fa-user-cog"></i></div>
         <h3>Profile Settings</h3>
         <p>Update your account information</p>
@@ -177,9 +210,25 @@
       document.getElementById('userRole').textContent = role.charAt(0).toUpperCase() + role.slice(1);
       document.getElementById('userAvatar').textContent = initial;
 
-      if (role === 'admin' || role === 'senior_admin') {
-        var adminCard = document.getElementById('adminCard');
-        if (adminCard) adminCard.style.display = '';
+      var titleEl = document.getElementById('dashboardTitle');
+
+      if (role === 'developer') {
+        // Developer: full dashboard with all modules
+        titleEl.innerHTML = 'Developer Dashboard<small>Full access — manage all modules</small>';
+        document.getElementById('devModules').style.display = '';
+      } else if (role === 'admin') {
+        // Admin: simpler dashboard
+        titleEl.innerHTML = 'Admin Dashboard<small>User &amp; system management</small>';
+        document.getElementById('adminModules').style.display = '';
+      } else if (role === 'senior_admin') {
+        titleEl.innerHTML = 'Dashboard<small>Senior Admin</small>';
+        document.getElementById('devModules').style.display = '';
+      } else {
+        // Regular user
+        titleEl.innerHTML = 'Dashboard';
+        document.getElementById('devModules').style.display = '';
+        var devAdminCard = document.getElementById('devAdminCard');
+        if (devAdminCard) devAdminCard.style.display = 'none';
       }
     })();
 

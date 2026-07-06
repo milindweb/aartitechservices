@@ -1,5 +1,28 @@
 # Changelog
 
+## v1.4.0 — 2026-07-06 — Documentation sync with actual filesystem
+
+### Documentation
+- `structure.md` — complete rewrite to match actual filesystem:
+  - Added missing root files: `.env.example`, `complaint.json`, `Projects/`, `VScode/`
+  - Added `frontend/pages/portfolio.html`, `privacy.html`, `terms.html`
+  - Added `frontend/pages/blog/` and `frontend/pages/portfolio/` (empty dirs)
+  - Added `frontend/app/profile.html`, `admin/` (users.html, audit.html)
+  - Added `frontend/app/hospital/`, `society/`, `future-apps/`, `ticket-manager/` (placeholder dirs)
+  - Added `frontend/shared/css/blog-sidebar.css`
+  - Added `frontend/shared/js/blog-sidebar.js`
+  - Added `frontend/shared/assets/img/SocCal01.png` through `SocCal04.png`
+  - Added `backend/schema/admin-rls-policy.sql`
+  - Added `supabase/config.toml`, `supabase/.gitignore`, `supabase/.temp/`
+  - Updated blog post count from ~20 to 29
+  - Updated _redirects section with `/privacy`, `/terms`, `/portfolio`, `/app/admin`, `/favicon.ico`
+  - Added Admin Module section to Key Files
+  - Added Future Module placeholders section
+- `README.md` — updated file tree, added privacy/terms/portfolio pages, admin module, profile page, blog count, Supabase config, Future/, Projects/, VScode/
+- `CHANGELOG.md` — added this entry
+
+---
+
 ## v1.3.0 — 2026-07-03 — Auth fixes, header reorder, sign-out redirect, favicon
 
 ### Fixed

@@ -32,6 +32,9 @@
     .tech-card ul { padding-left: 1rem; margin: 0; list-style: none; }
     .tech-card li { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.3rem; }
     .tech-card li::before { content: "• "; color: var(--accent); }
+    .screenshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .screenshot-grid img { width: 100%; border-radius: 10px; border: 1px solid var(--border); cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .screenshot-grid img:hover { transform: scale(1.03); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
     .cta-section { text-align: center; padding: 3rem 1rem; margin: 3rem 0; background: var(--secondary-bg); border-radius: 14px; border: 1px solid var(--border); }
     .cta-section h2 { margin-top: 0; }
     .cta-section p { max-width: 600px; margin: 0 auto 1.5rem; }
@@ -104,6 +107,28 @@
       </ul>
       <p class="tech"><strong>Technologies</strong><br />HTML • CSS • JavaScript • Cloudflare Pages</p>
       <a class="preview-link" href="https://drakanksha.pages.dev" target="_blank">Live Preview <i class="fas fa-external-link-alt"></i></a>
+    </div>
+
+    <div class="project-card">
+      <div class="status">Live</div>
+      <h3>Society Calculator</h3>
+      <p>A comprehensive loan management system for cooperative societies featuring loan sanction calculation with EMI amortization, final settlement, and fixed deposit management.</p>
+      <p>Includes configurable interest rates, loan limits, and CD/Share percentage settings with full amortization schedule generation and data persistence.</p>
+      <h4>Features</h4>
+      <ul>
+        <li>Maintenance Fee Calculation</li>
+        <li>Bill Generation</li>
+        <li>Expense Tracking</li>
+        <li>Member Management</li>
+        <li>Payment Records</li>
+      </ul>
+      <p class="tech"><strong>Technologies</strong><br />HTML • CSS • JavaScript • Supabase • PostgreSQL • Cloudflare Pages</p>
+      <div class="screenshot-grid">
+        <img src="/shared/assets/img/SocCal01.png" alt="Society Calculator Screenshot 1" loading="lazy" />
+        <img src="/shared/assets/img/SocCal02.png" alt="Society Calculator Screenshot 2" loading="lazy" />
+        <img src="/shared/assets/img/SocCal03.png" alt="Society Calculator Screenshot 3" loading="lazy" />
+        <img src="/shared/assets/img/SocCal04.png" alt="Society Calculator Screenshot 4" loading="lazy" />
+      </div>
     </div>
 
     <hr />

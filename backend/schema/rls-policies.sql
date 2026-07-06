@@ -15,7 +15,7 @@ CREATE POLICY "users_view_own_profile"
     auth.uid() = id 
     OR EXISTS (
       SELECT 1 FROM public.users_profile 
-      WHERE id = auth.uid() AND role = 'admin'
+      WHERE id = auth.uid() AND role IN ('admin', 'developer')
     )
   );
 
@@ -41,7 +41,7 @@ CREATE POLICY "blog_posts_public_read"
     OR author_id = auth.uid()
     OR EXISTS (
       SELECT 1 FROM public.users_profile 
-      WHERE id = auth.uid() AND role IN ('admin', 'blogger')
+      WHERE id = auth.uid() AND role IN ('admin', 'developer', 'blogger')
     )
   );
 
@@ -53,7 +53,7 @@ CREATE POLICY "blog_posts_insert"
     author_id = auth.uid()
     AND EXISTS (
       SELECT 1 FROM public.users_profile 
-      WHERE id = auth.uid() AND role IN ('admin', 'blogger')
+      WHERE id = auth.uid() AND role IN ('admin', 'developer', 'blogger')
     )
   );
 
@@ -65,7 +65,7 @@ CREATE POLICY "blog_posts_update"
     author_id = auth.uid()
     OR EXISTS (
       SELECT 1 FROM public.users_profile 
-      WHERE id = auth.uid() AND role = 'admin'
+      WHERE id = auth.uid() AND role IN ('admin', 'developer')
     )
   );
 
@@ -77,7 +77,7 @@ CREATE POLICY "blog_posts_delete"
     author_id = auth.uid()
     OR EXISTS (
       SELECT 1 FROM public.users_profile 
-      WHERE id = auth.uid() AND role = 'admin'
+      WHERE id = auth.uid() AND role IN ('admin', 'developer')
     )
   );
 
@@ -93,7 +93,7 @@ CREATE POLICY "blog_comments_read"
     OR user_id = auth.uid()
     OR EXISTS (
       SELECT 1 FROM public.users_profile 
-      WHERE id = auth.uid() AND role = 'admin'
+      WHERE id = auth.uid() AND role IN ('admin', 'developer')
     )
   );
 
@@ -117,7 +117,7 @@ CREATE POLICY "blog_comments_update"
     user_id = auth.uid()
     OR EXISTS (
       SELECT 1 FROM public.users_profile 
-      WHERE id = auth.uid() AND role = 'admin'
+      WHERE id = auth.uid() AND role IN ('admin', 'developer')
     )
   );
 
@@ -137,7 +137,7 @@ CREATE POLICY "hospital_appointments_read"
     )
     OR EXISTS (
       SELECT 1 FROM public.users_profile 
-      WHERE id = auth.uid() AND role IN ('admin', 'hospital_admin')
+      WHERE id = auth.uid() AND role IN ('admin', 'developer', 'hospital_admin')
     )
   );
 
@@ -159,7 +159,7 @@ CREATE POLICY "hospital_appointments_update"
     )
     OR EXISTS (
       SELECT 1 FROM public.users_profile 
-      WHERE id = auth.uid() AND role = 'admin'
+      WHERE id = auth.uid() AND role IN ('admin', 'developer')
     )
   );
 
@@ -172,7 +172,7 @@ CREATE POLICY "hospital_doctors_read"
     OR user_id = auth.uid()
     OR EXISTS (
       SELECT 1 FROM public.users_profile 
-      WHERE id = auth.uid() AND role IN ('admin', 'hospital_admin')
+      WHERE id = auth.uid() AND role IN ('admin', 'developer', 'hospital_admin')
     )
   );
 
@@ -191,7 +191,7 @@ CREATE POLICY "society_posts_members_read"
     )
     OR EXISTS (
       SELECT 1 FROM public.users_profile 
-      WHERE id = auth.uid() AND role = 'admin'
+      WHERE id = auth.uid() AND role IN ('admin', 'developer')
     )
   );
 
@@ -215,7 +215,7 @@ CREATE POLICY "society_posts_update"
     author_id = auth.uid()
     OR EXISTS (
       SELECT 1 FROM public.users_profile 
-      WHERE id = auth.uid() AND role = 'admin'
+      WHERE id = auth.uid() AND role IN ('admin', 'developer')
     )
   );
 
@@ -228,7 +228,7 @@ CREATE POLICY "society_groups_read"
     OR admin_id = auth.uid()
     OR EXISTS (
       SELECT 1 FROM public.users_profile 
-      WHERE id = auth.uid() AND role = 'admin'
+      WHERE id = auth.uid() AND role IN ('admin', 'developer')
     )
   );
 
@@ -250,7 +250,7 @@ CREATE POLICY "seniority_records_read_own"
     user_id = auth.uid()
     OR EXISTS (
       SELECT 1 FROM public.users_profile 
-      WHERE id = auth.uid() AND role IN ('admin', 'senior_admin')
+      WHERE id = auth.uid() AND role IN ('admin', 'developer', 'senior_admin')
     )
   );
 
@@ -261,7 +261,7 @@ CREATE POLICY "seniority_records_update_admin"
   USING (
     EXISTS (
       SELECT 1 FROM public.users_profile 
-      WHERE id = auth.uid() AND role IN ('admin', 'senior_admin')
+      WHERE id = auth.uid() AND role IN ('admin', 'developer', 'senior_admin')
     )
   );
 
@@ -289,7 +289,7 @@ CREATE POLICY "audit_logs_admin_read"
   USING (
     EXISTS (
       SELECT 1 FROM public.users_profile 
-      WHERE id = auth.uid() AND role = 'admin'
+      WHERE id = auth.uid() AND role IN ('admin', 'developer')
     )
   );
 
@@ -316,7 +316,7 @@ CREATE POLICY "admin_settings_write"
   USING (
     EXISTS (
       SELECT 1 FROM public.users_profile 
-      WHERE id = auth.uid() AND role = 'admin'
+      WHERE id = auth.uid() AND role IN ('admin', 'developer')
     )
   );
 

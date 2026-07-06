@@ -8,7 +8,7 @@ CREATE POLICY "admins_update_all_profiles"
   USING (
     EXISTS (
       SELECT 1 FROM public.users_profile
-      WHERE id = auth.uid() AND role = 'admin'
+      WHERE id = auth.uid() AND role IN ('admin', 'developer')
     )
   );
 

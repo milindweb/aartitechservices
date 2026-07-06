@@ -27,10 +27,17 @@ mk9/
 │
 ├── README.md
 ├── CHANGELOG.md
+├── structure.md
 ├── .gitignore
+├── .env.example
 ├── .env.original                  ↤ Backup of original env vars
+├── complaint.json
 │
 ├── supabase/
+│   │
+│   ├── .gitignore
+│   ├── config.toml
+│   ├── .temp/                     (various temp files: project-ref, versions, etc.)
 │   │
 │   └── functions/
 │       │
@@ -41,6 +48,15 @@ mk9/
 │   │
 │   ├── DEPLOYMENT.md
 │   └── ROADMAP.md
+│
+├── Future/
+│   ├── CRM/
+│   ├── ERP/
+│   ├── HRMS/
+│   ├── Inventory/
+│   └── School/
+│
+├── VScode/                        (empty — reserved)
 │
 ├── frontend/
 │   │
@@ -62,20 +78,50 @@ mk9/
 │   │
 │   ├── blog/
 │   │   │
-│   │   └── posts/                   ⭐ Individual blog post HTML files
+│   │   └── posts/                   ⭐ Individual blog post HTML files (29 posts)
 │   │       ├── _template.html
-│   │       ├── modern-portfolio-cloudflare-pages.html
+│   │       ├── arduino-esp32-workshop.html
+│   │       ├── automotive-diagnostics-guide.html
+│   │       ├── brand-identity-design.html
+│   │       ├── build-professional-network-freelancer.html
+│   │       ├── build-rest-api-nodejs-postgresql.html
+│   │       ├── camera-buying-guide-2026.html
+│   │       ├── chatgpt-business-ai.html
+│   │       ├── digital-tools-small-business-2026.html
 │   │       ├── digitizing-society-management.html
+│   │       ├── drone-photography-real-estate.html
+│   │       ├── drone-regulations-india-dgca.html
+│   │       ├── drone-types-cost-india.html
+│   │       ├── engineering-project-ideas-final-year.html
+│   │       ├── full-stack-beginners-guide.html
+│   │       ├── gbp-optimization-navi-mumbai.html
+│   │       ├── industrial-electrical-maintenance.html
+│   │       ├── industrial-training-college-industry.html
+│   │       ├── internship-rules-maharashtra-engineering.html
 │   │       ├── local-seo-navi-mumbai.html
-│   │       ├── ... (20 posts)
-│   │       └── readymade-projects-all-branches.html
+│   │       ├── modern-portfolio-cloudflare-pages.html
+│   │       ├── opencode-zen-free-models-vscode.html
+│   │       ├── pcb-design-workshop.html
+│   │       ├── petrol-vs-e20-vs-ev-2wheeler-guide.html
+│   │       ├── readymade-projects-all-branches.html
+│   │       ├── real-time-task-manager-react-nodejs.html
+│   │       ├── seo-vs-google-ads.html
+│   │       ├── workplace-safety-small-business.html
+│   │       └── zero-budget-content-marketing.html
 │   │
 │   ├── pages/
 │   │   │
+│   │   ├── about.html
+│   │   ├── blog.html                ⭐ Dynamic blog listing (JS-driven)
 │   │   ├── contact.html
 │   │   ├── contactform.html
-│   │   ├── blog.html                ⭐ Dynamic blog listing (JS-driven)
 │   │   ├── links.html
+│   │   ├── portfolio.html
+│   │   ├── privacy.html
+│   │   ├── terms.html
+│   │   │
+│   │   ├── blog/                    (empty — placeholder subdirs: ai/, automation/, cloud/, development/, seo/, training/)
+│   │   ├── portfolio/               (empty)
 │   │   │
 │   │   ├── expertise/
 │   │   │   ├── digital-engineering.html
@@ -83,11 +129,15 @@ mk9/
 │   │   │   └── learning-innovation.html    # Tabbed: Projects, Training, Workshops
 │   │   │
 │   │   └── partners/
+│   │       ├── index.html
 │   │       ├── graphics.html
 │   │       ├── electrical.html
 │   │       └── automotive.html
 │   │
-│       ├── app/                         ⭐ Login required — NOINDEX, NOFOLLOW
+│   ├── app/                         ⭐ Login required — NOINDEX, NOFOLLOW
+│   │   │
+│   │   ├── dashboard.html           ⭐ Post-login landing page
+│   │   ├── profile.html             ↤ User profile page
 │   │   │
 │   │   ├── auth/                    ↤ Authentication pages
 │   │   │   ├── login.html
@@ -96,11 +146,18 @@ mk9/
 │   │   │   ├── callback.html        ↤ Handles Supabase Auth redirects
 │   │   │   └── SETUP.md             ↤ Auth setup guide
 │   │   │
-│   │   ├── dashboard.html           ⭐ Post-login landing page
+│   │   ├── admin/
+│   │   │   ├── users.html           ↤ User management
+│   │   │   └── audit.html           ↤ Audit logs
 │   │   │
-│   │   └── seniority/
-│   │       ├── seniority-list.html       ↤ Auth-guarded
-│   │       └── seniority-management.html ↤ Auth-guarded
+│   │   ├── seniority/
+│   │   │   ├── seniority-list.html       ↤ Auth-guarded
+│   │   │   └── seniority-management.html ↤ Auth-guarded
+│   │   │
+│   │   ├── hospital/                (empty — placeholder)
+│   │   ├── society/                 (empty — placeholder)
+│   │   ├── future-apps/             (empty — placeholder)
+│   │   └── ticket-manager/          (empty — placeholder)
 │   │
 │   ├── shared/
 │   │   │
@@ -112,57 +169,56 @@ mk9/
 │   │   │   ├── style.css             # Shared base styles
 │   │   │   ├── headerfooter.css
 │   │   │   ├── auth.css              # Auth page styles (cards, forms, alerts, spinner)
+│   │   │   ├── blog-sidebar.css
 │   │   │   └── nadstyle.css
 │   │   │
-│   │   │   ├── js/
+│   │   ├── js/
 │   │   │   ├── config.js             # Centralized site config (brand, domain, contact, social)
 │   │   │   ├── seo-injector.js       # Reads config + PAGE_CONFIG; injects meta/OG/Twitter/JSON-LD
 │   │   │   ├── headerfooter.js       # Loads header/footer HTML + replaces {{PLACEHOLDERS}}; auth-aware nav
 │   │   │   ├── auth.js               # Auth module — signIn, signUp, signOut, requireAuth, getUser, getUserRole
 │   │   │   ├── blog.js               ⭐ Blog engine — search, categories, tags, pagination
+│   │   │   ├── blog-sidebar.js       # Blog sidebar widget
 │   │   │   └── form-handler.js
 │   │   │
 │   │   └── assets/
 │   │       └── img/
-│   │           ├── og-default.svg
 │   │           ├── favicon.png
 │   │           ├── logo.png
+│   │           ├── og-default.svg
 │   │           ├── icons8-project-96.png
+│   │           ├── SocCal01.png
+│   │           ├── SocCal02.png
+│   │           ├── SocCal03.png
+│   │           ├── SocCal04.png
 │   │           └── graphics/
 │   │               ├── birthday.svg
 │   │               ├── wedding.svg
 │   │               ├── logo.svg
 │   │               └── video.svg
 │   │
-│   ├── services/
-│   │   │
-│   │   └── blogService.js
-│   │
-│
-├── backend/
-│   │
-│   ├── .env.example
-│   │
-│   ├── schema/
-│   │   ├── schema.sql
-│   │   ├── database-design.md
-│   │   ├── rls-policies.sql
-│   │   └── auth-trigger.sql          ↤ Auto-create users_profile on signup
-│   │
-│   ├── seed/
-│   │   └── seed.sql
-│   │
-│   └── modules/
+│   └── services/
 │       │
-│       └── blog/
-│           └── functions/           (empty — reserved for blog edge functions)
+│       └── blogService.js
 │
-└── Future/
-    ├── CRM
-    ├── ERP
-    ├── HRMS
-    ├── Inventory
-    └── School
+└── backend/
+    │
+    ├── .env.example
+    │
+    ├── schema/
+    │   ├── schema.sql
+    │   ├── database-design.md
+    │   ├── rls-policies.sql
+    │   ├── auth-trigger.sql          ↤ Auto-create users_profile on signup
+    │   └── admin-rls-policy.sql      ↤ Admin RLS policies
+    │
+    ├── seed/
+    │   └── seed.sql
+    │
+    └── modules/
+        │
+        └── blog/
+            └── functions/           (empty — reserved for blog edge functions)
 
 ---
 
@@ -215,14 +271,19 @@ Publish root: `frontend/`
 Public pages:
 ```
 /                         /index.html                                                        200
+/about                    /pages/about.html                                                  200
+/portfolio                /pages/portfolio.html                                              200
 /contact                  /pages/contact.html                                                200
 /blog                     /pages/blog.html                                                   200
 /links                    /pages/links.html                                                  200
+/terms                    /pages/terms.html                                                  200
+/privacy                  /pages/privacy.html                                                200
 
 /expertise/digital-engineering     /pages/expertise/digital-engineering.html                 200
 /expertise/digital-marketing-seo   /pages/expertise/freelance-digital-marketing-seo.html      200
 /expertise/learning-innovation     /pages/expertise/learning-innovation.html                  200
 
+/partners                 /pages/partners/index.html                                         200
 /partners/graphics        /pages/partners/graphics.html                                      200
 /partners/electrical      /pages/partners/electrical.html                                    200
 /partners/automotive      /pages/partners/automotive.html                                    200
@@ -239,6 +300,7 @@ Auth (clean URL rewrites):
 /reset-password      /app/auth/reset-password.html                                          200
 /auth/callback       /app/auth/callback.html                                                200
 /dashboard           /app/dashboard.html                                                    200
+/app/admin           /app/admin/users.html                                                  200
 ```
 
 Seniority (clean URL rewrites):
@@ -254,6 +316,7 @@ Legacy redirects (301):
 /business-automation            /expertise/digital-engineering                                301
 /project-training               /expertise/learning-innovation                                301
 /graphics-branding              /partners/graphics                                            301
+/photography                    /partners/graphics                                            301
 /electrical                     /partners/electrical                                          301
 /automotive                     /partners/automotive                                          301
 
@@ -284,10 +347,11 @@ Legacy redirects (301):
             │     /         │         │    /app/      │
             │  (SEO: ✓)     │         │ (noindex)     │
             │               │         │               │
-             │ index.html    │         │ auth/          │
-             │ pages/        │         │ dashboard.html │
-             │ expertise/    │         │ seniority/     │
-             │ partners/     │         │               │
+            │ index.html    │         │ auth/          │
+            │ pages/        │         │ dashboard.html │
+            │ expertise/    │         │ admin/         │
+            │ partners/     │         │ seniority/     │
+            │ blog/         │         │ profile.html   │
             └───────────────┘         └───────────────┘
 ```
 
@@ -325,14 +389,30 @@ Legacy redirects (301):
 - **frontend/shared/js/auth.js** — Auth module: `signIn`, `signUp`, `signOut`, `resetPassword`, `requireAuth`, `getUser`, `getUserRole`
 - **frontend/shared/css/auth.css** — Auth page styles
 - **frontend/app/auth/** — Login, register, reset-password, callback pages
-- **frontend/app/dashboard.html** — Post-login dashboard with user profile and module links
+- **frontend/app/dashboard.html** — Post-login dashboard; shows different content per role (developer = full, admin = simplified, user = basic)
+- **frontend/app/profile.html** — User profile page
 - **backend/schema/auth-trigger.sql** — PostgreSQL trigger to auto-create `users_profile` on signup
 - **Auth guard** — Seniority pages and dashboard redirect unauthenticated users to `/login`
-- **Auth-aware nav** — Header shows DASHBOARD link only when logged in; no SIGN IN link in header (accessible via footer)
+- **Auth-aware nav** — Header shows DASHBOARD + LOGOUT when logged in; footer shows only LOGIN when logged out, no links when logged in
+- **Roles**: `user` (default), `blogger`, `developer` (full access, can assign admin role), `hospital_admin`, `society_admin`, `senior_admin`, `admin` (project access, assigned by developer)
+
+### Admin Module
+- **frontend/app/admin/users.html** — User management interface (accessible by admin & developer)
+- **frontend/app/admin/audit.html** — Audit log viewer
+- **backend/schema/admin-rls-policy.sql** — Admin-specific RLS policies
+
+### Dashboard by Role
+| Role | Dashboard | Access |
+|------|-----------|--------|
+| Developer | Full dashboard — Seniority, Blog, User Management, Profile, Website | Everything |
+| Admin | Simplified — User Management, Audit Logs, Profile, Website | Admin tasks |
+| Senior Admin | Full dashboard (minus user mgmt) | Seniority + general |
+| User | Basic — Seniority, Blog, Profile, Website | General modules |
 
 ### Backend Schema
 - **backend/schema/schema.sql** — Core tables, indexes, RLS policies
 - **backend/schema/rls-policies.sql** — Detailed row-level security documentation
+- **backend/schema/admin-rls-policy.sql** — Admin role permissions and policies
 - **backend/seed/seed.sql** — Initial data for categories, departments, groups
 
 ---
@@ -345,6 +425,12 @@ To add a new module:
   2. Create `supabase/functions/<name>-*/index.ts` for each edge function
   3. Create `backend/modules/<name>/` (schema/, policies/, seed/)
   4. Add migration file in `backend/migrations/`
+
+Existing placeholders:
+  - `frontend/app/hospital/`
+  - `frontend/app/society/`
+  - `frontend/app/future-apps/`
+  - `frontend/app/ticket-manager/`
 
 All future modules should use:
 

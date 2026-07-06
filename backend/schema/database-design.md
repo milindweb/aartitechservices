@@ -26,7 +26,7 @@ CREATE TABLE public.users_profile (
 );
 ```
 
-**Roles**: `user`, `blogger`, `hospital_admin`, `society_admin`, `senior_admin`, `admin`
+**Roles**: `user`, `blogger`, `developer`, `hospital_admin`, `society_admin`, `senior_admin`, `admin`
 
 ---
 
