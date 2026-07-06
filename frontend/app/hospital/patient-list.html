@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/shared/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Patient List', description: 'Search and manage hospital patients' };</script>
+  <script src="/shared/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/config/supabase.js"></script>
+  <script src="/shared/js/auth.js"></script>
+  <link rel="stylesheet" href="/shared/css/style.css">
+  <link rel="stylesheet" href="/shared/css/headerfooter.css">
+  <script src="/shared/js/headerfooter.js" defer></script>
+  <link rel="stylesheet" href="/app/hospital/css/hospital.css">
+  <style>
+    .patient-list-page { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+    .search-bar { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+    .search-bar input { flex: 1; min-width: 200px; padding: 10px 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; }
+    .search-bar select { padding: 10px 16px; border: 1px solid var(--border); border-radius: 8px; }
+    .table-wrap { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    th { background: var(--light); padding: 12px 16px; text-align: left; font-size: 0.8rem; text-transform: uppercase; color: var(--gray); letter-spacing: 0.5px; }
+    td { padding: 12px 16px; border-top: 1px solid var(--border); font-size: 0.9rem; }
+    tr:hover { background: var(--light); }
+    .clickable { color: var(--accent); cursor: pointer; font-weight: 600; }
+    .clickable:hover { text-decoration: underline; }
+    .pagination { display: flex; justify-content: center; gap: 8px; padding: 20px; }
+    .pagination button { padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px; background: #fff; cursor: pointer; }
+    .pagination button.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div class="patient-list-page" id="app">
+    <h1 style="margin-bottom:24px;"><i class="fas fa-users"></i> Patient List</h1>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search by name, UHID, or mobile..." oninput="debounceSearch()">
+      <select id="genderFilter" onchange="loadPatients(1)"><option value="">All Genders</option><option>Male</option><option>Female</option><option>Other</option></select>
+      <button class="btn btn-primary" onclick="window.location.href='/app/hospital/new-visit'"><i class="fas fa-plus"></i> New Patient</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>UHID</th><th>Name</th><th>Gender</th><th>Age</th><th>Mobile</th><th>Visits</th><th>Last Visit</th></tr></thead>
+        <tbody id="patientTableBody"><tr><td colspan="7" style="text-align:center;color:var(--gray);padding:40px;">Loading...</td></tr></tbody>
+      </table>
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </div>
+  <div id="footer-placeholder"></div>
+  <script>
+    requireAuth();
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    let currentPage = 1, totalPages = 1, pageSize = 20;
+    let searchTimer;
+
+    function debounceSearch() { clearTimeout(searchTimer); searchTimer = setTimeout(() => loadPatients(1), 300); }
+
+    async function loadPatients(page) {
+      currentPage = page;
+      const q = document.getElementById('searchInput').value.trim();
+      const gender = document.getElementById('genderFilter').value;
+      const tbody = document.getElementById('patientTableBody');
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:40px;">Loading...</td></tr>';
+
+      let query = sb.from('hospital_patients').select('id,uhid,full_name,gender,date_of_birth,mobile,created_at', { count: 'exact' });
+      if (q) query = query.or(`full_name.ilike.%${q}%,uhid.ilike.%${q}%,mobile.ilike.%${q}%`);
+      if (gender) query = query.eq('gender', gender);
+      query = query.order('created_at', { ascending: false }).range((page - 1) * pageSize, page * pageSize - 1);
+
+      const { data, count, error } = await query;
+      if (error) { tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--danger);">${error.message}</td></tr>`; return; }
+
+      totalPages = Math.ceil((count || 0) / pageSize);
+
+      if (!data || data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:40px;">No patients found.</td></tr>';
+      } else {
+        tbody.innerHTML = data.map(p => {
+          const age = p.date_of_birth ? Math.floor((new Date() - new Date(p.date_of_birth)) / (365.25 * 86400000)) : '—';
+          return `<tr>
+            <td class="clickable" onclick="window.location='/app/hospital/patient-profile?id=${p.uhid}'">#${p.uhid}</td>
+            <td><strong>${p.full_name}</strong></td>
+            <td>${p.gender || '—'}</td>
+            <td>${age}</td>
+            <td>${p.mobile || '—'}</td>
+            <td id="visitCount${p.id}">—</td>
+            <td id="lastVisit${p.id}">—</td>
+          </tr>`;
+        }).join('');
+
+        // Load visit counts & last visit dates asynchronously
+        data.forEach(async p => {
+          const { count } = await sb.from('hospital_visits').select('*', { count: 'exact', head: true }).eq('patient_id', p.id);
+          const vc = document.getElementById('visitCount' + p.id);
+          if (vc) vc.textContent = count || 0;
+          const { data: last } = await sb.from('hospital_visits').select('visit_date').eq('patient_id', p.id).order('visit_date', { ascending: false }).limit(1);
+          const lv = document.getElementById('lastVisit' + p.id);
+          if (lv) lv.textContent = last && last.length > 0 ? new Date(last[0].visit_date).toLocaleDateString() : '—';
+        });
+      }
+
+      // Pagination
+      const pg = document.getElementById('pagination');
+      pg.innerHTML = '';
+      if (totalPages > 1) {
+        pg.innerHTML += `<button onclick="loadPatients(${currentPage - 1})" ${currentPage <= 1 ? 'disabled' : ''}><i class="fas fa-chevron-left"></i></button>`;
+        for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
+          pg.innerHTML += `<button class="${i === currentPage ? 'active' : ''}" onclick="loadPatients(${i})">${i}</button>`;
+        }
+        pg.innerHTML += `<button onclick="loadPatients(${currentPage + 1})" ${currentPage >= totalPages ? 'disabled' : ''}><i class="fas fa-chevron-right"></i></button>`;
+      }
+    }
+    loadPatients(1);
+  </script>
+</body>
+</html>

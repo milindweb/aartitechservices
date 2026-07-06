@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/shared/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Patient Profile', description: 'Patient profile and visit history' };</script>
+  <script src="/shared/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/config/supabase.js"></script>
+  <script src="/shared/js/auth.js"></script>
+  <link rel="stylesheet" href="/shared/css/style.css">
+  <link rel="stylesheet" href="/shared/css/headerfooter.css">
+  <script src="/shared/js/headerfooter.js" defer></script>
+  <link rel="stylesheet" href="/app/hospital/css/hospital.css">
+  <style>
+    .profile-page { max-width: 960px; margin: 40px auto; padding: 0 20px; }
+    .profile-header { background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: flex; gap: 24px; align-items: start; flex-wrap: wrap; margin-bottom: 24px; }
+    .profile-avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--light); display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--accent); }
+    .profile-info h2 { font-size: 1.4rem; }
+    .profile-info .meta { color: var(--gray); font-size: 0.9rem; margin-top: 4px; }
+    .profile-info .meta span { margin-right: 16px; }
+    .visit-card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 16px; }
+    .visit-card .visit-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; cursor: pointer; }
+    .visit-card .visit-header h4 { font-size: 1rem; }
+    .visit-details { display: none; padding-top: 12px; border-top: 1px solid var(--border); }
+    .visit-details.open { display: block; }
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+    .detail-item label { font-size: 0.75rem; color: var(--gray); display: block; }
+    .detail-item span { font-size: 0.9rem; }
+    .drug-allergy { display: inline-block; background: #fce4ec; color: #c62828; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem; margin: 2px; }
+  </style>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div class="profile-page" id="app">
+    <div id="profileContent">
+      <p style="color:var(--gray);">Loading patient...</p>
+    </div>
+  </div>
+  <div id="footer-placeholder"></div>
+  <script>
+    requireAuth();
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const params = new URLSearchParams(window.location.search);
+    const patientId = params.get('id');
+
+    (async function() {
+      if (!patientId) { document.getElementById('profileContent').innerHTML = '<p style="color:var(--danger);">No patient ID provided.</p>'; return; }
+
+      // Load patient
+      const { data: patient } = await sb.from('hospital_patients').select('*').or(`uhid.eq.${patientId},id.eq.${patientId}`).maybeSingle();
+      if (!patient) { document.getElementById('profileContent').innerHTML = '<p style="color:var(--danger);">Patient not found.</p>'; return; }
+
+      // Load visits
+      const { data: visits } = await sb.from('hospital_visits')
+        .select('*, hospital_departments(name), hospital_doctor_master(name), hospital_vitals(*), hospital_chief_complaints(*), hospital_histories(*), hospital_examinations(*), hospital_investigation_results(*), hospital_diagnoses(*), hospital_prescriptions(*), hospital_procedures(*), hospital_advice(*), hospital_followups(*), hospital_doctor_notes(*), hospital_billing_items(*), hospital_billing_summary(*)')
+        .eq('patient_id', patient.id).order('visit_date', { ascending: false });
+
+      const age = patient.date_of_birth ? Math.floor((new Date() - new Date(patient.date_of_birth)) / (365.25 * 86400000)) : '—';
+
+      let html = `
+        <div class="profile-header">
+          <div class="profile-avatar"><i class="fas fa-user"></i></div>
+          <div class="profile-info">
+            <h2>${patient.full_name}</h2>
+            <div class="meta">
+              <span><i class="fas fa-id-card"></i> UHID: #${patient.uhid}</span>
+              <span><i class="fas fa-venus-mars"></i> ${patient.gender || '—'}</span>
+              <span><i class="fas fa-birthday-cake"></i> ${age} yrs</span>
+              <span><i class="fas fa-phone"></i> ${patient.mobile || '—'}</span>
+              <span><i class="fas fa-envelope"></i> ${patient.email || '—'}</span>
+            </div>
+            ${patient.drug_allergies && patient.drug_allergies.length > 0 ? `<div class="meta" style="margin-top:8px;"><strong>Allergies:</strong> ${patient.drug_allergies.map(a => `<span class="drug-allergy">${a}</span>`).join(' ')}</div>` : ''}
+            <div class="meta">${patient.address || ''}</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;margin-bottom:24px;">
+          <a href="/app/hospital/new-visit" class="btn btn-primary"><i class="fas fa-plus"></i> New Visit</a>
+        </div>
+        <h3 style="margin-bottom:16px;">Visit History (${visits?.length || 0})</h3>`;
+
+      if (!visits || visits.length === 0) {
+        html += '<p style="color:var(--gray);">No visits recorded yet.</p>';
+      } else {
+        for (const v of visits) {
+          html += `
+            <div class="visit-card">
+              <div class="visit-header" onclick="toggleVisit('visit${v.id}')">
+                <div>
+                  <h4>${new Date(v.visit_date).toLocaleDateString()} · OPD #${v.opd_number}</h4>
+                  <span style="font-size:0.85rem;color:var(--gray);">${v.hospital_departments?.name || '—'} · ${v.hospital_doctor_master?.name || '—'} · ${v.visit_type}</span>
+                </div>
+                <i class="fas fa-chevron-down" style="color:var(--gray);"></i>
+              </div>
+              <div class="visit-details" id="visit${v.id}">
+                <div class="detail-grid">
+                  ${v.hospital_vitals?.[0] ? `
+                    <div class="detail-item"><label>Vitals</label><span>BP: ${v.hospital_vitals[0].bp_systolic||'—'}/${v.hospital_vitals[0].bp_diastolic||'—'} | Pulse: ${v.hospital_vitals[0].pulse_rate||'—'} | Temp: ${v.hospital_vitals[0].temperature||'—'}°F | SpO₂: ${v.hospital_vitals[0].spo2||'—'}%</span></div>
+                  ` : ''}
+                  ${v.hospital_chief_complaints?.[0] ? `
+                    <div class="detail-item"><label>Complaints</label><span>${v.hospital_chief_complaints.map(c => c.symptom + (c.duration ? ' ('+c.duration+')' : '')).join(', ')}</span></div>
+                  ` : ''}
+                  ${v.hospital_diagnoses?.[0] ? `
+                    <div class="detail-item"><label>Diagnosis</label><span>${v.hospital_diagnoses.map(d => `<strong>${d.diagnosis_type}:</strong> ${d.diagnosis_text}`).join('<br>')}</span></div>
+                  ` : ''}
+                  ${v.hospital_prescriptions?.[0] ? `
+                    <div class="detail-item"><label>Prescriptions (${v.hospital_prescriptions.length})</label><span>${v.hospital_prescriptions.map(p => p.medicine_name + ' ' + (p.frequency||'')).join(', ')}</span></div>
+                  ` : ''}
+                  ${v.hospital_procedures?.[0] ? `
+                    <div class="detail-item"><label>Procedures</label><span>${v.hospital_procedures.map(p => p.procedure_name).join(', ')}</span></div>
+                  ` : ''}
+                  ${v.hospital_followups?.[0] ? `
+                    <div class="detail-item"><label>Follow-up</label><span>${v.hospital_followups[0].treatment_response||'—'} · ${v.hospital_followups[0].followup_date||'—'}</span></div>
+                  ` : ''}
+                  ${v.hospital_billing_summary?.[0] ? `
+                    <div class="detail-item"><label>Billing</label><span>₹${v.hospital_billing_summary[0].grand_total} (${v.hospital_billing_summary[0].payment_status})</span></div>
+                  ` : ''}
+                </div>
+              </div>
+            </div>`;
+        }
+      }
+
+      document.getElementById('profileContent').innerHTML = html;
+    })();
+
+    function toggleVisit(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('open');
+    }
+  </script>
+</body>
+</html>

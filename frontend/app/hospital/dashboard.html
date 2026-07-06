@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/shared/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Hospital Dashboard', description: 'Hospital management dashboard' };</script>
+  <script src="/shared/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/config/supabase.js"></script>
+  <script src="/shared/js/auth.js"></script>
+  <link rel="stylesheet" href="/shared/css/style.css">
+  <link rel="stylesheet" href="/shared/css/headerfooter.css">
+  <script src="/shared/js/headerfooter.js" defer></script>
+  <link rel="stylesheet" href="/app/hospital/css/hospital.css">
+  <style>
+    .hosp-dashboard { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+    .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 40px; }
+    .dash-card { background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-align: center; }
+    .dash-card .icon { font-size: 2rem; color: var(--accent); margin-bottom: 12px; }
+    .dash-card .value { font-size: 2rem; font-weight: 700; color: var(--dark); }
+    .dash-card .label { font-size: 0.9rem; color: var(--gray); margin-top: 4px; }
+    .quick-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 40px; }
+    .quick-action { display: flex; align-items: center; gap: 12px; background: var(--light); padding: 16px 20px; border-radius: 10px; cursor: pointer; transition: all 0.2s; text-decoration: none; color: var(--dark); }
+    .quick-action:hover { background: var(--accent); color: #fff; transform: translateY(-2px); }
+    .quick-action i { font-size: 1.3rem; }
+    .recent-section { background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 24px; }
+    .recent-section h3 { margin-bottom: 16px; font-size: 1.1rem; color: var(--dark); }
+    .visit-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .visit-row:last-child { border-bottom: none; }
+    .visit-row .patient { font-weight: 600; }
+    .visit-row .meta { font-size: 0.85rem; color: var(--gray); }
+    .badge { padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+    .badge-active { background: #e8f5e9; color: #2e7d32; }
+    .badge-completed { background: #e3f2fd; color: #1565c0; }
+    .badge-pending { background: #fff3e0; color: #e65100; }
+  </style>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div class="hosp-dashboard" id="app">
+    <h1 style="margin-bottom:24px;"><i class="fas fa-hospital"></i> Hospital Dashboard</h1>
+
+    <div class="dash-grid">
+      <div class="dash-card"><div class="icon"><i class="fas fa-users"></i></div><div class="value" id="totalPatients">—</div><div class="label">Total Patients</div></div>
+      <div class="dash-card"><div class="icon"><i class="fas fa-calendar-check"></i></div><div class="value" id="todayVisits">—</div><div class="label">Today's Visits</div></div>
+      <div class="dash-card"><div class="icon"><i class="fas fa-clock"></i></div><div class="value" id="pendingVisits">—</div><div class="label">Pending</div></div>
+      <div class="dash-card"><div class="icon"><i class="fas fa-calendar-alt"></i></div><div class="value" id="todayAppointments">—</div><div class="label">Appointments</div></div>
+    </div>
+
+    <div class="quick-actions">
+      <a href="/app/hospital/new-visit" class="quick-action"><i class="fas fa-plus-circle"></i> New Visit</a>
+      <a href="/app/hospital/patient-list" class="quick-action"><i class="fas fa-search"></i> Search Patients</a>
+      <a href="/app/hospital/appointments" class="quick-action"><i class="fas fa-calendar-plus"></i> Appointments</a>
+    </div>
+
+    <div class="recent-section">
+      <h3><i class="fas fa-history"></i> Recent Visits</h3>
+      <div id="recentVisits"><p style="color:var(--gray);">Loading...</p></div>
+    </div>
+  </div>
+  <div id="footer-placeholder"></div>
+  <script>
+    requireAuth();
+
+    const { createClient } = supabase;
+    const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function loadDashboard() {
+      const today = new Date().toISOString().split('T')[0];
+
+      const [{ count: totalPatients }, { count: todayVisits }, { count: pendingVisits }, { count: todayAppts }, { data: recent }] = await Promise.all([
+        sb.from('hospital_patients').select('*', { count: 'exact', head: true }),
+        sb.from('hospital_visits').select('*', { count: 'exact', head: true }).gte('visit_date', today).lt('visit_date', today + 'T23:59:59'),
+        sb.from('hospital_visits').select('*', { count: 'exact', head: true }).eq('visit_status', 'active'),
+        sb.from('hospital_appointments').select('*', { count: 'exact', head: true }).eq('appointment_date', today),
+        sb.from('hospital_visits').select('*, hospital_patients(*)').order('created_at', { ascending: false }).limit(10),
+      ]);
+
+      document.getElementById('totalPatients').textContent = totalPatients || 0;
+      document.getElementById('todayVisits').textContent = todayVisits || 0;
+      document.getElementById('pendingVisits').textContent = pendingVisits || 0;
+      document.getElementById('todayAppointments').textContent = todayAppts || 0;
+
+      const container = document.getElementById('recentVisits');
+      if (!recent || recent.length === 0) {
+        container.innerHTML = '<p style="color:var(--gray);">No recent visits.</p>';
+      } else {
+        container.innerHTML = recent.map(v => `
+          <div class="visit-row">
+            <div>
+              <div class="patient">${v.hospital_patients?.full_name || 'Unknown'} <span class="meta">#${v.opd_number}</span></div>
+              <div class="meta">${new Date(v.visit_date).toLocaleString()} · ${v.visit_type}</div>
+            </div>
+            <span class="badge badge-${v.visit_status === 'active' ? 'active' : 'completed'}">${v.visit_status}</span>
+          </div>
+        `).join('');
+      }
+    }
+    loadDashboard();
+  </script>
+</body>
+</html>

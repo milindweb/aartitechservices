@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/shared/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'New OPD Visit', description: 'New patient OPD visit form' };</script>
+  <script src="/shared/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/config/supabase.js"></script>
+  <script src="/shared/js/auth.js"></script>
+  <link rel="stylesheet" href="/shared/css/style.css">
+  <link rel="stylesheet" href="/shared/css/headerfooter.css">
+  <script src="/shared/js/headerfooter.js" defer></script>
+  <link rel="stylesheet" href="/app/hospital/css/hospital.css">
+  <style>
+    .visit-form { max-width: 960px; margin: 40px auto; padding: 0 20px; }
+    .section-card { background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; }
+    .section-card h3 { font-size: 1rem; color: var(--accent); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--light); display: flex; align-items: center; gap: 8px; }
+    .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 12px; }
+    .form-group { display: flex; flex-direction: column; }
+    .form-group label { font-size: 0.8rem; font-weight: 600; color: var(--gray); margin-bottom: 4px; }
+    .form-group input, .form-group select, .form-group textarea { padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.9rem; }
+    .form-group textarea { resize: vertical; min-height: 60px; }
+    .btn { padding: 8px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.2s; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: #2980b9; }
+    .btn-success { background: var(--success); color: #fff; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-sm { padding: 5px 12px; font-size: 0.8rem; }
+    .add-btn { background: var(--light); border: 1px dashed var(--border); padding: 8px; border-radius: 6px; cursor: pointer; color: var(--accent); font-size: 0.85rem; text-align: center; margin-top: 8px; }
+    .add-btn:hover { background: var(--filter-active); }
+    .item-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; padding: 8px; background: var(--light); border-radius: 6px; margin-bottom: 6px; }
+    .remove-btn { color: var(--danger); cursor: pointer; font-size: 0.9rem; }
+    .patient-search { position: relative; }
+    .patient-results { position: absolute; top: 100%; left: 0; right: 0; background: #fff; border: 1px solid var(--border); border-radius: 6px; max-height: 200px; overflow-y: auto; z-index: 10; display: none; }
+    .patient-results .result-item { padding: 10px 12px; cursor: pointer; border-bottom: 1px solid var(--border); }
+    .patient-results .result-item:hover { background: var(--light); }
+    .patient-results .result-item small { color: var(--gray); display: block; }
+    .nav-steps { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; padding: 16px; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .nav-step { padding: 8px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; cursor: pointer; background: var(--light); color: var(--gray); }
+    .nav-step.active { background: var(--accent); color: #fff; }
+    .nav-step.done { background: var(--success); color: #fff; }
+    .prescription-entry { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr; gap: 8px; align-items: end; margin-bottom: 8px; }
+    @media (max-width: 768px) { .prescription-entry { grid-template-columns: 1fr 1fr; } }
+    .billing-entry { display: grid; grid-template-columns: 2fr 80px 80px 100px auto; gap: 8px; align-items: center; margin-bottom: 6px; }
+    .billing-summary { margin-top: 12px; text-align: right; }
+    .billing-summary div { margin-bottom: 4px; }
+    .billing-summary .grand { font-size: 1.3rem; font-weight: 700; color: var(--dark); }
+  </style>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div class="visit-form" id="app">
+    <h1 style="margin-bottom:16px;"><i class="fas fa-plus-circle"></i> New OPD Visit</h1>
+    <div class="nav-steps" id="navSteps">
+      <span class="nav-step active" data-step="1">1. Patient</span>
+      <span class="nav-step" data-step="2">2. Doctor</span>
+      <span class="nav-step" data-step="3">3. Vitals</span>
+      <span class="nav-step" data-step="4">4. Clinical</span>
+      <span class="nav-step" data-step="5">5. Prescription</span>
+      <span class="nav-step" data-step="6">6. Billing</span>
+      <span class="nav-step" data-step="7">7. Review & Save</span>
+    </div>
+
+    <!-- Step 1: Patient Info -->
+    <div class="section-card" id="step1">
+      <h3><i class="fas fa-user"></i> Patient Information</h3>
+      <div class="form-row">
+        <div class="form-group patient-search">
+          <label>Search Existing Patient</label>
+          <input type="text" id="patientSearch" placeholder="Name, Mobile or UHID..." oninput="searchPatient()">
+          <div class="patient-results" id="patientResults"></div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>UHID *</label><input type="text" id="uhid" required></div>
+        <div class="form-group"><label>Visit Type</label><select id="visitType"><option>New</option><option>Follow-up</option></select></div>
+        <div class="form-group"><label>Token No.</label><input type="number" id="tokenNumber"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Patient Name *</label><input type="text" id="patientName" required></div>
+        <div class="form-group"><label>Mobile</label><input type="tel" id="mobile"></div>
+        <div class="form-group"><label>Gender</label><select id="gender"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Date of Birth</label><input type="date" id="dob" onchange="calcAge()"></div>
+        <div class="form-group"><label>Age (auto)</label><input type="text" id="age" readonly></div>
+        <div class="form-group"><label>Email</label><input type="email" id="email"></div>
+        <div class="form-group"><label>Blood Group</label><select id="bloodGroup"><option value="">Select</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Address</label><textarea id="address" rows="2"></textarea></div>
+      </div>
+      <div style="text-align:right;margin-top:12px;"><button class="btn btn-primary" onclick="nextStep(2)">Next <i class="fas fa-arrow-right"></i></button></div>
+    </div>
+
+    <!-- Step 2: Doctor Info -->
+    <div class="section-card" id="step2" style="display:none;">
+      <h3><i class="fas fa-user-md"></i> Doctor & Department</h3>
+      <div class="form-row">
+        <div class="form-group"><label>Department *</label><select id="department" onchange="loadDoctors()"><option value="">Select Department</option></select></div>
+        <div class="form-group"><label>Doctor *</label><select id="doctor"><option value="">Select Doctor</option></select></div>
+        <div class="form-group"><label>Referred By</label><input type="text" id="referredBy"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:12px;">
+        <button class="btn" onclick="prevStep(1)"><i class="fas fa-arrow-left"></i> Back</button>
+        <button class="btn btn-primary" onclick="nextStep(3)">Next <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Step 3: Vitals -->
+    <div class="section-card" id="step3" style="display:none;">
+      <h3><i class="fas fa-heartbeat"></i> Vitals</h3>
+      <div class="form-row">
+        <div class="form-group"><label>Height (cm)</label><input type="number" step="0.1" id="height" oninput="calcBMI()"></div>
+        <div class="form-group"><label>Weight (kg)</label><input type="number" step="0.1" id="weight" oninput="calcBMI()"></div>
+        <div class="form-group"><label>BMI (auto)</label><input type="text" id="bmi" readonly></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>BP Systolic</label><input type="number" id="bpSystolic"></div>
+        <div class="form-group"><label>BP Diastolic</label><input type="number" id="bpDiastolic"></div>
+        <div class="form-group"><label>Pulse Rate</label><input type="number" id="pulse"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Respiratory Rate</label><input type="number" id="respRate"></div>
+        <div class="form-group"><label>SpO₂ (%)</label><input type="number" id="spo2" min="0" max="100"></div>
+        <div class="form-group"><label>Temperature (°F)</label><input type="number" step="0.1" id="temperature"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Blood Sugar</label><input type="number" step="0.1" id="bloodSugar"></div>
+        <div class="form-group"><label>Blood Sugar Type</label><select id="bloodSugarType"><option value="">Select</option><option>Fasting</option><option>Post Prandial</option><option>Random</option><option>HbA1c</option></select></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:12px;">
+        <button class="btn" onclick="prevStep(2)"><i class="fas fa-arrow-left"></i> Back</button>
+        <button class="btn btn-primary" onclick="nextStep(4)">Next <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Step 4: Clinical (Complaints, History, Examination, Investigations, Diagnosis, Follow-up) -->
+    <div class="section-card" id="step4" style="display:none;">
+      <h3><i class="fas fa-stethoscope"></i> Clinical Details</h3>
+
+      <h4 style="margin:12px 0 8px;font-size:0.9rem;color:var(--gray);">Chief Complaints</h4>
+      <div id="complaintsList"></div>
+      <div class="add-btn" onclick="addComplaint()"><i class="fas fa-plus"></i> Add Complaint</div>
+
+      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--gray);">History</h4>
+      <div class="form-row">
+        <div class="form-group"><label>History of Present Illness</label><textarea id="historyIllness" rows="2"></textarea></div>
+        <div class="form-group"><label>Past Medical History</label><textarea id="pastMedical" rows="2"></textarea></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Current Medicines</label><textarea id="currentMedicines" rows="2"></textarea></div>
+        <div class="form-group"><label>Drug Allergies</label><textarea id="drugAllergies" rows="2"></textarea></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Family / Personal History</label><textarea id="familyHistory" rows="2"></textarea></div>
+      </div>
+
+      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--gray);">Examination</h4>
+      <div class="form-row">
+        <div class="form-group"><label>General Examination</label><textarea id="generalExam" rows="2"></textarea></div>
+        <div class="form-group"><label>Systemic Examination</label><textarea id="systemicExam" rows="2"></textarea></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Clinical Findings</label><textarea id="clinicalFindings" rows="2"></textarea></div>
+        <div class="form-group"><label>Lab Findings</label><textarea id="labFindings" rows="2"></textarea></div>
+      </div>
+
+      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--gray);">Suggested Investigations</h4>
+      <div id="investigationsList"></div>
+      <div class="add-btn" onclick="addInvestigation()"><i class="fas fa-plus"></i> Add Investigation</div>
+
+      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--gray);">Diagnosis</h4>
+      <div class="form-row">
+        <div class="form-group"><label>Provisional Diagnosis</label><input type="text" id="provisionalDiagnosis" list="diagnosisList"></div>
+        <div class="form-group"><label>Final Diagnosis</label><input type="text" id="finalDiagnosis" list="diagnosisList"></div>
+      </div>
+      <datalist id="diagnosisList"></datalist>
+
+      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--gray);">Procedures / Treatment</h4>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Select Procedures</label>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;" id="proceduresCheckboxes">
+            <label><input type="checkbox" value="Injection"> Injection</label>
+            <label><input type="checkbox" value="Dressing"> Dressing</label>
+            <label><input type="checkbox" value="Nebulization"> Nebulization</label>
+            <label><input type="checkbox" value="IV Fluids"> IV Fluids</label>
+            <label><input type="checkbox" value="Minor Procedure"> Minor Procedure</label>
+            <label><input type="checkbox" value="Other Treatment"> Other Treatment</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group"><label>Treatment Notes</label><textarea id="treatmentNotes" rows="2"></textarea></div>
+
+      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--gray);">Advice & Follow-up</h4>
+      <div class="form-row">
+        <div class="form-group"><label>Advice</label><textarea id="advice" rows="2" placeholder="Diet, Lifestyle, Rest, Exercise, General Instructions..."></textarea></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Treatment Response</label><select id="treatmentResponse"><option value="">Select</option><option>N/A</option><option>Improved</option><option>Recovered</option><option>No Change</option><option>Worsened</option><option>Follow-up Required</option></select></div>
+        <div class="form-group"><label>Follow-up Date</label><input type="date" id="followupDate"></div>
+        <div class="form-group"><label>Next Visit Advice</label><input type="text" id="nextVisitAdvice"></div>
+      </div>
+
+      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--gray);">Special Instructions</h4>
+      <div class="form-row">
+        <div class="form-group"><label>Special Instructions</label><textarea id="specialInstructions" rows="2" placeholder="Additional instructions not covered above..."></textarea></div>
+      </div>
+
+      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--gray);">Doctor Remarks</h4>
+      <div class="form-row">
+        <div class="form-group"><label>Remarks</label><textarea id="doctorRemarks" rows="2"></textarea></div>
+        <div class="form-group"><label>Signature</label><input type="text" id="doctorSignature" placeholder="Doctor name / stamp"></div>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;margin-top:12px;">
+        <button class="btn" onclick="prevStep(3)"><i class="fas fa-arrow-left"></i> Back</button>
+        <button class="btn btn-primary" onclick="nextStep(5)">Next <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Step 5: Prescription -->
+    <div class="section-card" id="step5" style="display:none;">
+      <h3><i class="fas fa-prescription"></i> Prescription</h3>
+      <div id="prescriptionsList"></div>
+      <div class="add-btn" onclick="addPrescription()"><i class="fas fa-plus"></i> Add Medicine</div>
+      <div style="display:flex;justify-content:space-between;margin-top:12px;">
+        <button class="btn" onclick="prevStep(4)"><i class="fas fa-arrow-left"></i> Back</button>
+        <button class="btn btn-primary" onclick="nextStep(6)">Next <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Step 6: Billing -->
+    <div class="section-card" id="step6" style="display:none;">
+      <h3><i class="fas fa-receipt"></i> Billing</h3>
+      <div id="billingList"></div>
+      <div class="add-btn" onclick="addBillingItem()"><i class="fas fa-plus"></i> Add Item</div>
+      <div class="billing-summary">
+        <div>Total: ₹<span id="billTotal">0.00</span></div>
+        <div class="form-row" style="grid-template-columns:auto 120px;justify-content:end;align-items:center;">
+          <label style="font-weight:600;">Discount (₹)</label>
+          <input type="number" id="billDiscount" value="0" oninput="calcBillSummary()" style="width:100%;">
+        </div>
+        <div class="grand">Grand Total: ₹<span id="billGrandTotal">0.00</span></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:12px;">
+        <button class="btn" onclick="prevStep(5)"><i class="fas fa-arrow-left"></i> Back</button>
+        <button class="btn btn-primary" onclick="nextStep(7)">Next <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Step 7: Review & Save -->
+    <div class="section-card" id="step7" style="display:none;">
+      <h3><i class="fas fa-check-circle"></i> Review & Save</h3>
+      <div id="reviewContent"></div>
+      <div style="display:flex;justify-content:space-between;margin-top:16px;">
+        <button class="btn" onclick="prevStep(6)"><i class="fas fa-arrow-left"></i> Back</button>
+        <button class="btn btn-success" onclick="saveVisit()" id="saveBtn"><i class="fas fa-save"></i> Save Visit</button>
+      </div>
+    </div>
+  </div>
+  <div id="footer-placeholder"></div>
+
+  <script>
+    requireAuth();
+    const SUPABASE_URL = window.SUPABASE_URL || '{{SUPABASE_URL}}';
+    const SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY || '{{SUPABASE_ANON_KEY}}';
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let currentStep = 1;
+    let complaintCount = 0, investigationCount = 0, prescriptionCount = 0, billingCount = 0;
+    let selectedPatientId = null;
+    let searchTimer;
+
+    // Navigation
+    function showStep(n) {
+      for (let i = 1; i <= 7; i++) {
+        document.getElementById('step' + i).style.display = i === n ? 'block' : 'none';
+        const nav = document.querySelector(`.nav-step[data-step="${i}"]`);
+        if (nav) { nav.classList.toggle('active', i === n); nav.classList.toggle('done', i < n); }
+      }
+      currentStep = n;
+      if (n === 5) loadMedicineAutocomplete();
+      if (n === 7) buildReview();
+    }
+    function nextStep(n) { showStep(n); }
+    function prevStep(n) { showStep(n); }
+
+    // Patient search (debounced)
+    function searchPatient() {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => doSearchPatient(), 300);
+    }
+    async function doSearchPatient() {
+      const q = document.getElementById('patientSearch').value.trim();
+      const resultsDiv = document.getElementById('patientResults');
+      if (q.length < 2) { resultsDiv.style.display = 'none'; return; }
+      const { data } = await sb.from('hospital_patients').select('id,uhid,full_name,mobile').or(`full_name.ilike.%${q}%,mobile.ilike.%${q}%,uhid.ilike.%${q}%`).limit(10);
+      if (data && data.length > 0) {
+        resultsDiv.innerHTML = data.map(p => `<div class="result-item" onclick="selectPatient('${p.id}','${p.uhid}','${p.full_name.replace(/'/g,"\\'")}','${p.mobile||''}')">${p.full_name} <small>#${p.uhid} · ${p.mobile||'—'}</small></div>`).join('');
+        resultsDiv.style.display = 'block';
+      } else { resultsDiv.innerHTML = '<div class="result-item" style="color:var(--gray);">No existing patient found. Fill details below to create new.</div>'; resultsDiv.style.display = 'block'; }
+    }
+    function selectPatient(id, uhid, name, mobile) {
+      selectedPatientId = id;
+      document.getElementById('uhid').value = uhid;
+      document.getElementById('patientName').value = name;
+      document.getElementById('mobile').value = mobile;
+      document.getElementById('patientResults').style.display = 'none';
+      document.getElementById('patientSearch').value = name;
+    }
+
+    function calcAge() {
+      const dob = document.getElementById('dob').value;
+      if (dob) {
+        const age = Math.floor((new Date() - new Date(dob)) / (365.25 * 86400000));
+        document.getElementById('age').value = age;
+      }
+    }
+    function calcBMI() {
+      const h = parseFloat(document.getElementById('height').value) / 100;
+      const w = parseFloat(document.getElementById('weight').value);
+      if (h && w) document.getElementById('bmi').value = (w / (h * h)).toFixed(1);
+    }
+
+    // Load departments on init
+    (async function init() {
+      const { data: depts } = await sb.from('hospital_departments').select('id,name').order('name');
+      const deptSelect = document.getElementById('department');
+      if (depts) depts.forEach(d => { deptSelect.innerHTML += `<option value="${d.id}">${d.name}</option>`; });
+
+      const { data: diagnoses } = await sb.from('icd10_codes').select('disease_name');
+      const dl = document.getElementById('diagnosisList');
+      if (diagnoses) diagnoses.forEach(d => { dl.innerHTML += `<option value="${d.disease_name}">`; });
+    })();
+
+    async function loadDoctors() {
+      const deptId = document.getElementById('department').value;
+      const docSelect = document.getElementById('doctor');
+      docSelect.innerHTML = '<option value="">Select Doctor</option>';
+      if (!deptId) return;
+      const { data } = await sb.from('hospital_doctor_master').select('id,name').eq('department_id', deptId).eq('is_hospital', false).order('name');
+      if (data) data.forEach(d => { docSelect.innerHTML += `<option value="${d.id}">${d.name}</option>`; });
+      docSelect.innerHTML += '<option value="other">Other</option>';
+    }
+
+    // Complaints
+    function addComplaint() {
+      complaintCount++;
+      const div = document.createElement('div');
+      div.className = 'item-row';
+      div.id = 'complaint' + complaintCount;
+      div.innerHTML = `
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <input type="text" placeholder="Symptom" class="complaint-symptom" list="symptomList${complaintCount}">
+          <input type="text" placeholder="Duration" class="complaint-duration">
+        </div>
+        <span class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></span>`;
+      document.getElementById('complaintsList').appendChild(div);
+
+      // Add symptom datalist
+      const deptCode = document.getElementById('department').value;
+      if (deptCode) {
+        const dl = document.createElement('datalist');
+        dl.id = 'symptomList' + complaintCount;
+        sb.from('symptom_master').select('symptom_name').eq('department_code', deptCode).then(({ data }) => {
+          if (data) data.forEach(s => { dl.innerHTML += `<option value="${s.symptom_name}">`; });
+        });
+        document.body.appendChild(dl);
+      }
+    }
+
+    // Investigations
+    function addInvestigation() {
+      investigationCount++;
+      const div = document.createElement('div');
+      div.className = 'item-row';
+      div.id = 'investigation' + investigationCount;
+      div.innerHTML = `
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;">
+          <input type="text" placeholder="Test name" class="inv-test" list="invList${investigationCount}">
+          <input type="text" placeholder="Result" class="inv-result">
+          <input type="text" placeholder="Normal range" class="inv-range">
+          <input type="text" placeholder="Remark" class="inv-remark">
+        </div>
+        <span class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></span>`;
+      document.getElementById('investigationsList').appendChild(div);
+
+      const dl = document.createElement('datalist');
+      dl.id = 'invList' + investigationCount;
+      sb.from('loinc_codes').select('long_common_name').in('status', ['ACTIVE', 'TRIAL']).limit(200).then(({ data }) => {
+        if (data) data.forEach(i => { dl.innerHTML += `<option value="${i.long_common_name}">`; });
+      });
+      document.body.appendChild(dl);
+    }
+
+    // Prescriptions
+    function addPrescription(medName) {
+      prescriptionCount++;
+      const div = document.createElement('div');
+      div.className = 'prescription-entry';
+      div.id = 'rx' + prescriptionCount;
+      div.innerHTML = `
+        <div class="form-group"><label>Medicine</label>
+          <input type="text" class="rx-medicine" list="medList" value="${medName||''}" placeholder="Medicine name"></div>
+        <div class="form-group"><label>Route</label><select class="rx-route">
+          <option>Tablet</option><option>Capsule</option><option>Syrup</option><option>Injection</option><option>IV</option><option>Ointment</option><option>Drops</option><option>Other</option></select></div>
+        <div class="form-group"><label>Frequency</label><select class="rx-frequency">
+          <option>OD</option><option>BD</option><option>TDS</option><option>QID</option><option>HS</option><option>SOS</option><option>STAT</option><option>Weekly</option><option>Monthly</option></select></div>
+        <div class="form-group"><label>Food Timing</label><select class="rx-food">
+          <option>Before Food</option><option>After Food</option><option>With Food</option><option>Empty Stomach</option><option>At Bedtime</option><option>SOS</option><option>Not Applicable</option></select></div>
+        <div class="form-group"><label>Duration</label><input type="text" class="rx-duration" placeholder="e.g. 7 days"></div>
+        <div class="form-group"><label>Instructions</label><input type="text" class="rx-instructions" placeholder="e.g. 1-0-1"></div>
+        <span class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></span>`;
+      document.getElementById('prescriptionsList').appendChild(div);
+    }
+    async function loadMedicineAutocomplete() {
+      const existing = document.getElementById('medList');
+      if (!existing || existing.children.length === 0) {
+        const dl = document.createElement('datalist');
+        dl.id = 'medList';
+        const { data } = await sb.from('medicine_search').select('generic_name,brand_name').limit(500);
+        if (data) {
+          const seen = new Set();
+          data.forEach(m => {
+            if (m.generic_name && !seen.has(m.generic_name)) { dl.innerHTML += `<option value="${m.generic_name}">`; seen.add(m.generic_name); }
+            if (m.brand_name && !seen.has(m.brand_name)) { dl.innerHTML += `<option value="${m.brand_name}">`; seen.add(m.brand_name); }
+          });
+        }
+        document.body.appendChild(dl);
+      }
+    }
+
+    // Billing
+    function addBillingItem(desc, qty, rate) {
+      billingCount++;
+      const div = document.createElement('div');
+      div.className = 'billing-entry';
+      div.id = 'bill' + billingCount;
+      div.innerHTML = `
+        <input type="text" class="bill-desc" placeholder="Description" value="${desc||''}">
+        <input type="number" class="bill-qty" placeholder="Qty" value="${qty||1}" min="1" oninput="calcBillSummary()">
+        <input type="number" class="bill-rate" placeholder="Rate" value="${rate||0}" min="0" step="0.01" oninput="calcBillSummary()">
+        <span class="bill-amount">₹0.00</span>
+        <span class="remove-btn" onclick="this.parentElement.remove();calcBillSummary();"><i class="fas fa-times"></i></span>`;
+      document.getElementById('billingList').appendChild(div);
+    }
+    function calcBillSummary() {
+      let total = 0;
+      document.querySelectorAll('.billing-entry').forEach(entry => {
+        const qty = parseFloat(entry.querySelector('.bill-qty').value) || 0;
+        const rate = parseFloat(entry.querySelector('.bill-rate').value) || 0;
+        const amt = qty * rate;
+        entry.querySelector('.bill-amount').textContent = '₹' + amt.toFixed(2);
+        total += amt;
+      });
+      const discount = parseFloat(document.getElementById('billDiscount').value) || 0;
+      document.getElementById('billTotal').textContent = total.toFixed(2);
+      document.getElementById('billGrandTotal').textContent = (total - discount).toFixed(2);
+    }
+
+    // Review
+    function buildReview() {
+      const sections = [];
+      sections.push(`<h4>Patient</h4><p>${document.getElementById('patientName').value} | UHID: ${document.getElementById('uhid').value} | ${document.getElementById('gender').value} | ${document.getElementById('age').value || '—'} yrs</p>`);
+      sections.push(`<h4>Doctor</h4><p>${document.getElementById('department').selectedOptions[0]?.text || '—'} → ${document.getElementById('doctor').selectedOptions[0]?.text || '—'}</p>`);
+      sections.push(`<h4>Vitals</h4><p>BP: ${document.getElementById('bpSystolic').value||'—'}/${document.getElementById('bpDiastolic').value||'—'} | Pulse: ${document.getElementById('pulse').value||'—'} | Temp: ${document.getElementById('temperature').value||'—'}°F | SpO₂: ${document.getElementById('spo2').value||'—'}%</p>`);
+      sections.push(`<h4>Prescriptions</h4><p>${document.querySelectorAll('.prescription-entry').length} medicines added</p>`);
+      sections.push(`<h4>Billing</h4><p>Total: ₹${document.getElementById('billTotal').textContent} | Grand: ₹${document.getElementById('billGrandTotal').textContent}</p>`);
+      document.getElementById('reviewContent').innerHTML = sections.join('<hr style="margin:8px 0;">');
+    }
+
+    // Save everything
+    async function saveVisit() {
+      const btn = document.getElementById('saveBtn');
+      btn.disabled = true; btn.textContent = 'Saving...';
+
+      try {
+        // 1. Patient
+        let patientId = selectedPatientId;
+        if (!patientId) {
+          const { data: existing } = await sb.from('hospital_patients').select('id').eq('uhid', document.getElementById('uhid').value).maybeSingle();
+          if (existing) { patientId = existing.id; }
+        }
+        if (!patientId) {
+          const { data: newPatient, error: pe } = await sb.from('hospital_patients').insert({
+            uhid: document.getElementById('uhid').value,
+            full_name: document.getElementById('patientName').value,
+            gender: document.getElementById('gender').value,
+            date_of_birth: document.getElementById('dob').value || null,
+            mobile: document.getElementById('mobile').value,
+            email: document.getElementById('email').value,
+            blood_group: document.getElementById('bloodGroup').value || null,
+            address: document.getElementById('address').value,
+            created_by: (await sb.auth.getUser()).data.user?.id,
+          }).select().single();
+          if (pe) throw pe;
+          patientId = newPatient.id;
+        }
+
+        // 2. Visit
+        const { data: visit, error: ve } = await sb.from('hospital_visits').insert({
+          patient_id: patientId,
+          opd_number: document.getElementById('uhid').value + '-' + Date.now(),
+          token_number: parseInt(document.getElementById('tokenNumber').value) || null,
+          visit_type: document.getElementById('visitType').value,
+          department_id: document.getElementById('department').value || null,
+          doctor_id: document.getElementById('doctor').value === 'other' ? null : (document.getElementById('doctor').value || null),
+          referred_by: document.getElementById('referredBy').value,
+          created_by: (await sb.auth.getUser()).data.user?.id,
+        }).select().single();
+        if (ve) throw ve;
+        const vid = visit.id;
+
+        // 3. Vitals
+        const height = parseFloat(document.getElementById('height').value);
+        const weight = parseFloat(document.getElementById('weight').value);
+        if (height || weight || document.getElementById('bpSystolic').value) {
+          await sb.from('hospital_vitals').insert({
+            visit_id: vid, height_cm: height || null, weight_kg: weight || null,
+            bp_systolic: parseInt(document.getElementById('bpSystolic').value) || null,
+            bp_diastolic: parseInt(document.getElementById('bpDiastolic').value) || null,
+            pulse_rate: parseInt(document.getElementById('pulse').value) || null,
+            respiratory_rate: parseInt(document.getElementById('respRate').value) || null,
+            spo2: parseInt(document.getElementById('spo2').value) || null,
+            temperature: parseFloat(document.getElementById('temperature').value) || null,
+            blood_sugar: parseFloat(document.getElementById('bloodSugar').value) || null,
+            blood_sugar_type: document.getElementById('bloodSugarType').value || null,
+          });
+        }
+
+        // 4. Complaints
+        const complaints = [...document.querySelectorAll('#complaintsList .item-row')].map(el =>
+          sb.from('hospital_chief_complaints').insert({
+            visit_id: vid,
+            symptom: el.querySelector('.complaint-symptom').value,
+            duration: el.querySelector('.complaint-duration').value,
+          })
+        );
+        await Promise.all(complaints);
+
+        // 5. History
+        const histories = [
+          { type: 'present_illness', val: document.getElementById('historyIllness').value },
+          { type: 'past_medical', val: document.getElementById('pastMedical').value },
+          { type: 'current_medicines', val: document.getElementById('currentMedicines').value },
+          { type: 'drug_allergy', val: document.getElementById('drugAllergies').value },
+          { type: 'family', val: document.getElementById('familyHistory').value },
+        ];
+        for (const h of histories) {
+          if (h.val) await sb.from('hospital_histories').insert({ visit_id: vid, history_type: h.type, description: h.val });
+        }
+
+        // 6. Examinations
+        const exams = [
+          { type: 'general', val: document.getElementById('generalExam').value },
+          { type: 'systemic', val: document.getElementById('systemicExam').value },
+          { type: 'clinical_findings', val: document.getElementById('clinicalFindings').value },
+          { type: 'lab_findings', val: document.getElementById('labFindings').value },
+        ];
+        for (const e of exams) {
+          if (e.val) await sb.from('hospital_examinations').insert({ visit_id: vid, exam_type: e.type, description: e.val });
+        }
+
+        // 7. Investigations
+        const investigations = [...document.querySelectorAll('#investigationsList .item-row')].map(el =>
+          sb.from('hospital_investigation_results').insert({
+            visit_id: vid, test_name: el.querySelector('.inv-test').value,
+            result: el.querySelector('.inv-result').value,
+            normal_range: el.querySelector('.inv-range').value,
+            doctor_remark: el.querySelector('.inv-remark').value,
+          })
+        );
+        await Promise.all(investigations);
+
+        // 8. Diagnosis
+        const prov = document.getElementById('provisionalDiagnosis').value;
+        const fin = document.getElementById('finalDiagnosis').value;
+        if (prov) await sb.from('hospital_diagnoses').insert({ visit_id: vid, diagnosis_type: 'provisional', diagnosis_text: prov });
+        if (fin) await sb.from('hospital_diagnoses').insert({ visit_id: vid, diagnosis_type: 'final', diagnosis_text: fin });
+
+        // 9. Prescriptions
+        const prescriptions = [...document.querySelectorAll('.prescription-entry')].map(el =>
+          sb.from('hospital_prescriptions').insert({
+            visit_id: vid, medicine_name: el.querySelector('.rx-medicine').value,
+            route: el.querySelector('.rx-route').value,
+            frequency: el.querySelector('.rx-frequency').value,
+            food_timing: el.querySelector('.rx-food').value,
+            duration: el.querySelector('.rx-duration').value,
+            instructions: el.querySelector('.rx-instructions').value,
+          })
+        );
+        await Promise.all(prescriptions);
+
+        // 10. Procedures
+        const procedures = [...document.querySelectorAll('#proceduresCheckboxes input:checked')].map(cb =>
+          sb.from('hospital_procedures').insert({
+            visit_id: vid, procedure_name: cb.value, notes: document.getElementById('treatmentNotes').value,
+          })
+        );
+        await Promise.all(procedures);
+
+        // 11. Advice
+        const adviceText = document.getElementById('advice').value;
+        if (adviceText) await sb.from('hospital_advice').insert({ visit_id: vid, advice_type: 'General Instructions', description: adviceText });
+
+        // 12. Follow-up
+        const response = document.getElementById('treatmentResponse').value;
+        const fupDate = document.getElementById('followupDate').value;
+        const fupAdvice = document.getElementById('nextVisitAdvice').value;
+        if (response || fupDate || fupAdvice) {
+          await sb.from('hospital_followups').insert({
+            visit_id: vid, treatment_response: response || null,
+            followup_date: fupDate || null, next_visit_advice: fupAdvice || null,
+          });
+        }
+
+        // 13. Special Instructions
+        const specialInst = document.getElementById('specialInstructions').value;
+        if (specialInst) {
+          await sb.from('hospital_special_instructions').insert({
+            visit_id: vid, instructions: specialInst,
+          });
+        }
+
+        // 14. Doctor Notes
+        const remarks = document.getElementById('doctorRemarks').value;
+        const sig = document.getElementById('doctorSignature').value;
+        if (remarks || sig) {
+          await sb.from('hospital_doctor_notes').insert({
+            visit_id: vid, remarks: remarks || null, signature: sig || null,
+            doctor_id: document.getElementById('doctor').value || null,
+          });
+        }
+
+        // 15. Billing
+        const billingItems = [...document.querySelectorAll('.billing-entry')].map(el =>
+          sb.from('hospital_billing_items').insert({
+            visit_id: vid,
+            description: el.querySelector('.bill-desc').value,
+            quantity: parseInt(el.querySelector('.bill-qty').value) || 1,
+            rate: parseFloat(el.querySelector('.bill-rate').value) || 0,
+          })
+        );
+        await Promise.all(billingItems);
+        const total = parseFloat(document.getElementById('billTotal').textContent) || 0;
+        const discount = parseFloat(document.getElementById('billDiscount').value) || 0;
+        if (total > 0) {
+          await sb.from('hospital_billing_summary').insert({
+            visit_id: vid, total_amount: total, discount: discount, payment_status: 'pending',
+          });
+        }
+
+        // 15. Update visit status
+        await sb.from('hospital_visits').update({ visit_status: 'completed' }).eq('id', vid);
+
+        alert('Visit saved successfully! OPD #' + visit.opd_number);
+        window.location.href = '/app/hospital/dashboard';
+      } catch (err) {
+        alert('Error saving visit: ' + err.message);
+        console.error(err);
+        btn.disabled = false; btn.textContent = 'Save Visit';
+      }
+    }
+
+    // Initialize first complaint & investigation
+    addComplaint();
+    addInvestigation();
+    addPrescription();
+    addBillingItem('Consultation Fee', 1, 300);
+  </script>
+</body>
+</html>

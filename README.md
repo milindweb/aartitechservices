@@ -50,7 +50,13 @@ Multi-service business portal with static HTML/CSS/JS frontend, Supabase backend
 │   │   ├── dashboard.html # Post-login dashboard
 │   │   ├── profile.html   # User profile
 │   │   ├── seniority/     # Seniority management
-│   │   ├── hospital/      # (placeholder)
+│   │   ├── hospital/      # Hospital management module
+│   │   │   ├── dashboard.html
+│   │   │   ├── new-visit.html
+│   │   │   ├── patient-list.html
+│   │   │   ├── patient-profile.html
+│   │   │   ├── appointments.html
+│   │   │   └── css/hospital.css
 │   │   ├── society/       # (placeholder)
 │   │   ├── future-apps/   # (placeholder)
 │   │   └── ticket-manager/ # (placeholder)
@@ -65,12 +71,20 @@ Multi-service business portal with static HTML/CSS/JS frontend, Supabase backend
 ├── backend/               # Database schema & configuration
 │   ├── schema/            # schema.sql, rls-policies.sql, auth-trigger.sql, admin-rls-policy.sql, database-design.md
 │   ├── seed/              # seed.sql
-│   └── modules/           # Module-specific schema (blog/)
+│   ├── import/            # ETL pipeline for CDCI + LOINC master data
+│   │   ├── scripts/       # filter, import, verify scripts
+│   │   └── sql/           # medicine, investigation, diagnosis DDL
+│   └── modules/           # Module-specific schema
+│       ├── blog/          # (reserved)
+│       └── hospital/      # Schema, seed, RLS for hospital module
 ├── supabase/
 │   ├── config.toml        # Supabase project config
 │   └── functions/         # Edge Functions
-│       └── blog-posts/    # Blog CRUD API
-├── docs/                  # DEPLOYMENT.md, ROADMAP.md
+│       ├── blog-posts/    # Blog CRUD API
+│       ├── hospital-patients/  # Patient CRUD API
+│       ├── hospital-masters/   # Master data lookup API
+│       └── hospital-dashboard/ # Dashboard aggregation API
+├── docs/                  # DEPLOYMENT.md, ROADMAP.md, SRS-Hospital.md
 ├── Future/                # Module placeholders (CRM, ERP, HRMS, Inventory, School)
 └── VScode/                # (empty)
 ```
@@ -95,13 +109,14 @@ Multi-service business portal with static HTML/CSS/JS frontend, Supabase backend
 - **Dark/Light Theme** toggle with localStorage persistence
 - **Responsive Design** with mobile hamburger navigation
 - **SEO:** robots.txt, sitemap.xml, favicon, dynamic Open Graph / JSON-LD
+- **Hospital Management Module** — OPD visit workflow (7-step form), patient registry, appointment calendar, vitals/prescriptions/billing with master data autocomplete (CDCI medicines, LOINC investigations, ICD-10 diagnoses)
+- **Medical Master Data Pipeline** — ETL pipeline importing CDCI (186K drugs) and LOINC (102K lab tests) into Supabase PostgreSQL
 
 ### Planned
 - Full blog CRUD with comments
-- Hospital management (departments, doctors, appointments)
 - Society management (groups, members, events)
 - Ticket manager
-- Additional Supabase Edge Functions (comments, hospital, society, etc.)
+- Additional Supabase Edge Functions (comments, society, etc.)
 - Automated sitemap generation
 
 ## Getting Started

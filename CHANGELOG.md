@@ -1,5 +1,23 @@
 # Changelog
 
+## v1.5.0 — 2026-07-06 — Hospital management module & medical master data pipeline
+
+### Added
+- `frontend/app/hospital/` — Full hospital management UI: dashboard, 7-step OPD visit form (`new-visit.html`), patient list with search/pagination, patient profile with visit history, appointment calendar with modal booking
+- `backend/modules/hospital/` — Database schema (18 OPD transaction tables), seed data (22 departments, 12 doctors, ~90 symptoms, billing rate cards), RLS policies
+- `backend/import/` — Complete ETL pipeline for medical master data: CDCI (186K+ drugs, brands, generics) and LOINC (102K+ lab tests) → filter scripts → SQL DDL → batch import → verification
+- `supabase/functions/hospital-patients/` — Edge function for patient CRUD (GET by ID, paginated search, POST create)
+- `supabase/functions/hospital-masters/` — Edge function for master data lookups (medicines, investigations, symptoms, diagnoses, doctors, departments)
+- `supabase/functions/hospital-dashboard/` — Edge function for dashboard stats aggregation
+- `docs/SRS-Hospital.md` — Comprehensive software requirements specification for the hospital module
+
+### Documentation
+- `structure.md` — updated file tree with hospital frontend, backend modules, import pipeline, edge functions, and SRS document
+- `README.md` — updated file tree, moved hospital from Planned to Implemented, added medical data pipeline
+- `CHANGELOG.md` — added this entry
+
+---
+
 ## v1.4.0 — 2026-07-06 — Documentation sync with actual filesystem
 
 ### Documentation

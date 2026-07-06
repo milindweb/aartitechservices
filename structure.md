@@ -41,13 +41,23 @@ mk9/
 │   │
 │   └── functions/
 │       │
-│       └── blog-posts/
+│       ├── blog-posts/
+│       │   └── index.ts
+│       │
+│       ├── hospital-patients/
+│       │   └── index.ts
+│       │
+│       ├── hospital-masters/
+│       │   └── index.ts
+│       │
+│       └── hospital-dashboard/
 │           └── index.ts
 │
 ├── docs/
 │   │
 │   ├── DEPLOYMENT.md
-│   └── ROADMAP.md
+│   ├── ROADMAP.md
+│   └── SRS-Hospital.md              ↤ Hospital Management System SRS
 │
 ├── Future/
 │   ├── CRM/
@@ -154,7 +164,14 @@ mk9/
 │   │   │   ├── seniority-list.html       ↤ Auth-guarded
 │   │   │   └── seniority-management.html ↤ Auth-guarded
 │   │   │
-│   │   ├── hospital/                (empty — placeholder)
+│   │   ├── hospital/                ⭐ Hospital management module
+│   │   │   ├── dashboard.html
+│   │   │   ├── new-visit.html       (7-step OPD visit form)
+│   │   │   ├── patient-list.html
+│   │   │   ├── patient-profile.html
+│   │   │   ├── appointments.html
+│   │   │   └── css/
+│   │   │       └── hospital.css
 │   │   ├── society/                 (empty — placeholder)
 │   │   ├── future-apps/             (empty — placeholder)
 │   │   └── ticket-manager/          (empty — placeholder)
@@ -215,10 +232,39 @@ mk9/
     ├── seed/
     │   └── seed.sql
     │
+    ├── import/                      ⭐ ETL pipeline for medical master data
+    │   ├── README.md                (pipeline docs)
+    │   ├── requirements.txt
+    │   ├── config.py
+    │   ├── raw/                     (source data — gitignored)
+    │   │   ├── CDCI/                (7 TSV files)
+    │   │   └── LOINC/               (Loinc.csv, Part.csv, etc.)
+    │   ├── cleaned/                 (filtered CSVs — gitignored)
+    │   ├── scripts/
+    │   │   ├── utils.py
+    │   │   ├── filter_cdci.py
+    │   │   ├── filter_loinc.py
+    │   │   ├── filter_icd10.py      (placeholder)
+    │   │   ├── import_supabase.py
+    │   │   └── verify_data.py
+    │   └── sql/
+    │       ├── medicine_master.sql
+    │       ├── investigation_master.sql
+    │       ├── revert-future-tables.sql
+    │       └── diagnosis_master.sql (placeholder)
+    │
     └── modules/
         │
-        └── blog/
-            └── functions/           (empty — reserved for blog edge functions)
+        ├── blog/
+        │   └── functions/           (empty — reserved for blog edge functions)
+        │
+        └── hospital/                ⭐ Hospital schema, seed & policies
+            ├── schema/
+            │   └── hospital-schema.sql
+            ├── seed/
+            │   └── seed-masters.sql
+            └── policies/
+                └── hospital-rls.sql
 
 ---
 
@@ -426,8 +472,15 @@ To add a new module:
   3. Create `backend/modules/<name>/` (schema/, policies/, seed/)
   4. Add migration file in `backend/migrations/`
 
-Existing placeholders:
-  - `frontend/app/hospital/`
+Active modules:
+  - `frontend/app/hospital/` ✅ (dashboard, new-visit, patient-list, patient-profile, appointments)
+  - `backend/modules/hospital/` ✅ (schema, seed, policies)
+  - `backend/import/` ✅ (CDCI + LOINC ETL pipeline: filter → clean → import → verify)
+  - `supabase/functions/hospital-patients/` ✅
+  - `supabase/functions/hospital-masters/` ✅
+  - `supabase/functions/hospital-dashboard/` ✅
+
+Placeholders:
   - `frontend/app/society/`
   - `frontend/app/future-apps/`
   - `frontend/app/ticket-manager/`
@@ -440,3 +493,48 @@ All future modules should use:
 - Supabase Edge Functions
 
 without changing the main architecture.
+
+### Import Pipeline (`backend/import/`)
+
+```
+backend/import/
+├── README.md                       # Usage docs
+├── requirements.txt                # psycopg2-binary, python-dotenv
+├── config.py                       # DB creds, file paths, column mappings
+├── raw/                            # Source data (gitignored)
+│   ├── CDCI/                       # 7 TSV files (BrandMaster, GenericMaster, etc.)
+│   └── LOINC/                      # Loinc.csv + Part.csv (imported); AnswerList, LoincAnswerListLink & LoincPartLink (raw/ only — not imported)
+├── cleaned/                        # Filtered CSVs (gitignored)
+├── scripts/
+│   ├── utils.py                    # Shared logger
+│   ├── filter_cdci.py              # TSV → CSV (all columns kept)
+│   ├── filter_loinc.py             # Loinc.csv → 7 columns, ACTIVE/TRIAL only
+│   ├── filter_icd10.py             # Placeholder
+│   ├── import_supabase.py          # Run SQL DDL + batch inserts (1k/batch)
+│   └── verify_data.py              # CSV row count vs DB row count
+└── sql/
+    ├── medicine_master.sql         # 7 tables + medicine_search MV
+    ├── investigation_master.sql    # loinc_codes + loinc_parts (future tables removed — run revert-future-tables.sql if exported)
+    ├── revert-future-tables.sql    # Drop loinc_answer_list, loinc_answer_list_links, loinc_part_links from Supabase
+    └── diagnosis_master.sql        # icd10_codes (placeholder)
+```
+
+**Pipeline flow:** `filter_cdci.py` + `filter_loinc.py` → cleaned CSVs → `import_supabase.py` (SQL DDL + batch INSERT ON CONFLICT DO NOTHING) → `verify_data.py`
+
+**Cleaned CSV sizes:**
+
+| File | Size | Rows |
+|------|------|------|
+| **CDCI** | | **186,673** |
+| substance_master.csv | 352K | 3,274 |
+| generic_master.csv | 2.5M | 10,174 |
+| brand_master.csv | 13M | 93,019 |
+| product_master.csv | 1.9M | 71,503 |
+| drug_form_master.csv | 16K | 422 |
+| route_master.csv | 4.9K | 160 |
+| supplier_master.csv | 374K | 8,121 |
+| **LOINC** | | **908,495** |
+| loinc_codes.csv | 12M | 102,751 |
+| loinc_parts.csv | 6.9M | 74,087 |
+
+
