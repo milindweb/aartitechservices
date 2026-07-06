@@ -297,6 +297,22 @@
     }
 
     // Load departments on init
+    const FALLBACK_DEPARTMENTS = [
+      'General Medicine', 'Cardiology', 'Dermatology', 'ENT', 'Ophthalmology',
+      'Orthopedics', 'Pediatrics', 'Obstetrics & Gynecology', 'Neurology',
+      'Psychiatry', 'Gastroenterology', 'Pulmonology', 'Urology', 'Nephrology',
+      'Endocrinology', 'Dental', 'General Surgery', 'Physiotherapy',
+      'Emergency / Casualty', 'Oncology'
+    ];
+    const FALLBACK_DOCTORS = {
+      'General Medicine': ['Dr. Girkar', 'Dr. Nerekar', 'Dr. Sathe', 'Dr. Hajari'],
+      'Cardiology': ['Dr. Sharma', 'Dr. Patil'],
+      'Pediatrics': ['Dr. Mehta', 'Dr. Joshi'],
+      'Orthopedics': ['Dr. Desai', 'Dr. Kulkarni'],
+      'ENT': ['Dr. Shah', 'Dr. Rao'],
+      'Ophthalmology': ['Dr. Iyer', 'Dr. Menon'],
+    };
+
     (async function init() {
       try {
         const { data: depts, error: deptErr } = await SUPABASE.from('hospital_departments').select('id,name').order('name');
@@ -305,20 +321,26 @@
         if (depts && depts.length > 0) {
           depts.forEach(d => { deptSelect.innerHTML += `<option value="${d.id}">${d.name}</option>`; });
         } else {
-          deptSelect.innerHTML += '<option value="" disabled>No departments found</option>';
+          throw new Error('No departments in DB');
         }
-      } catch (e) { console.error('Failed to load departments:', e); }
+      } catch (e) {
+        console.warn('Using fallback departments:', e);
+        const deptSelect = document.getElementById('department');
+        FALLBACK_DEPARTMENTS.forEach(d => { deptSelect.innerHTML += `<option value="${d}">${d}</option>`; });
+      }
 
       try {
         const { data: diagnoses, error: diagErr } = await SUPABASE.from('icd10_codes').select('disease_name');
         if (diagErr) throw diagErr;
         const dl = document.getElementById('diagnosisList');
         if (diagnoses) diagnoses.forEach(d => { dl.innerHTML += `<option value="${d.disease_name}">`; });
-      } catch (e) { console.error('Failed to load diagnoses:', e); }
+      } catch (e) { console.warn('Failed to load diagnoses:', e); }
     })();
 
     async function loadDoctors() {
-      const deptId = document.getElementById('department').value;
+      const deptSelect = document.getElementById('department');
+      const deptName = deptSelect.selectedOptions[0]?.text || '';
+      const deptId = deptSelect.value;
       const docSelect = document.getElementById('doctor');
       docSelect.innerHTML = '<option value="">Select Doctor</option>';
       if (!deptId) return;
@@ -327,8 +349,14 @@
         if (error) throw error;
         if (data && data.length > 0) {
           data.forEach(d => { docSelect.innerHTML += `<option value="${d.id}">${d.name}</option>`; });
+        } else {
+          throw new Error('No doctors for this dept');
         }
-      } catch (e) { console.error('Failed to load doctors:', e); }
+      } catch (e) {
+        console.warn('Using fallback doctors:', e);
+        const fallback = FALLBACK_DOCTORS[deptName] || [];
+        fallback.forEach(dr => { docSelect.innerHTML += `<option value="${dr}">${dr}</option>`; });
+      }
       docSelect.innerHTML += '<option value="other">Other</option>';
     }
 
@@ -494,13 +522,16 @@
         }
 
         // 2. Visit
+        const deptVal = document.getElementById('department').value;
+        const docVal = document.getElementById('doctor').value;
+        const isUuid = v => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(v);
         const { data: visit, error: ve } = await SUPABASE.from('hospital_visits').insert({
           patient_id: patientId,
-          opd_number: patientUhid + '-' + Date.now(),
+          opd_number: document.getElementById('uhid').value + '-' + Date.now(),
           token_number: parseInt(document.getElementById('tokenNumber').value) || null,
           visit_type: document.getElementById('visitType').value,
-          department_id: document.getElementById('department').value || null,
-          doctor_id: document.getElementById('doctor').value === 'other' ? null : (document.getElementById('doctor').value || null),
+          department_id: isUuid(deptVal) ? deptVal : null,
+          doctor_id: docVal === 'other' ? null : (isUuid(docVal) ? docVal : null),
           referred_by: document.getElementById('referredBy').value,
           created_by: (await SUPABASE.auth.getUser()).data.user?.id,
         }).select().single();
