@@ -56,7 +56,7 @@ Multi-service business portal with static HTML/CSS/JS frontend, Supabase backend
 │   │   │   ├── patient-list.html
 │   │   │   ├── patient-profile.html
 │   │   │   ├── appointments.html
-│   │   │   ├── department-list.html
+│   │   │   ├── data/masters.json
 │   │   │   ├── components/hospital-nav.html
 │   │   │   ├── css/hospital.css
 │   │   │   └── js/hospital-nav.js

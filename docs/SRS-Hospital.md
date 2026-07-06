@@ -25,7 +25,6 @@
 /app/hospital/patient-list           /app/hospital/patient-list.html            200
 /app/hospital/patient-profile        /app/hospital/patient-profile.html         200
 /app/hospital/appointments           /app/hospital/appointments.html            200
-/app/hospital/masters                /app/hospital/department-list.html          200
 ```
 
 ## File Structure
@@ -37,7 +36,8 @@ frontend/app/hospital/
 ├── patient-list.html        # Searchable patient list with pagination
 ├── patient-profile.html     # Full patient profile + visit history
 ├── appointments.html        # Daily appointment calendar + modal booking
-├── department-list.html     # Masters reference: departments & doctors
+├── data/
+│   └── masters.json         # Departments & doctors for fallback dropdowns
 ├── components/
 │   └── hospital-nav.html    # Sub-navigation bar (back, home, quick links)
 ├── css/
@@ -771,24 +771,6 @@ A sticky sub-navigation bar appears below the main site header on every hospital
 - Paginated (20 per page)
 - Table columns: UHID, Name, Gender, Age, Mobile, Visit Count, Last Visit Date
 - Click UHID → patient profile page
-
-## Masters (Departments & Doctors)
-
-A reference page listing all departments and doctors in searchable card grids.
-
-**File:** `frontend/app/hospital/department-list.html`  
-**URL:** `/app/hospital/masters`
-
-### Departments Section
-- 22 departments displayed as cards with `CODE` badge and full name
-- Searchable by name or code
-- Fallback data matches seeded departments exactly
-
-### Doctors Section
-- 12 entries: individual doctors + hospital entities
-- Each card shows name and type (Doctor / Hospital badge)
-- Searchable by name
-- Fallback data matches `hospital_doctor_master` seed data
 
 ## Patient Profile
 - Header: Avatar, Name, UHID, Gender, Age, Mobile, Email, Allergies, Address

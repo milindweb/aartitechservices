@@ -82,9 +82,21 @@
     document.getElementById('apptDate').value = new Date().toISOString().split('T')[0];
 
     (async () => {
-      const { data: depts } = await SUPABASE.from('hospital_departments').select('id,name').order('name');
-      const sel = document.getElementById('newApptDept');
-      if (depts) depts.forEach(d => { sel.innerHTML += `<option value="${d.id}">${d.name}</option>`; });
+      try {
+        const { data: depts } = await SUPABASE.from('hospital_departments').select('id,name').order('name');
+        const sel = document.getElementById('newApptDept');
+        if (depts && depts.length > 0) {
+          depts.forEach(d => { sel.innerHTML += `<option value="${d.id}">${d.name}</option>`; });
+        } else {
+          throw new Error('No departments');
+        }
+      } catch (e) {
+        console.warn('Using fallback departments:', e);
+        const res = await fetch('/app/hospital/data/masters.json');
+        const data = await res.json();
+        const sel = document.getElementById('newApptDept');
+        data.departments.forEach(d => { sel.innerHTML += `<option value="${d.code}">${d.name}</option>`; });
+      }
     })();
 
     async function loadModalDoctors() {

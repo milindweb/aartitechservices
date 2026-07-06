@@ -407,21 +407,17 @@
       if (h && w) document.getElementById('bmi').value = (w / (h * h)).toFixed(1);
     }
 
-    // Load departments on init
-    const FALLBACK_DEPARTMENTS = [
-      'General Medicine', 'Cardiology', 'Emergency / Casualty', 'Pulmonology',
-      'Dental', 'Dermatology', 'Endocrinology', 'Ear, Nose & Throat',
-      'Ophthalmology', 'Gastroenterology', 'Nephrology', 'Neurology',
-      'Neurosurgery', 'Obstetrics & Gynecology', 'Oncology', 'Orthopedics',
-      'Pediatrics', 'Physical Medicine & Rehabilitation', 'Psychiatry',
-      'General Surgery', 'Urology', 'Physiotherapy'
-    ];
-    const FALLBACK_DOCTORS = [
-      'Dr. Girkar', 'Dr. Nerekar', 'Dr. Sathe', 'Dr. Hajari',
-      'Dr. Gargi Hospital', 'Dr. Gitai Hospital', 'Dr. Shyamnagar Hospital',
-      'Dr. INHS Sandhani', 'Dr. Terna Hospital', 'Dr. JJ Hospital',
-      'Dr. KEM Hospital', 'Dr. Unknown'
-    ];
+    let MASTERS_DATA = null;
+    async function loadMastersFallback() {
+      if (MASTERS_DATA) return MASTERS_DATA;
+      try {
+        const res = await fetch('/app/hospital/data/masters.json');
+        MASTERS_DATA = await res.json();
+      } catch (e) {
+        MASTERS_DATA = { departments: [], doctors: [] };
+      }
+      return MASTERS_DATA;
+    }
 
     (async function init() {
       try {
@@ -435,8 +431,9 @@
         }
       } catch (e) {
         console.warn('Using fallback departments:', e);
+        const masters = await loadMastersFallback();
         const deptSelect = document.getElementById('department');
-        FALLBACK_DEPARTMENTS.forEach(d => { deptSelect.innerHTML += `<option value="${d}">${d}</option>`; });
+        masters.departments.forEach(d => { deptSelect.innerHTML += `<option value="${d.code}">${d.name}</option>`; });
       }
 
       try {
@@ -460,7 +457,8 @@
         }
       } catch (e) {
         console.warn('Using fallback doctors:', e);
-        FALLBACK_DOCTORS.forEach(dr => { docSelect.innerHTML += `<option value="${dr}">${dr}</option>`; });
+        const masters = await loadMastersFallback();
+        masters.doctors.forEach(dr => { docSelect.innerHTML += `<option value="${dr}">${dr}</option>`; });
       }
       docSelect.innerHTML += '<option value="other">Other</option>';
     }

@@ -170,7 +170,8 @@ mk9/
 │   │   │   ├── patient-list.html
 │   │   │   ├── patient-profile.html
 │   │   │   ├── appointments.html
-│   │   │   ├── department-list.html (masters reference: depts & doctors)
+│   │   │   ├── data/
+│   │   │   │   └── masters.json         (departments & doctors for fallback)
 │   │   │   ├── components/
 │   │   │   │   └── hospital-nav.html    (sub-navigation: back, home, quick links)
 │   │   │   ├── css/

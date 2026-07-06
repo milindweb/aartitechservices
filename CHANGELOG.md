@@ -1,17 +1,17 @@
 # Changelog
 
-## v1.7.0 — 2026-07-06 — Hospital masters reference page
+## v1.7.0 — 2026-07-06 — Hospital masters JSON + fallback refactor
 
 ### Added
-- `frontend/app/hospital/department-list.html` — Masters page with searchable departments (22) and doctors (12) reference lists; loads from Supabase with exact fallback data
-- `/app/hospital/masters` clean URL in `frontend/_redirects`
+- `frontend/app/hospital/data/masters.json` — Central JSON file with exact 22 departments (code + name) and 12 doctors list
 
 ### Changed
-- `frontend/app/hospital/components/hospital-nav.html` — added "Masters" nav link (fa-book)
-- `frontend/app/hospital/new-visit.html` — fallback lists updated to match exact department codes and doctor registry (flat list: 4 doctors + 7 hospitals + Dr. Unknown)
+- `frontend/app/hospital/new-visit.html` — replaced hardcoded fallback arrays with fetch from `masters.json`; added `loadMastersFallback()` helper
+- `frontend/app/hospital/appointments.html` — department dropdown fallback now loads from `masters.json`
+- `frontend/app/hospital/department-list.html` — removed (replaced by JSON data file)
 
 ### Documentation
-- `structure.md`, `README.md`, `SRS-Hospital.md` — updated with new masters page
+- `structure.md`, `README.md`, `SRS-Hospital.md` — updated file tree with `data/masters.json`
 - `CHANGELOG.md` — added this entry
 
 ---
