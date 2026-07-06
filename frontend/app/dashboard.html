@@ -137,6 +137,11 @@
 
     <!-- Developer Modules (full dashboard) -->
     <div class="module-grid" id="devModules">
+      <a href="/app/hospital" class="module-card">
+        <div class="icon"><i class="fas fa-hospital"></i></div>
+        <h3>Hospital Manager</h3>
+        <p>OPD visits, patient registry, appointments &amp; billing</p>
+      </a>
       <a href="/app/seniority" class="module-card">
         <div class="icon"><i class="fas fa-ranking-star"></i></div>
         <h3>Seniority Manager</h3>
@@ -220,6 +225,11 @@
         // Admin: simpler dashboard
         titleEl.innerHTML = 'Admin Dashboard<small>User &amp; system management</small>';
         document.getElementById('adminModules').style.display = '';
+      } else if (role === 'hospital_admin') {
+        titleEl.innerHTML = 'Hospital Dashboard<small>Hospital management</small>';
+        document.getElementById('devModules').style.display = '';
+        var devAdminCard = document.getElementById('devAdminCard');
+        if (devAdminCard) devAdminCard.style.display = 'none';
       } else if (role === 'senior_admin') {
         titleEl.innerHTML = 'Dashboard<small>Senior Admin</small>';
         document.getElementById('devModules').style.display = '';
