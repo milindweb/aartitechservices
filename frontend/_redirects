@@ -35,14 +35,6 @@
 /dashboard           /app/dashboard.html                                                    200
 /app/admin           /app/admin/users.html                                                   200
 
-# Hospital
-/app/hospital                /app/hospital/dashboard.html                                       200
-/app/hospital/dashboard      /app/hospital/dashboard.html                                       200
-/app/hospital/new-visit      /app/hospital/new-visit.html                                       200
-/app/hospital/patient-list   /app/hospital/patient-list.html                                    200
-/app/hospital/patient-profile /app/hospital/patient-profile.html                                200
-/app/hospital/appointments   /app/hospital/appointments.html                                    200
-
 # Seniority
 /app/seniority           /app/seniority/seniority-list.html                                    200
 /app/seniority/manage    /app/seniority/seniority-management.html                              200
