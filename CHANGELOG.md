@@ -1,5 +1,23 @@
 # Changelog
 
+## v1.6.0 — 2026-07-06 — Hospital sub-navigation component
+
+### Added
+- `frontend/app/hospital/components/hospital-nav.html` — Reusable sub-navigation bar with back button, hospital home link, and quick links (New Visit, Patients, Appointments)
+- `frontend/app/hospital/js/hospital-nav.js` — Dynamic component loader (fetches and injects nav HTML)
+- `.hosp-nav` styles in `frontend/app/hospital/css/hospital.css` — Sticky sub-nav below main header with responsive breakpoints
+
+### Changed
+- All 5 hospital pages (`dashboard.html`, `new-visit.html`, `patient-list.html`, `patient-profile.html`, `appointments.html`) — added `<div id="hospitalNav">` + hospital-nav.js for consistent cross-page navigation
+
+### Documentation
+- `structure.md` — added `components/` and `js/` directories under hospital module
+- `README.md` — updated hospital file tree with new files
+- `SRS-Hospital.md` — added navigation section and updated file structure
+- `CHANGELOG.md` — added this entry
+
+---
+
 ## v1.5.0 — 2026-07-06 — Hospital management module & medical master data pipeline
 
 ### Added

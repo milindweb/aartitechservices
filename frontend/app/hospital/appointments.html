@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="/shared/css/style.css">
   <link rel="stylesheet" href="/shared/css/headerfooter.css">
   <script src="/shared/js/headerfooter.js" defer></script>
+  <script src="/app/hospital/js/hospital-nav.js" defer></script>
   <link rel="stylesheet" href="/app/hospital/css/hospital.css">
   <style>
     .appt-page { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
@@ -31,6 +32,7 @@
 </head>
 <body>
   <div id="header"></div>
+  <div id="hospitalNav"></div>
   <div class="appt-page" id="app">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:24px;">
       <h1 style="margin:0;"><i class="fas fa-calendar-alt"></i> Appointments</h1>
@@ -86,11 +88,9 @@
     })();
 
     async function loadModalDoctors() {
-      const deptId = document.getElementById('newApptDept').value;
       const sel = document.getElementById('newApptDoctor');
       sel.innerHTML = '<option value="">Select</option>';
-      if (!deptId) return;
-      const { data } = await SUPABASE.from('hospital_doctor_master').select('id,name').eq('department_id', deptId).eq('is_hospital', false);
+      const { data } = await SUPABASE.from('hospital_doctor_master').select('id,name').eq('is_hospital', false);
       if (data) data.forEach(d => { sel.innerHTML += `<option value="${d.id}">${d.name}</option>`; });
     }
 

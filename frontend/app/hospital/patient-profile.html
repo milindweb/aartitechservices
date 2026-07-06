@@ -13,30 +13,26 @@
   <link rel="stylesheet" href="/shared/css/style.css">
   <link rel="stylesheet" href="/shared/css/headerfooter.css">
   <script src="/shared/js/headerfooter.js" defer></script>
+  <script src="/app/hospital/js/hospital-nav.js" defer></script>
   <link rel="stylesheet" href="/app/hospital/css/hospital.css">
   <style>
-    .profile-page { max-width: 960px; margin: 40px auto; padding: 0 20px; }
-    .profile-header { background: var(--card-bg); border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: flex; gap: 24px; align-items: start; flex-wrap: wrap; margin-bottom: 24px; }
-    .profile-avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--light); display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--accent); }
+    .profile-header { background: var(--hosp-card); border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); display: flex; gap: 24px; align-items: start; flex-wrap: wrap; margin-bottom: 24px; }
+    .profile-avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--hosp-bg); display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--hosp-primary); }
     .profile-info h2 { font-size: 1.4rem; }
-    .profile-info .meta { color: var(--gray); font-size: 0.9rem; margin-top: 4px; }
+    .profile-info .meta { color: var(--hosp-text-secondary); font-size: 0.9rem; margin-top: 4px; }
     .profile-info .meta span { margin-right: 16px; }
-    .visit-card { background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 16px; }
-    .visit-card .visit-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; cursor: pointer; }
-    .visit-card .visit-header h4 { font-size: 1rem; }
-    .visit-details { display: none; padding-top: 12px; border-top: 1px solid var(--border); }
-    .visit-details.open { display: block; }
     .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
-    .detail-item label { font-size: 0.75rem; color: var(--gray); display: block; }
+    .detail-item label { font-size: 0.75rem; color: var(--hosp-text-secondary); display: block; }
     .detail-item span { font-size: 0.9rem; }
     .drug-allergy { display: inline-block; background: #fce4ec; color: #c62828; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem; margin: 2px; }
   </style>
 </head>
 <body>
   <div id="header"></div>
-  <div class="profile-page" id="app">
+  <div id="hospitalNav"></div>
+  <div class="hosp-container" id="app">
     <div id="profileContent">
-      <p style="color:var(--gray);">Loading patient...</p>
+      <p style="color:var(--hosp-text-secondary);">Loading patient...</p>
     </div>
   </div>
   <div id="footer"></div>
@@ -62,6 +58,9 @@
         .eq('patient_id', patient.id).order('visit_date', { ascending: false });
 
       const age = patient.date_of_birth ? Math.floor((new Date() - new Date(patient.date_of_birth)) / (365.25 * 86400000)) : '—';
+      const allergyBadges = patient.drug_allergies?.length
+        ? patient.drug_allergies.map(a => `<span class="drug-allergy">${a}</span>`).join(' ')
+        : '';
 
       let html = `
         <div class="profile-header">
@@ -75,29 +74,29 @@
               <span><i class="fas fa-phone"></i> ${patient.mobile || '—'}</span>
               <span><i class="fas fa-envelope"></i> ${patient.email || '—'}</span>
             </div>
-            ${patient.drug_allergies && patient.drug_allergies.length > 0 ? `<div class="meta" style="margin-top:8px;"><strong>Allergies:</strong> ${patient.drug_allergies.map(a => `<span class="drug-allergy">${a}</span>`).join(' ')}</div>` : ''}
+            ${allergyBadges ? `<div class="meta" style="margin-top:8px;"><strong>Allergies:</strong> ${allergyBadges}</div>` : ''}
             <div class="meta">${patient.address || ''}</div>
           </div>
         </div>
         <div style="display:flex;gap:12px;margin-bottom:24px;">
-          <a href="/app/hospital/new-visit" class="btn btn-primary"><i class="fas fa-plus"></i> New Visit</a>
+          <a href="/app/hospital/new-visit?clear=1" class="hosp-btn hosp-btn-primary"><i class="fas fa-plus"></i> New Visit</a>
         </div>
         <h3 style="margin-bottom:16px;">Visit History (${visits?.length || 0})</h3>`;
 
       if (!visits || visits.length === 0) {
-        html += '<p style="color:var(--gray);">No visits recorded yet.</p>';
+        html += '<p style="color:var(--hosp-text-secondary);">No visits recorded yet.</p>';
       } else {
         for (const v of visits) {
           html += `
-            <div class="visit-card">
-              <div class="visit-header" onclick="toggleVisit('visit${v.id}')">
+            <div class="hosp-visit-card">
+              <div class="hosp-visit-header" onclick="toggleVisit('visit${v.id}')">
                 <div>
                   <h4>${new Date(v.visit_date).toLocaleDateString()} · OPD #${v.opd_number}</h4>
-                  <span style="font-size:0.85rem;color:var(--gray);">${v.hospital_departments?.name || '—'} · ${v.hospital_doctor_master?.name || '—'} · ${v.visit_type}</span>
+                  <span style="font-size:0.85rem;color:var(--hosp-text-secondary);">${v.hospital_departments?.name || '—'} · ${v.hospital_doctor_master?.name || '—'} · ${v.visit_type}</span>
                 </div>
-                <i class="fas fa-chevron-down" style="color:var(--gray);"></i>
+                <i class="fas fa-chevron-down" style="color:var(--hosp-text-secondary);"></i>
               </div>
-              <div class="visit-details" id="visit${v.id}">
+              <div class="hosp-visit-body" id="visit${v.id}">
                 <div class="detail-grid">
                   ${v.hospital_vitals?.[0] ? `
                     <div class="detail-item"><label>Vitals</label><span>BP: ${v.hospital_vitals[0].bp_systolic||'—'}/${v.hospital_vitals[0].bp_diastolic||'—'} | Pulse: ${v.hospital_vitals[0].pulse_rate||'—'} | Temp: ${v.hospital_vitals[0].temperature||'—'}°F | SpO₂: ${v.hospital_vitals[0].spo2||'—'}%</span></div>
@@ -130,8 +129,7 @@
     })();
 
     function toggleVisit(id) {
-      const el = document.getElementById(id);
-      el.classList.toggle('open');
+      document.getElementById(id).classList.toggle('open');
     }
   </script>
 </body>

@@ -18,6 +18,13 @@
 - [x] Contact page + enquiry form (with privacy/terms/disclaimer/feedback accordions)
 - [x] 6 service pages (SEO, Web & Software Dev, Projects & Training, Graphics/Photography & Branding, Electrical, Automotive)
 
+### Hospital Management System
+- [x] OPD visit workflow (7-step form with patient, doctor, vitals, clinical, prescription, billing)
+- [x] Patient registry with search, pagination, and profile with visit history
+- [x] Appointment calendar with modal booking and inline status management
+- [x] Medical master data pipeline (CDCI drugs, LOINC lab tests)
+- [x] Hospital sub-navigation component (back, home, quick links on every page)
+
 ## 🚧 In Progress
 
 ### Seniority Management Module
@@ -29,7 +36,6 @@
 
 ### Modules
 - [ ] Blog module (full CRUD, categories, comments)
-- [ ] Hospital Management System
 - [ ] Society Management System
 - [ ] Admin Panel
 

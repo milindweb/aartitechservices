@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="/shared/css/style.css">
   <link rel="stylesheet" href="/shared/css/headerfooter.css">
   <script src="/shared/js/headerfooter.js" defer></script>
+  <script src="/app/hospital/js/hospital-nav.js" defer></script>
   <link rel="stylesheet" href="/app/hospital/css/hospital.css">
   <style>
     .visit-form { max-width: 960px; margin: 40px auto; padding: 0 20px; }
@@ -23,6 +24,7 @@
 </head>
 <body>
   <div id="header"></div>
+  <div id="hospitalNav"></div>
   <div class="visit-form" id="app">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
       <h1 style="margin:0;"><i class="fas fa-plus-circle"></i> New OPD Visit</h1>
@@ -797,6 +799,11 @@
 
     // ----- Init -----
     (function initDefaults() {
+      // Clear draft if coming from profile page (?clear=1)
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('clear') === '1') {
+        localStorage.removeItem(DRAFT_KEY);
+      }
       if (!loadDraft()) {
         addComplaint();
         addInvestigation();

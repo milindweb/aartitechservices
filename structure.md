@@ -170,8 +170,12 @@ mk9/
 │   │   │   ├── patient-list.html
 │   │   │   ├── patient-profile.html
 │   │   │   ├── appointments.html
-│   │   │   └── css/
-│   │   │       └── hospital.css
+│   │   │   ├── components/
+│   │   │   │   └── hospital-nav.html    (sub-navigation: back, home, quick links)
+│   │   │   ├── css/
+│   │   │   │   └── hospital.css
+│   │   │   └── js/
+│   │   │       └── hospital-nav.js      (loads hospital-nav.html dynamically)
 │   │   ├── society/                 (empty — placeholder)
 │   │   ├── future-apps/             (empty — placeholder)
 │   │   └── ticket-manager/          (empty — placeholder)

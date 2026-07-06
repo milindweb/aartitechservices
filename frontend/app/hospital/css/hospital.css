@@ -109,6 +109,23 @@
 .hosp-visit-body { display: none; padding: 16px; border-top: 1px solid var(--hosp-border); }
 .hosp-visit-body.open { display: block; }
 
+/* Hospital Sub-navigation */
+.hosp-nav { background: var(--hosp-card); border-bottom: 2px solid var(--hosp-primary); position: sticky; top: 60px; z-index: 999; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+.hosp-nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; height: 48px; gap: 12px; }
+.hosp-nav-left { display: flex; align-items: center; gap: 8px; }
+.hosp-nav-back { background: var(--hosp-bg); border: none; border-radius: 8px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--hosp-text); font-size: 0.95rem; transition: all 0.2s; }
+.hosp-nav-back:hover { background: var(--hosp-primary); color: #fff; }
+.hosp-nav-home { display: flex; align-items: center; gap: 6px; text-decoration: none; color: var(--hosp-primary); font-weight: 600; font-size: 0.9rem; padding: 4px 12px; border-radius: 8px; transition: all 0.2s; }
+.hosp-nav-home:hover { background: var(--hosp-bg); }
+.hosp-nav-links { display: flex; align-items: center; gap: 4px; }
+.hosp-nav-link { display: flex; align-items: center; gap: 6px; text-decoration: none; color: var(--hosp-text-secondary); font-size: 0.85rem; font-weight: 500; padding: 6px 12px; border-radius: 8px; transition: all 0.2s; }
+.hosp-nav-link:hover { background: var(--hosp-bg); color: var(--hosp-primary); }
+.hosp-nav-link i { font-size: 0.9rem; }
+@media (max-width: 600px) {
+  .hosp-nav-links .hosp-nav-link span { display: none; }
+  .hosp-nav-home span { display: none; }
+}
+
 /* Dashboard */
 .hosp-dashboard { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
 .hosp-dashboard > h1 { margin-bottom: 24px; }

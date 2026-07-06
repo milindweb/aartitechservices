@@ -36,9 +36,12 @@ frontend/app/hospital/
 ├── patient-list.html        # Searchable patient list with pagination
 ├── patient-profile.html     # Full patient profile + visit history
 ├── appointments.html        # Daily appointment calendar + modal booking
+├── components/
+│   └── hospital-nav.html    # Sub-navigation bar (back, home, quick links)
 ├── css/
-│   └── hospital.css         # Hospital-specific styles
-└── js/                      # (reserved for future JS modules)
+│   └── hospital.css         # Hospital-specific styles (incl. .hosp-nav)
+└── js/
+    └── hospital-nav.js      # Dynamic loader for hospital-nav.html
 
 backend/modules/hospital/
 ├── schema/
@@ -701,6 +704,27 @@ Summary:
 - Displays summary of all sections
 - Save button persists everything in a single transaction flow (sequential inserts)
 - On success: redirects to dashboard
+
+## Hospital Navigation
+
+A sticky sub-navigation bar appears below the main site header on every hospital page.
+
+### Component
+**File:** `frontend/app/hospital/components/hospital-nav.html` (loaded dynamically by `js/hospital-nav.js`)
+
+### Elements
+| Element | Action | Icon |
+|---------|--------|------|
+| Back button | `history.back()` | `fa-arrow-left` |
+| Home | Links to `/app/hospital/dashboard` | `fa-hospital` |
+| New Visit | Links to `/app/hospital/new-visit` | `fa-plus-circle` |
+| Patients | Links to `/app/hospital/patient-list` | `fa-users` |
+| Appointments | Links to `/app/hospital/appointments` | `fa-calendar-alt` |
+
+### Behavior
+- Sticky at `top: 60px` (sits below the main header)
+- Responsive: link labels hidden on screens < 600px (icons remain visible)
+- Dark mode compatible via CSS custom properties (`--hosp-*`)
 
 ## Dashboard
 
