@@ -11,6 +11,18 @@
   --hosp-text-secondary: #6b7280;
 }
 
+.dark-mode {
+  --hosp-primary: #60a5fa;
+  --hosp-success: #4ade80;
+  --hosp-warning: #fbbf24;
+  --hosp-danger: #f87171;
+  --hosp-bg: #1e293b;
+  --hosp-card: #1e293b;
+  --hosp-border: #334155;
+  --hosp-text: #f1f5f9;
+  --hosp-text-secondary: #cbd5e1;
+}
+
 .hosp-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
 .hosp-section { background: var(--hosp-card); border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-bottom: 20px; }
 .hosp-section h3 { font-size: 1rem; color: var(--hosp-primary); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--hosp-bg); }
@@ -18,6 +30,7 @@
 /* Form elements */
 .hosp-input, .hosp-select, .hosp-textarea { padding: 8px 12px; border: 1px solid var(--hosp-border); border-radius: 6px; font-size: 0.9rem; width: 100%; }
 .hosp-input:focus, .hosp-select:focus, .hosp-textarea:focus { outline: none; border-color: var(--hosp-primary); box-shadow: 0 0 0 2px rgba(26,115,232,0.15); }
+.dark-mode .hosp-input:focus, .dark-mode .hosp-select:focus, .dark-mode .hosp-textarea:focus { box-shadow: 0 0 0 2px rgba(96,165,250,0.2); }
 .hosp-textarea { resize: vertical; min-height: 60px; }
 .hosp-label { font-size: 0.8rem; font-weight: 600; color: var(--hosp-text-secondary); margin-bottom: 4px; display: block; }
 
@@ -28,7 +41,7 @@
 /* Buttons */
 .hosp-btn { padding: 8px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.2s; }
 .hosp-btn-primary { background: var(--hosp-primary); color: #fff; }
-.hosp-btn-primary:hover { background: #1557b0; }
+.hosp-btn-primary:hover { filter: brightness(0.85); }
 .hosp-btn-success { background: var(--hosp-success); color: #fff; }
 .hosp-btn-danger { background: var(--hosp-danger); color: #fff; }
 .hosp-btn-sm { padding: 5px 12px; font-size: 0.8rem; }
@@ -39,6 +52,10 @@
 .hosp-badge-completed { background: #e8f0fe; color: #1a73e8; }
 .hosp-badge-pending { background: #fef7e0; color: #e37400; }
 .hosp-badge-cancelled { background: #fce8e6; color: #c5221f; }
+.dark-mode .hosp-badge-active { background: rgba(74,222,128,0.15); color: #4ade80; }
+.dark-mode .hosp-badge-completed { background: rgba(96,165,250,0.15); color: #93c5fd; }
+.dark-mode .hosp-badge-pending { background: rgba(251,191,36,0.15); color: #fbbf24; }
+.dark-mode .hosp-badge-cancelled { background: rgba(248,113,113,0.15); color: #f87171; }
 
 /* Table */
 .hosp-table { width: 100%; border-collapse: collapse; }
@@ -60,7 +77,7 @@
 
 /* Patient search dropdown */
 .hosp-search-wrap { position: relative; }
-.hosp-search-results { position: absolute; top: 100%; left: 0; right: 0; background: #fff; border: 1px solid var(--hosp-border); border-radius: 6px; max-height: 200px; overflow-y: auto; z-index: 100; display: none; }
+.hosp-search-results { position: absolute; top: 100%; left: 0; right: 0; background: var(--hosp-card); border: 1px solid var(--hosp-border); border-radius: 6px; max-height: 200px; overflow-y: auto; z-index: 100; display: none; }
 .hosp-search-results .hosp-result-item { padding: 10px 12px; cursor: pointer; border-bottom: 1px solid var(--hosp-border); }
 .hosp-search-results .hosp-result-item:hover { background: var(--hosp-bg); }
 .hosp-search-results .hosp-result-item small { color: var(--hosp-text-secondary); display: block; }
@@ -73,7 +90,7 @@
 
 /* Add item row */
 .hosp-add-row { background: var(--hosp-bg); border: 1px dashed var(--hosp-border); padding: 8px; border-radius: 6px; cursor: pointer; color: var(--hosp-primary); font-size: 0.85rem; text-align: center; margin-top: 8px; }
-.hosp-add-row:hover { background: #e8f0fe; }
+.hosp-add-row:hover { background: color-mix(in srgb, var(--hosp-primary) 12%, transparent); }
 .hosp-item-row { display: grid; gap: 8px; align-items: center; padding: 8px; background: var(--hosp-bg); border-radius: 6px; margin-bottom: 6px; }
 .hosp-remove { color: var(--hosp-danger); cursor: pointer; }
 
@@ -84,7 +101,7 @@
 /* Modal */
 .hosp-modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
 .hosp-modal.open { display: flex; }
-.hosp-modal-content { background: #fff; border-radius: 12px; padding: 24px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; }
+.hosp-modal-content { background: var(--hosp-card); border-radius: 12px; padding: 24px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; }
 
 /* Visit history card */
 .hosp-visit-card { margin-bottom: 12px; }
