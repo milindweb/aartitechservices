@@ -89,6 +89,7 @@ ALTER TABLE public.blog_comments ENABLE ROW LEVEL SECURITY;
 CREATE TABLE public.hospital_departments (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name VARCHAR(100) NOT NULL,
+  code VARCHAR(50) UNIQUE,
   description TEXT,
   head_id UUID REFERENCES public.users_profile(id) ON DELETE SET NULL,
   contact_email VARCHAR(255),

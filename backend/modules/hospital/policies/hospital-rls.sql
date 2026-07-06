@@ -12,7 +12,7 @@ DECLARE
     'drug_form_master', 'route_master', 'supplier_master',
     'loinc_codes', 'loinc_parts',
     'icd10_codes', 'medicine_search',
-    'symptom_master', 'hospital_doctor_master'
+    'symptom_master', 'hospital_doctor_master', 'hospital_departments'
   ];
   t TEXT;
 BEGIN

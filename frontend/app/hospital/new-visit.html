@@ -326,13 +326,23 @@
 
     // Load departments on init
     (async function init() {
-      const { data: depts } = await SUPABASE.from('hospital_departments').select('id,name').order('name');
-      const deptSelect = document.getElementById('department');
-      if (depts) depts.forEach(d => { deptSelect.innerHTML += `<option value="${d.id}">${d.name}</option>`; });
+      try {
+        const { data: depts, error: deptErr } = await SUPABASE.from('hospital_departments').select('id,name').order('name');
+        if (deptErr) throw deptErr;
+        const deptSelect = document.getElementById('department');
+        if (depts && depts.length > 0) {
+          depts.forEach(d => { deptSelect.innerHTML += `<option value="${d.id}">${d.name}</option>`; });
+        } else {
+          deptSelect.innerHTML += '<option value="" disabled>No departments found</option>';
+        }
+      } catch (e) { console.error('Failed to load departments:', e); }
 
-      const { data: diagnoses } = await SUPABASE.from('icd10_codes').select('disease_name');
-      const dl = document.getElementById('diagnosisList');
-      if (diagnoses) diagnoses.forEach(d => { dl.innerHTML += `<option value="${d.disease_name}">`; });
+      try {
+        const { data: diagnoses, error: diagErr } = await SUPABASE.from('icd10_codes').select('disease_name');
+        if (diagErr) throw diagErr;
+        const dl = document.getElementById('diagnosisList');
+        if (diagnoses) diagnoses.forEach(d => { dl.innerHTML += `<option value="${d.disease_name}">`; });
+      } catch (e) { console.error('Failed to load diagnoses:', e); }
     })();
 
     async function loadDoctors() {
@@ -340,8 +350,13 @@
       const docSelect = document.getElementById('doctor');
       docSelect.innerHTML = '<option value="">Select Doctor</option>';
       if (!deptId) return;
-      const { data } = await SUPABASE.from('hospital_doctor_master').select('id,name').eq('department_id', deptId).eq('is_hospital', false).order('name');
-      if (data) data.forEach(d => { docSelect.innerHTML += `<option value="${d.id}">${d.name}</option>`; });
+      try {
+        const { data, error } = await SUPABASE.from('hospital_doctor_master').select('id,name').eq('department_id', deptId).eq('is_hospital', false).order('name');
+        if (error) throw error;
+        if (data && data.length > 0) {
+          data.forEach(d => { docSelect.innerHTML += `<option value="${d.id}">${d.name}</option>`; });
+        }
+      } catch (e) { console.error('Failed to load doctors:', e); }
       docSelect.innerHTML += '<option value="other">Other</option>';
     }
 
@@ -420,14 +435,17 @@
       if (!existing || existing.children.length === 0) {
         const dl = document.createElement('datalist');
         dl.id = 'medList';
-        const { data } = await SUPABASE.from('medicine_search').select('generic_name,brand_name').limit(500);
-        if (data) {
-          const seen = new Set();
-          data.forEach(m => {
-            if (m.generic_name && !seen.has(m.generic_name)) { dl.innerHTML += `<option value="${m.generic_name}">`; seen.add(m.generic_name); }
-            if (m.brand_name && !seen.has(m.brand_name)) { dl.innerHTML += `<option value="${m.brand_name}">`; seen.add(m.brand_name); }
-          });
-        }
+        try {
+          const { data, error } = await SUPABASE.from('medicine_search').select('generic_name,brand_name').limit(500);
+          if (error) throw error;
+          if (data) {
+            const seen = new Set();
+            data.forEach(m => {
+              if (m.generic_name && !seen.has(m.generic_name)) { dl.innerHTML += `<option value="${m.generic_name}">`; seen.add(m.generic_name); }
+              if (m.brand_name && !seen.has(m.brand_name)) { dl.innerHTML += `<option value="${m.brand_name}">`; seen.add(m.brand_name); }
+            });
+          }
+        } catch (e) { console.error('Failed to load medicines:', e); }
         document.body.appendChild(dl);
       }
     }
