@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="/app/hospital/css/hospital.css">
   <style>
     .visit-form { max-width: 960px; margin: 40px auto; padding: 0 20px; }
-    .section-card { background: var(--hosp-card); border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; }
+    .section-card { background: var(--card-bg); border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; }
     .section-card h3 { font-size: 1rem; color: var(--accent); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--light); display: flex; align-items: center; gap: 8px; }
     .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 12px; }
     .form-group { display: flex; flex-direction: column; }
@@ -34,11 +34,11 @@
     .item-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; padding: 8px; background: var(--light); border-radius: 6px; margin-bottom: 6px; }
     .remove-btn { color: var(--danger); cursor: pointer; font-size: 0.9rem; }
     .patient-search { position: relative; }
-    .patient-results { position: absolute; top: 100%; left: 0; right: 0; background: var(--hosp-card); border: 1px solid var(--border); border-radius: 6px; max-height: 200px; overflow-y: auto; z-index: 10; display: none; }
+    .patient-results { position: absolute; top: 100%; left: 0; right: 0; background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; max-height: 200px; overflow-y: auto; z-index: 10; display: none; }
     .patient-results .result-item { padding: 10px 12px; cursor: pointer; border-bottom: 1px solid var(--border); }
     .patient-results .result-item:hover { background: var(--light); }
     .patient-results .result-item small { color: var(--gray); display: block; }
-    .nav-steps { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; padding: 16px; background: var(--hosp-card); border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .nav-steps { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; padding: 16px; background: var(--card-bg); border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
     .nav-step { padding: 8px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; cursor: pointer; background: var(--light); color: var(--gray); }
     .nav-step.active { background: var(--accent); color: #fff; }
     .nav-step.done { background: var(--success); color: #fff; }
@@ -508,7 +508,7 @@
           department_id: document.getElementById('department').value || null,
           doctor_id: document.getElementById('doctor').value === 'other' ? null : (document.getElementById('doctor').value || null),
           referred_by: document.getElementById('referredBy').value,
-          created_by: (await sb.auth.getUser()).data.user?.id,
+          created_by: (await SUPABASE.auth.getUser()).data.user?.id,
         }).select().single();
         if (ve) throw ve;
         const vid = visit.id;
