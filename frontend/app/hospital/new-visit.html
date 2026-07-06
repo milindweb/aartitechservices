@@ -338,24 +338,21 @@
     })();
 
     async function loadDoctors() {
-      const deptSelect = document.getElementById('department');
-      const deptName = deptSelect.selectedOptions[0]?.text || '';
-      const deptId = deptSelect.value;
       const docSelect = document.getElementById('doctor');
       docSelect.innerHTML = '<option value="">Select Doctor</option>';
-      if (!deptId) return;
       try {
-        const { data, error } = await SUPABASE.from('hospital_doctor_master').select('id,name').eq('department_id', deptId).eq('is_hospital', false).order('name');
+        const { data, error } = await SUPABASE.from('hospital_doctor_master').select('id,name').eq('is_hospital', false).order('name');
         if (error) throw error;
         if (data && data.length > 0) {
           data.forEach(d => { docSelect.innerHTML += `<option value="${d.id}">${d.name}</option>`; });
         } else {
-          throw new Error('No doctors for this dept');
+          throw new Error('No doctors in DB');
         }
       } catch (e) {
         console.warn('Using fallback doctors:', e);
-        const fallback = FALLBACK_DOCTORS[deptName] || [];
-        fallback.forEach(dr => { docSelect.innerHTML += `<option value="${dr}">${dr}</option>`; });
+        const all = new Set();
+        Object.values(FALLBACK_DOCTORS).forEach(list => list.forEach(dr => all.add(dr)));
+        all.forEach(dr => { docSelect.innerHTML += `<option value="${dr}">${dr}</option>`; });
       }
       docSelect.innerHTML += '<option value="other">Other</option>';
     }
