@@ -33,16 +33,15 @@
   </style>
 </head>
 <body>
-  <div id="header-placeholder"></div>
+  <div id="header"></div>
   <div class="profile-page" id="app">
     <div id="profileContent">
       <p style="color:var(--gray);">Loading patient...</p>
     </div>
   </div>
-  <div id="footer-placeholder"></div>
+  <div id="footer"></div>
   <script>
-    requireAuth();
-    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    AUTH.requireAuth();
     const params = new URLSearchParams(window.location.search);
     const patientId = params.get('id');
 
@@ -50,11 +49,11 @@
       if (!patientId) { document.getElementById('profileContent').innerHTML = '<p style="color:var(--danger);">No patient ID provided.</p>'; return; }
 
       // Load patient
-      const { data: patient } = await sb.from('hospital_patients').select('*').or(`uhid.eq.${patientId},id.eq.${patientId}`).maybeSingle();
+      const { data: patient } = await SUPABASE.from('hospital_patients').select('*').or(`uhid.eq.${patientId},id.eq.${patientId}`).maybeSingle();
       if (!patient) { document.getElementById('profileContent').innerHTML = '<p style="color:var(--danger);">Patient not found.</p>'; return; }
 
       // Load visits
-      const { data: visits } = await sb.from('hospital_visits')
+      const { data: visits } = await SUPABASE.from('hospital_visits')
         .select('*, hospital_departments(name), hospital_doctor_master(name), hospital_vitals(*), hospital_chief_complaints(*), hospital_histories(*), hospital_examinations(*), hospital_investigation_results(*), hospital_diagnoses(*), hospital_prescriptions(*), hospital_procedures(*), hospital_advice(*), hospital_followups(*), hospital_doctor_notes(*), hospital_billing_items(*), hospital_billing_summary(*)')
         .eq('patient_id', patient.id).order('visit_date', { ascending: false });
 

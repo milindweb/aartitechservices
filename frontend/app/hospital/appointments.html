@@ -36,7 +36,7 @@
   </style>
 </head>
 <body>
-  <div id="header-placeholder"></div>
+  <div id="header"></div>
   <div class="appt-page" id="app">
     <div class="appt-header">
       <h1><i class="fas fa-calendar-alt"></i> Appointments</h1>
@@ -77,17 +77,16 @@
     </div>
   </div>
 
-  <div id="footer-placeholder"></div>
+  <div id="footer"></div>
   <script>
-    requireAuth();
-    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    AUTH.requireAuth();
 
     // Initialize date
     document.getElementById('apptDate').value = new Date().toISOString().split('T')[0];
 
     // Load departments for modal
     (async () => {
-      const { data: depts } = await sb.from('hospital_departments').select('id,name').order('name');
+      const { data: depts } = await SUPABASE.from('hospital_departments').select('id,name').order('name');
       const sel = document.getElementById('newApptDept');
       if (depts) depts.forEach(d => { sel.innerHTML += `<option value="${d.id}">${d.name}</option>`; });
     })();
@@ -97,7 +96,7 @@
       const sel = document.getElementById('newApptDoctor');
       sel.innerHTML = '<option value="">Select</option>';
       if (!deptId) return;
-      const { data } = await sb.from('hospital_doctor_master').select('id,name').eq('department_id', deptId).eq('is_hospital', false);
+      const { data } = await SUPABASE.from('hospital_doctor_master').select('id,name').eq('department_id', deptId).eq('is_hospital', false);
       if (data) data.forEach(d => { sel.innerHTML += `<option value="${d.id}">${d.name}</option>`; });
     }
 
@@ -117,7 +116,7 @@
       const container = document.getElementById('appointmentsList');
       container.innerHTML = '<p style="color:var(--gray);">Loading...</p>';
 
-      const { data, error } = await sb.from('hospital_opd_appointments')
+      const { data, error } = await SUPABASE.from('hospital_opd_appointments')
         .select('*, hospital_patients(full_name,mobile,uhid), hospital_doctor_master(name), hospital_departments(name)')
         .gte('appointment_date', date + 'T00:00:00')
         .lt('appointment_date', date + 'T23:59:59')
@@ -146,7 +145,7 @@
     loadAppointments();
 
     async function updateStatus(id, status) {
-      await sb.from('hospital_opd_appointments').update({ status }).eq('id', id);
+      await SUPABASE.from('hospital_opd_appointments').update({ status }).eq('id', id);
       loadAppointments();
     }
 
@@ -164,11 +163,11 @@
 
       // Upsert patient
       let patientId;
-      const { data: existing } = await sb.from('hospital_patients').select('id').eq('full_name', name).maybeSingle();
+      const { data: existing } = await SUPABASE.from('hospital_patients').select('id').eq('full_name', name).maybeSingle();
       if (existing) {
         patientId = existing.id;
       } else {
-        const { data: np } = await sb.from('hospital_patients').insert({
+        const { data: np } = await SUPABASE.from('hospital_patients').insert({
           uhid: 'APPT-' + Date.now(),
           full_name: name,
           mobile: document.getElementById('newApptMobile').value || null,
@@ -179,7 +178,7 @@
       const doctorId = document.getElementById('newApptDoctor').value;
       const deptId = document.getElementById('newApptDept').value;
 
-      await sb.from('hospital_opd_appointments').insert({
+      await SUPABASE.from('hospital_opd_appointments').insert({
         patient_id: patientId,
         doctor_id: doctorId || null,
         department_id: deptId || null,

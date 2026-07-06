@@ -38,7 +38,7 @@
   </style>
 </head>
 <body>
-  <div id="header-placeholder"></div>
+  <div id="header"></div>
   <div class="hosp-dashboard" id="app">
     <h1 style="margin-bottom:24px;"><i class="fas fa-hospital"></i> Hospital Dashboard</h1>
 
@@ -60,22 +60,19 @@
       <div id="recentVisits"><p style="color:var(--gray);">Loading...</p></div>
     </div>
   </div>
-  <div id="footer-placeholder"></div>
+  <div id="footer"></div>
   <script>
-    requireAuth();
-
-    const { createClient } = supabase;
-    const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    AUTH.requireAuth();
 
     async function loadDashboard() {
       const today = new Date().toISOString().split('T')[0];
 
       const [{ count: totalPatients }, { count: todayVisits }, { count: pendingVisits }, { count: todayAppts }, { data: recent }] = await Promise.all([
-        sb.from('hospital_patients').select('*', { count: 'exact', head: true }),
-        sb.from('hospital_visits').select('*', { count: 'exact', head: true }).gte('visit_date', today).lt('visit_date', today + 'T23:59:59'),
-        sb.from('hospital_visits').select('*', { count: 'exact', head: true }).eq('visit_status', 'active'),
-        sb.from('hospital_appointments').select('*', { count: 'exact', head: true }).eq('appointment_date', today),
-        sb.from('hospital_visits').select('*, hospital_patients(*)').order('created_at', { ascending: false }).limit(10),
+        SUPABASE.from('hospital_patients').select('*', { count: 'exact', head: true }),
+        SUPABASE.from('hospital_visits').select('*', { count: 'exact', head: true }).gte('visit_date', today).lt('visit_date', today + 'T23:59:59'),
+        SUPABASE.from('hospital_visits').select('*', { count: 'exact', head: true }).eq('visit_status', 'active'),
+        SUPABASE.from('hospital_appointments').select('*', { count: 'exact', head: true }).eq('appointment_date', today),
+        SUPABASE.from('hospital_visits').select('*, hospital_patients(*)').order('created_at', { ascending: false }).limit(10),
       ]);
 
       document.getElementById('totalPatients').textContent = totalPatients || 0;

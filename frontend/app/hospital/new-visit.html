@@ -51,7 +51,7 @@
   </style>
 </head>
 <body>
-  <div id="header-placeholder"></div>
+  <div id="header"></div>
   <div class="visit-form" id="app">
     <h1 style="margin-bottom:16px;"><i class="fas fa-plus-circle"></i> New OPD Visit</h1>
     <div class="nav-steps" id="navSteps">
@@ -263,13 +263,10 @@
       </div>
     </div>
   </div>
-  <div id="footer-placeholder"></div>
+  <div id="footer"></div>
 
   <script>
-    requireAuth();
-    const SUPABASE_URL = window.SUPABASE_URL || '{{SUPABASE_URL}}';
-    const SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY || '{{SUPABASE_ANON_KEY}}';
-    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    AUTH.requireAuth();
 
     let currentStep = 1;
     let complaintCount = 0, investigationCount = 0, prescriptionCount = 0, billingCount = 0;
@@ -299,7 +296,7 @@
       const q = document.getElementById('patientSearch').value.trim();
       const resultsDiv = document.getElementById('patientResults');
       if (q.length < 2) { resultsDiv.style.display = 'none'; return; }
-      const { data } = await sb.from('hospital_patients').select('id,uhid,full_name,mobile').or(`full_name.ilike.%${q}%,mobile.ilike.%${q}%,uhid.ilike.%${q}%`).limit(10);
+      const { data } = await SUPABASE.from('hospital_patients').select('id,uhid,full_name,mobile').or(`full_name.ilike.%${q}%,mobile.ilike.%${q}%,uhid.ilike.%${q}%`).limit(10);
       if (data && data.length > 0) {
         resultsDiv.innerHTML = data.map(p => `<div class="result-item" onclick="selectPatient('${p.id}','${p.uhid}','${p.full_name.replace(/'/g,"\\'")}','${p.mobile||''}')">${p.full_name} <small>#${p.uhid} · ${p.mobile||'—'}</small></div>`).join('');
         resultsDiv.style.display = 'block';
@@ -329,11 +326,11 @@
 
     // Load departments on init
     (async function init() {
-      const { data: depts } = await sb.from('hospital_departments').select('id,name').order('name');
+      const { data: depts } = await SUPABASE.from('hospital_departments').select('id,name').order('name');
       const deptSelect = document.getElementById('department');
       if (depts) depts.forEach(d => { deptSelect.innerHTML += `<option value="${d.id}">${d.name}</option>`; });
 
-      const { data: diagnoses } = await sb.from('icd10_codes').select('disease_name');
+      const { data: diagnoses } = await SUPABASE.from('icd10_codes').select('disease_name');
       const dl = document.getElementById('diagnosisList');
       if (diagnoses) diagnoses.forEach(d => { dl.innerHTML += `<option value="${d.disease_name}">`; });
     })();
@@ -343,7 +340,7 @@
       const docSelect = document.getElementById('doctor');
       docSelect.innerHTML = '<option value="">Select Doctor</option>';
       if (!deptId) return;
-      const { data } = await sb.from('hospital_doctor_master').select('id,name').eq('department_id', deptId).eq('is_hospital', false).order('name');
+      const { data } = await SUPABASE.from('hospital_doctor_master').select('id,name').eq('department_id', deptId).eq('is_hospital', false).order('name');
       if (data) data.forEach(d => { docSelect.innerHTML += `<option value="${d.id}">${d.name}</option>`; });
       docSelect.innerHTML += '<option value="other">Other</option>';
     }
@@ -367,7 +364,7 @@
       if (deptCode) {
         const dl = document.createElement('datalist');
         dl.id = 'symptomList' + complaintCount;
-        sb.from('symptom_master').select('symptom_name').eq('department_code', deptCode).then(({ data }) => {
+        SUPABASE.from('symptom_master').select('symptom_name').eq('department_code', deptCode).then(({ data }) => {
           if (data) data.forEach(s => { dl.innerHTML += `<option value="${s.symptom_name}">`; });
         });
         document.body.appendChild(dl);
@@ -392,7 +389,7 @@
 
       const dl = document.createElement('datalist');
       dl.id = 'invList' + investigationCount;
-      sb.from('loinc_codes').select('long_common_name').in('status', ['ACTIVE', 'TRIAL']).limit(200).then(({ data }) => {
+      SUPABASE.from('loinc_codes').select('long_common_name').in('status', ['ACTIVE', 'TRIAL']).limit(200).then(({ data }) => {
         if (data) data.forEach(i => { dl.innerHTML += `<option value="${i.long_common_name}">`; });
       });
       document.body.appendChild(dl);
@@ -423,7 +420,7 @@
       if (!existing || existing.children.length === 0) {
         const dl = document.createElement('datalist');
         dl.id = 'medList';
-        const { data } = await sb.from('medicine_search').select('generic_name,brand_name').limit(500);
+        const { data } = await SUPABASE.from('medicine_search').select('generic_name,brand_name').limit(500);
         if (data) {
           const seen = new Set();
           data.forEach(m => {
@@ -483,11 +480,11 @@
         // 1. Patient
         let patientId = selectedPatientId;
         if (!patientId) {
-          const { data: existing } = await sb.from('hospital_patients').select('id').eq('uhid', document.getElementById('uhid').value).maybeSingle();
+          const { data: existing } = await SUPABASE.from('hospital_patients').select('id').eq('uhid', document.getElementById('uhid').value).maybeSingle();
           if (existing) { patientId = existing.id; }
         }
         if (!patientId) {
-          const { data: newPatient, error: pe } = await sb.from('hospital_patients').insert({
+          const { data: newPatient, error: pe } = await SUPABASE.from('hospital_patients').insert({
             uhid: document.getElementById('uhid').value,
             full_name: document.getElementById('patientName').value,
             gender: document.getElementById('gender').value,
@@ -496,14 +493,14 @@
             email: document.getElementById('email').value,
             blood_group: document.getElementById('bloodGroup').value || null,
             address: document.getElementById('address').value,
-            created_by: (await sb.auth.getUser()).data.user?.id,
+            created_by: (await SUPABASE.auth.getUser()).data.user?.id,
           }).select().single();
           if (pe) throw pe;
           patientId = newPatient.id;
         }
 
         // 2. Visit
-        const { data: visit, error: ve } = await sb.from('hospital_visits').insert({
+        const { data: visit, error: ve } = await SUPABASE.from('hospital_visits').insert({
           patient_id: patientId,
           opd_number: document.getElementById('uhid').value + '-' + Date.now(),
           token_number: parseInt(document.getElementById('tokenNumber').value) || null,
@@ -520,7 +517,7 @@
         const height = parseFloat(document.getElementById('height').value);
         const weight = parseFloat(document.getElementById('weight').value);
         if (height || weight || document.getElementById('bpSystolic').value) {
-          await sb.from('hospital_vitals').insert({
+          await SUPABASE.from('hospital_vitals').insert({
             visit_id: vid, height_cm: height || null, weight_kg: weight || null,
             bp_systolic: parseInt(document.getElementById('bpSystolic').value) || null,
             bp_diastolic: parseInt(document.getElementById('bpDiastolic').value) || null,
@@ -535,7 +532,7 @@
 
         // 4. Complaints
         const complaints = [...document.querySelectorAll('#complaintsList .item-row')].map(el =>
-          sb.from('hospital_chief_complaints').insert({
+          SUPABASE.from('hospital_chief_complaints').insert({
             visit_id: vid,
             symptom: el.querySelector('.complaint-symptom').value,
             duration: el.querySelector('.complaint-duration').value,
@@ -552,7 +549,7 @@
           { type: 'family', val: document.getElementById('familyHistory').value },
         ];
         for (const h of histories) {
-          if (h.val) await sb.from('hospital_histories').insert({ visit_id: vid, history_type: h.type, description: h.val });
+          if (h.val) await SUPABASE.from('hospital_histories').insert({ visit_id: vid, history_type: h.type, description: h.val });
         }
 
         // 6. Examinations
@@ -563,12 +560,12 @@
           { type: 'lab_findings', val: document.getElementById('labFindings').value },
         ];
         for (const e of exams) {
-          if (e.val) await sb.from('hospital_examinations').insert({ visit_id: vid, exam_type: e.type, description: e.val });
+          if (e.val) await SUPABASE.from('hospital_examinations').insert({ visit_id: vid, exam_type: e.type, description: e.val });
         }
 
         // 7. Investigations
         const investigations = [...document.querySelectorAll('#investigationsList .item-row')].map(el =>
-          sb.from('hospital_investigation_results').insert({
+          SUPABASE.from('hospital_investigation_results').insert({
             visit_id: vid, test_name: el.querySelector('.inv-test').value,
             result: el.querySelector('.inv-result').value,
             normal_range: el.querySelector('.inv-range').value,
@@ -580,12 +577,12 @@
         // 8. Diagnosis
         const prov = document.getElementById('provisionalDiagnosis').value;
         const fin = document.getElementById('finalDiagnosis').value;
-        if (prov) await sb.from('hospital_diagnoses').insert({ visit_id: vid, diagnosis_type: 'provisional', diagnosis_text: prov });
-        if (fin) await sb.from('hospital_diagnoses').insert({ visit_id: vid, diagnosis_type: 'final', diagnosis_text: fin });
+        if (prov) await SUPABASE.from('hospital_diagnoses').insert({ visit_id: vid, diagnosis_type: 'provisional', diagnosis_text: prov });
+        if (fin) await SUPABASE.from('hospital_diagnoses').insert({ visit_id: vid, diagnosis_type: 'final', diagnosis_text: fin });
 
         // 9. Prescriptions
         const prescriptions = [...document.querySelectorAll('.prescription-entry')].map(el =>
-          sb.from('hospital_prescriptions').insert({
+          SUPABASE.from('hospital_prescriptions').insert({
             visit_id: vid, medicine_name: el.querySelector('.rx-medicine').value,
             route: el.querySelector('.rx-route').value,
             frequency: el.querySelector('.rx-frequency').value,
@@ -598,7 +595,7 @@
 
         // 10. Procedures
         const procedures = [...document.querySelectorAll('#proceduresCheckboxes input:checked')].map(cb =>
-          sb.from('hospital_procedures').insert({
+          SUPABASE.from('hospital_procedures').insert({
             visit_id: vid, procedure_name: cb.value, notes: document.getElementById('treatmentNotes').value,
           })
         );
@@ -606,14 +603,14 @@
 
         // 11. Advice
         const adviceText = document.getElementById('advice').value;
-        if (adviceText) await sb.from('hospital_advice').insert({ visit_id: vid, advice_type: 'General Instructions', description: adviceText });
+        if (adviceText) await SUPABASE.from('hospital_advice').insert({ visit_id: vid, advice_type: 'General Instructions', description: adviceText });
 
         // 12. Follow-up
         const response = document.getElementById('treatmentResponse').value;
         const fupDate = document.getElementById('followupDate').value;
         const fupAdvice = document.getElementById('nextVisitAdvice').value;
         if (response || fupDate || fupAdvice) {
-          await sb.from('hospital_followups').insert({
+          await SUPABASE.from('hospital_followups').insert({
             visit_id: vid, treatment_response: response || null,
             followup_date: fupDate || null, next_visit_advice: fupAdvice || null,
           });
@@ -622,7 +619,7 @@
         // 13. Special Instructions
         const specialInst = document.getElementById('specialInstructions').value;
         if (specialInst) {
-          await sb.from('hospital_special_instructions').insert({
+          await SUPABASE.from('hospital_special_instructions').insert({
             visit_id: vid, instructions: specialInst,
           });
         }
@@ -631,7 +628,7 @@
         const remarks = document.getElementById('doctorRemarks').value;
         const sig = document.getElementById('doctorSignature').value;
         if (remarks || sig) {
-          await sb.from('hospital_doctor_notes').insert({
+          await SUPABASE.from('hospital_doctor_notes').insert({
             visit_id: vid, remarks: remarks || null, signature: sig || null,
             doctor_id: document.getElementById('doctor').value || null,
           });
@@ -639,7 +636,7 @@
 
         // 15. Billing
         const billingItems = [...document.querySelectorAll('.billing-entry')].map(el =>
-          sb.from('hospital_billing_items').insert({
+          SUPABASE.from('hospital_billing_items').insert({
             visit_id: vid,
             description: el.querySelector('.bill-desc').value,
             quantity: parseInt(el.querySelector('.bill-qty').value) || 1,
@@ -650,13 +647,13 @@
         const total = parseFloat(document.getElementById('billTotal').textContent) || 0;
         const discount = parseFloat(document.getElementById('billDiscount').value) || 0;
         if (total > 0) {
-          await sb.from('hospital_billing_summary').insert({
+          await SUPABASE.from('hospital_billing_summary').insert({
             visit_id: vid, total_amount: total, discount: discount, payment_status: 'pending',
           });
         }
 
         // 15. Update visit status
-        await sb.from('hospital_visits').update({ visit_status: 'completed' }).eq('id', vid);
+        await SUPABASE.from('hospital_visits').update({ visit_status: 'completed' }).eq('id', vid);
 
         alert('Visit saved successfully! OPD #' + visit.opd_number);
         window.location.href = '/app/hospital/dashboard';

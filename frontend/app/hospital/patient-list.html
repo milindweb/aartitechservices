@@ -32,7 +32,7 @@
   </style>
 </head>
 <body>
-  <div id="header-placeholder"></div>
+  <div id="header"></div>
   <div class="patient-list-page" id="app">
     <h1 style="margin-bottom:24px;"><i class="fas fa-users"></i> Patient List</h1>
     <div class="search-bar">
@@ -48,10 +48,9 @@
       <div class="pagination" id="pagination"></div>
     </div>
   </div>
-  <div id="footer-placeholder"></div>
+  <div id="footer"></div>
   <script>
-    requireAuth();
-    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    AUTH.requireAuth();
     let currentPage = 1, totalPages = 1, pageSize = 20;
     let searchTimer;
 
@@ -64,7 +63,7 @@
       const tbody = document.getElementById('patientTableBody');
       tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:40px;">Loading...</td></tr>';
 
-      let query = sb.from('hospital_patients').select('id,uhid,full_name,gender,date_of_birth,mobile,created_at', { count: 'exact' });
+      let query = SUPABASE.from('hospital_patients').select('id,uhid,full_name,gender,date_of_birth,mobile,created_at', { count: 'exact' });
       if (q) query = query.or(`full_name.ilike.%${q}%,uhid.ilike.%${q}%,mobile.ilike.%${q}%`);
       if (gender) query = query.eq('gender', gender);
       query = query.order('created_at', { ascending: false }).range((page - 1) * pageSize, page * pageSize - 1);
@@ -92,10 +91,10 @@
 
         // Load visit counts & last visit dates asynchronously
         data.forEach(async p => {
-          const { count } = await sb.from('hospital_visits').select('*', { count: 'exact', head: true }).eq('patient_id', p.id);
+          const { count } = await SUPABASE.from('hospital_visits').select('*', { count: 'exact', head: true }).eq('patient_id', p.id);
           const vc = document.getElementById('visitCount' + p.id);
           if (vc) vc.textContent = count || 0;
-          const { data: last } = await sb.from('hospital_visits').select('visit_date').eq('patient_id', p.id).order('visit_date', { ascending: false }).limit(1);
+          const { data: last } = await SUPABASE.from('hospital_visits').select('visit_date').eq('patient_id', p.id).order('visit_date', { ascending: false }).limit(1);
           const lv = document.getElementById('lastVisit' + p.id);
           if (lv) lv.textContent = last && last.length > 0 ? new Date(last[0].visit_date).toLocaleDateString() : '—';
         });
