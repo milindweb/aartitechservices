@@ -1,31 +1,17 @@
 # Cloudflare Pages redirects
 # Format: source destination status
+#
+# NOTE: Cloudflare Pages automatically serves .html files at clean URLs
+# (e.g. /about.html -> /about) and 308-redirects the .html form. So pages
+# that map 1:1 to a file need NO rule here — adding one causes a redirect loop.
 
-# Root -> home
-/                  /index.html                                           200
-
-# Top-level pages
-/about             /about.html                                           200
-/portfolio         /portfolio.html                                       200
-/contact           /contact.html                                         200
-/blog              /blog.html                                            200
-/links             /links.html                                           200
-/terms             /terms.html                                           200
-/privacy           /privacy.html                                         200
-
-# Expertise pages
-/expertise/digital-engineering     /expertise/digital-engineering.html               200
+# Expertise alias (filename differs from clean URL -> keep rewrite)
 /expertise/digital-marketing-seo   /expertise/freelance-digital-marketing-seo.html    200
-/expertise/learning-innovation     /expertise/learning-innovation.html                200
+
+# Expertise page anchors (301 to page + fragment)
 /expertise/learning-innovation/projects     /expertise/learning-innovation#projects          301
 /expertise/learning-innovation/training     /expertise/learning-innovation#training          301
 /expertise/learning-innovation/workshops    /expertise/learning-innovation#workshops         301
-
-# Partners pages
-/partners             /partners/index.html                                           200
-/partners/graphics        /partners/graphics.html                                   200
-/partners/electrical      /partners/electrical.html                                 200
-/partners/automotive      /partners/automotive.html                                 200
 
 # Legacy redirects (301) - old service URLs -> new clean URLs
 /seo-digital-marketing          /expertise/digital-marketing-seo                                301
@@ -44,7 +30,7 @@
 # Old workshop redirect
 /workshop.html                  /expertise/learning-innovation                                  301
 
-# Blog posts — clean /blog/:slug URLs
+# Blog posts — clean /blog/:slug URLs (target filename differs from slug -> rewrite)
 /blog/opencode-zen-free-models-vscode         /blog/posts/opencode-zen-free-models-vscode.html           200
 /blog/petrol-vs-e20-vs-ev-2wheeler-guide       /blog/posts/petrol-vs-e20-vs-ev-2wheeler-guide.html         200
 /blog/camera-buying-guide-2026                /blog/posts/camera-buying-guide-2026.html                  200
