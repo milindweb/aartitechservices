@@ -18,7 +18,6 @@ Business and portfolio website for Aarti Tech Services — a clean, static HTML/
 ├── blog.html            Blog listing (JS-driven)
 ├── contact.html         Contact page
 ├── contactform.html     Contact form partial
-├── links.html           Links page
 ├── portfolio.html       Portfolio page
 ├── privacy.html         Privacy policy
 ├── terms.html           Terms of service
@@ -32,7 +31,6 @@ Business and portfolio website for Aarti Tech Services — a clean, static HTML/
 ├── img/                 Images
 ├── fonts/               Self-hosted icon fonts
 ├── components/          Header & footer partials (loaded at runtime)
-├── archive/             Archived code (auth, app modules, backend, hospital) — not deployed
 ├── docs/                Deployment & roadmap
 ├── _headers             Cloudflare security headers & caching
 ├── _redirects           Cloudflare URL rewrites

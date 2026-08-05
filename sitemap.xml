@@ -26,11 +26,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://aartitechservices.pages.dev/links</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
     <loc>https://aartitechservices.pages.dev/terms</loc>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>

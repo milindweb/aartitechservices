@@ -4,7 +4,7 @@ const SITE_CONFIG = {
   brand: {
     name: 'Aarti Tech Services',
     nameUppercase: 'AARTI TECH SERVICES',
-    legalName: 'MK9 Solutions',
+    legalName: 'AARTI TECH SERVICES',
     tagline: "Let's Build &amp; Grow business Together",
     copyright: '\u00A9 2026 AartiTechServices. All rights reserved.',
   },
@@ -25,7 +25,7 @@ const SITE_CONFIG = {
   },
 
   social: {
-    whatsapp: 'https://wa.me/919869787575',
+    whatsapp: 'https://wa.me/makhandare',
     telegram: 'https://t.me/itsmakk',
     instagram: 'https://instagram.com/aartitechservices',
     facebook: 'https://fb.me/AartiTechServices',
@@ -37,7 +37,7 @@ const SITE_CONFIG = {
   logoIcon: 'A',
 
   organization: {
-    telephone: '+91-9869787575',
+    telephone: '+9l-9869787S7S',
     contactType: 'customer service',
     areaServed: 'IN',
   },
