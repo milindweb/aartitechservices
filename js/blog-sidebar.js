@@ -4,7 +4,7 @@
   var sidebarEl = document.getElementById('bp-sidebar');
   if (!sidebarEl) return;
 
-  var currentSlug = window.location.pathname.replace('/blog/', '').replace(/\/$/, '');
+  var currentSlug = window.location.pathname.replace('/blog/posts/', '/blog/').replace('/blog/', '').replace(/\/$/, '').replace(/\.html$/, '');
 
   fetch('/data/posts.json')
     .then(function (res) { return res.json(); })
