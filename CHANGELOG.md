@@ -1,5 +1,64 @@
 # Changelog
 
+## v2.2.0 — 2026-08-05 — Fix Cloudflare clean-URL redirect loops
+
+### Fixed
+- `_redirects` — removed 1:1 clean-URL rewrite rules (`/about → /about.html 200`, etc.) that conflicted with Cloudflare Pages' automatic clean-URL feature, causing infinite 308 redirect loops on `/about`, `/portfolio`, `/contact`, `/blog`, and `/partners/*`
+- Cloudflare auto-serves `.html` files at clean URLs, so those pages no longer need any rule; only rules where the target filename differs remain (blog slugs, expertise alias, legacy 301s, favicon)
+
+### Documentation
+- `structure.md` — updated Clean URLs & Redirects section to document the auto clean-URL behavior and remaining rules
+- `CHANGELOG.md` — added this entry
+
+---
+
+## v2.1.0 — 2026-08-05 — Local dev server honoring _redirects + blog sidebar slug fix
+
+### Added
+- `_local_server.py` — local development server that reads `_redirects` and serves clean URLs (`/blog`, `/blog/:slug`, `/about`, etc.) exactly like Cloudflare Pages; run with `python3 _local_server.py`
+
+### Fixed
+- `js/blog-sidebar.js` — current post now correctly excluded from "Recent Posts": slug resolution handles both the clean URL (`/blog/:slug`) and the physical path (`/blog/posts/:slug.html`) via `window.location.pathname`
+
+### Documentation
+- `structure.md` — added Local Development section
+- `CHANGELOG.md` — added this entry
+
+---
+
+## v2.0.0 — 2026-08-05 — Convert to fully static business site (remove Supabase & auth)
+
+### Added
+- `fonts/` — self-hosted Font Awesome 6.4 + Bootstrap Icons 1.10.5 (no CDN dependency)
+- `structure.md` — rewritten for the new root-based static structure
+
+### Removed
+- `supabase/` (config.toml, edge functions, migrations) — deleted
+- `complaint.json`, `import.log`, `Future/` — deleted
+- All auth: login/logout/dashboard nav items removed from `components/header.html`, `components/footer.html`, `js/headerfooter.js`
+
+### Changed
+- Repo root is now the publish root — `frontend/` folder removed, contents moved to root
+- Pages flattened: `pages/*.html` → root (`about.html`, `blog.html`, `contact.html`, etc.); `pages/expertise/` → `expertise/`, `pages/partners/` → `partners/`
+- Shared assets relocated: `shared/css/` → `css/`, `shared/js/` → `js/`, `shared/components/` → `components/`, `shared/assets/img/` → `img/`
+- All HTML/JS/CSS references updated from `/shared/*` to the new root-level paths
+- CDN font links replaced with self-hosted local paths
+- `_redirects` — removed `/app/*` and auth lines; retargeted `/about` etc. to root; kept all blog slug redirects
+- `_headers` — removed `/app/*` noindex block; updated asset paths
+- `robots.txt` — removed `Disallow: /app/`
+- `portfolio.html`, `privacy.html`, `expertise/learning-innovation.html` — removed Supabase mentions
+
+### Moved to Archive
+- `app/`, `backend/`, `Hospital data raw/`, `config/`, `services/`, `shared/js/auth.js`, `shared/css/auth.css`, `docs/SRS-Hospital.md`, `structure.md` (old) → `archive/`
+- `archive/README.md` — documents the archived content
+
+### Documentation
+- `README.md` — rewritten for static-only architecture and root structure
+- `docs/DEPLOYMENT.md`, `docs/ROADMAP.md` — updated for static-only, no Supabase
+- `CHANGELOG.md` — added this entry
+
+---
+
 ## v1.7.0 — 2026-07-06 — Hospital masters JSON + fallback refactor
 
 ### Added

@@ -43,7 +43,7 @@ Business and portfolio website for Aarti Tech Services — a clean, static HTML/
 ## Features
 
 - **Homepage** with hero, service cards, premium services, team section
-- **6 Service Pages** (Digital Marketing & SEO, Web & Software Development, Projects & Training, Graphics/Photography & Branding, Electrical, Automotive)
+- **6 Service Pages** (3 expertise: Digital Engineering, Digital Marketing & SEO, Learning & Innovation; 3 partners: Graphics/Photography & Branding, Electrical, Automotive)
 - **Centralized Configuration** (`js/config.js`) — brand name, domain, contact, social links in one file
 - **Dynamic SEO Injection** — titles, meta, OG/Twitter tags, JSON-LD generated from config at runtime
 - **Blog System** — static JSON-driven engine with 29 posts, search, category/tag filtering, pagination, clean `/blog/:slug` URLs
