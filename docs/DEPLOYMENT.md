@@ -3,31 +3,29 @@
 ## Architecture
 
 ```
-Frontend → GitHub → Cloudflare Pages → mk9.in
-Backend  → Supabase Edge Functions (Deno/TypeScript)
-Database → Supabase PostgreSQL
-Auth     → Supabase Auth
-Storage  → Supabase Storage
+Static site → GitHub → Cloudflare Pages → aartitechservices.pages.dev
 ```
 
-## Frontend (Cloudflare Pages)
+Pure static HTML/CSS/JS. No backend, no database, no auth. Hosted on Cloudflare Pages with the repo root as the build output.
+
+## Cloudflare Pages
 
 ### Build Settings
 - **Framework preset:** None (static HTML/CSS/JS)
 - **Build command:** None
-- **Build output:** `frontend/`
-- **Root directory:** `frontend/`
+- **Build output:** `/` (repo root)
+- **Root directory:** `/` (repo root)
 
 ### Configuration Files
 | File | Purpose |
 |------|---------|
-| `frontend/_headers` | Security headers & cache rules |
-| `frontend/_redirects` | Clean URL rewrites & page consolidation redirects (e.g. `/seo-digital-marketing` → `/pages/services/...`; `/photography` → `/pages/services/graphics`) |
+| `_headers` | Security headers & cache rules |
+| `_redirects` | Clean URL rewrites & page consolidation redirects |
 
 ### Site Configuration
 All branding, domain, contact, and SEO values are centralized in:
-- **`frontend/shared/js/config.js`** — Change brand name, domain, phone, social links, etc. here
-- **`frontend/shared/js/seo-injector.js`** — Reads config + per-page PAGE_CONFIG to inject meta tags at runtime
+- **`js/config.js`** — Change brand name, domain, phone, social links, etc. here
+- **`js/seo-injector.js`** — Reads config + per-page PAGE_CONFIG to inject meta tags at runtime
 
 No build step is required — updates to `config.js` take effect immediately on next deploy.
 
@@ -36,33 +34,23 @@ No build step is required — updates to `config.js` take effect immediately on 
 ### Deployment Steps
 1. Push changes to the GitHub repository
 2. Cloudflare Pages auto-deploys from the configured branch
-3. Site is live at `https://mk9.in`
+3. Site is live at the configured domain
 
-### DNS
-- Domain: `mk9.in`
-- Managed via Cloudflare DNS (proxied through Cloudflare)
+## Project Layout
 
-## Backend (Supabase)
-
-### Edge Functions
-```bash
-supabase functions deploy blog-posts
-supabase functions deploy <function-name>
 ```
-
-### Database Migrations
-```bash
-supabase db push
-```
-
-### Environment Variables
-- Copy `backend/.env.example` → `.env.local`
-- Set `SITE_URL`, `SITE_NAME`, `SMTP_*` values
-- Keep `.env.local` out of version control
-
-## Future Subdomains (planned)
-```
-mk9.in         → Main Portal
-blog.mk9.in    → Blog Module
-seniority.mk9.in → Seniority Management
+├── index.html          Homepage
+├── about.html          About page
+├── blog.html           Blog listing (static, JSON-driven)
+├── contact.html        Contact page
+├── portfolio.html      Portfolio
+├── css/                Stylesheets
+├── js/                 Scripts (config, seo-injector, header/footer, blog, forms)
+├── data/               Static data (posts.json)
+├── img/                Images
+├── fonts/              Self-hosted icon fonts (Font Awesome, Bootstrap Icons)
+├── components/         Header & footer partials (loaded at runtime)
+├── expertise/          Service pages
+├── partners/           Partner pages
+└── blog/posts/         Individual blog post HTML files
 ```

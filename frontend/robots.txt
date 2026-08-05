@@ -1,6 +1,0 @@
-User-agent: *
-Allow: /
-
-Disallow: /app/
-
-Sitemap: https://aartitechservices.pages.dev/sitemap.xml

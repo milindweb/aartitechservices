@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/js/config.js"></script>
+  <script>
+    const PAGE_CONFIG = {
+      type: 'article',
+      title: 'Full Stack Web Development: A Complete Beginner\'s Guide',
+      description: 'Learn full stack web development from scratch. Covers frontend, backend, database, API integration, and deployment. A complete roadmap for engineering students and aspiring developers.',
+      canonical: '/blog/full-stack-beginners-guide',
+      date: '2026-07-16',
+      author: 'Aarti Tech Services',
+      tags: ["Full Stack", "Web Development", "JavaScript", "React", "Node.js"],
+    };
+  </script>
+  <script src="/js/seo-injector.js"></script>
+
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/headerfooter.css">
+  <link rel="stylesheet" href="/fonts/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="/fonts/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="/css/blog-sidebar.css">
+
+  <style>
+    .bp-container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+    .bp-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+    .bp-meta .bp-badge { background: var(--gradient); color: #fff; padding: 0.2rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+    .bp-container h1 { font-size: 2rem; font-weight: 800; margin: 0 0 1.5rem; color: var(--text-primary); line-height: 1.3; }
+    .bp-container h2 { font-size: 1.4rem; font-weight: 700; margin: 2rem 0 0.75rem; color: var(--text-primary); }
+    .bp-container h3 { font-size: 1.15rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    .bp-container p { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin: 0 0 1rem; }
+    .bp-container ul, .bp-container ol { color: var(--text-secondary); line-height: 1.8; margin: 0 0 1rem; padding-left: 1.5rem; }
+    .bp-container li { margin-bottom: 0.3rem; }
+    .bp-container img { max-width: 100%; border-radius: 12px; margin: 1.5rem 0; }
+    .bp-container code { background: var(--secondary-bg); padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.9em; }
+    .bp-container pre { background: var(--secondary-bg); padding: 1rem; border-radius: 10px; overflow-x: auto; border: 1px solid var(--border); margin: 1rem 0; }
+    .bp-container pre code { background: none; padding: 0; }
+    .bp-container blockquote { border-left: 4px solid var(--accent); padding: 0.5rem 1rem; margin: 1rem 0; background: var(--secondary-bg); border-radius: 0 8px 8px 0; color: var(--text-secondary); }
+    .bp-back { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); text-decoration: none; font-weight: 600; margin-bottom: 2rem; transition: var(--transition); }
+    .bp-back:hover { gap: 10px; }
+    .bp-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .bp-tags span { font-size: 0.8rem; padding: 0.3rem 0.7rem; background: var(--secondary-bg); border-radius: 20px; color: var(--text-secondary); border: 1px solid var(--border); }
+    .bp-tip { background: var(--secondary-bg); border-left: 4px solid var(--accent); padding: 1rem 1.25rem; border-radius: 0 10px 10px 0; margin: 1rem 0; }
+    .bp-tip p { margin: 0; font-size: 0.95rem; }
+    @media (max-width: 600px) {
+      .bp-container h1 { font-size: 1.5rem; }
+      .bp-container { padding: 1.5rem 1rem 3rem; }
+    }
+  </style>
+
+  <script src="/js/headerfooter.js" defer></script>
+  <script src="/js/blog-sidebar.js" defer></script>
+</head>
+<body>
+
+  <div id="header"></div>
+
+  <main class="bp-layout">
+    <div class="bp-container">
+    <a href="/blog" class="bp-back"><i class="bi bi-arrow-left"></i> Back to Blog</a>
+
+    <div class="bp-meta">
+      <span><i class="bi bi-calendar3"></i> <time datetime="2026-07-16">July 16, 2026</time></span>
+      <span class="bp-badge">Full Stack Development</span>
+    </div>
+
+    <h1>Full Stack Web Development: A Complete Beginner's Guide</h1>
+
+    <p>If you are an engineering student or a aspiring developer wondering what full stack development actually means and where to start, you are not alone. The term "full stack" gets thrown around a lot, but at its core it is simple: a full stack developer can build both the frontend (what users see) and the backend (the server and database) of a web application.</p>
+
+    <p>This guide walks through the entire full stack landscape &mdash; the technologies, the architecture, and a practical roadmap to go from zero to building your first full stack application.</p>
+
+    <h2>What Does Full Stack Actually Mean?</h2>
+
+    <p>A web application has three layers:</p>
+
+    <ul>
+      <li><strong>Frontend</strong> &mdash; The user interface. HTML, CSS, JavaScript. Frameworks like React or Vue.js.</li>
+      <li><strong>Backend</strong> &mdash; The server that processes requests, runs business logic, and talks to the database. Node.js, Python (Django), or PHP.</li>
+      <li><strong>Database</strong> &mdash; Where data is stored. PostgreSQL, MySQL, MongoDB, or Supabase.</li>
+    </ul>
+
+    <p>A full stack developer understands all three layers well enough to build a complete application from scratch.</p>
+
+    <h2>The Technology Stack We Recommend</h2>
+
+    <p>There are many combinations, but for a beginner in 2026, this stack gives the best balance of learning curve, job opportunities, and real-world relevance:</p>
+
+    <table style="width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:0.95rem;">
+      <thead>
+        <tr><th style="border:1px solid var(--border);padding:0.75rem;background:var(--gradient);color:#fff;">Layer</th><th style="border:1px solid var(--border);padding:0.75rem;background:var(--gradient);color:#fff;">Technology</th><th style="border:1px solid var(--border);padding:0.75rem;background:var(--gradient);color:#fff;">Why</th></tr>
+      </thead>
+      <tbody>
+        <tr><td style="border:1px solid var(--border);padding:0.5rem 0.75rem;color:var(--text-secondary);font-weight:600;">Frontend</td><td style="border:1px solid var(--border);padding:0.5rem 0.75rem;color:var(--text-secondary);">React (with Vite)</td><td style="border:1px solid var(--border);padding:0.5rem 0.75rem;color:var(--text-secondary);">Most demanded framework, huge ecosystem</td></tr>
+        <tr><td style="border:1px solid var(--border);padding:0.5rem 0.75rem;color:var(--text-secondary);font-weight:600;">Backend</td><td style="border:1px solid var(--border);padding:0.5rem 0.75rem;color:var(--text-secondary);">Node.js + Express</td><td style="border:1px solid var(--border);padding:0.5rem 0.75rem;color:var(--text-secondary);">JavaScript end to end, fastest path to full stack</td></tr>
+        <tr><td style="border:1px solid var(--border);padding:0.5rem 0.75rem;color:var(--text-secondary);font-weight:600;">Database</td><td style="border:1px solid var(--border);padding:0.5rem 0.75rem;color:var(--text-secondary);">PostgreSQL + Supabase</td><td style="border:1px solid var(--border);padding:0.5rem 0.75rem;color:var(--text-secondary);">Free hosted, has auth and storage built in</td></tr>
+        <tr><td style="border:1px solid var(--border);padding:0.5rem 0.75rem;color:var(--text-secondary);font-weight:600;">Deployment</td><td style="border:1px solid var(--border);padding:0.5rem 0.75rem;color:var(--text-secondary);">Vercel / Netlify + Render</td><td style="border:1px solid var(--border);padding:0.5rem 0.75rem;color:var(--text-secondary);">Free hosting for frontend and backend</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Phase 1: Frontend Fundamentals</h2>
+
+    <p>Start with the basics. No framework, no build tools. Just raw HTML, CSS, and JavaScript. Build a few simple pages: a portfolio site, a calculator, a to-do list. Understand the DOM, event handling, and fetch API before touching React.</p>
+
+    <p>Once you are comfortable, learn React. Focus on components, props, state, useEffect, and routing with React Router. Do not jump into state management libraries like Redux yet &mdash; stick with useState and useContext until you understand the need for more.</p>
+
+    <div class="bp-tip">
+      <p><strong>Project idea:</strong> Build a personal portfolio site using React with a dark mode toggle, contact form, and project showcase. Deploy it on Vercel for free. You will learn components, state, forms, and deployment in one go.</p>
+    </div>
+
+    <h2>Phase 2: Backend with Node.js</h2>
+
+    <p>Node.js lets you run JavaScript on the server. Install Node, learn the basics of the HTTP module, then move to Express.js &mdash; the most popular Node framework.</p>
+
+    <p>Understand these concepts:</p>
+    <ul>
+      <li>Routes and HTTP methods (GET, POST, PUT, DELETE)</li>
+      <li>Middleware (logging, authentication, error handling)</li>
+      <li>Request body parsing and validation</li>
+      <li>Environment variables for configuration</li>
+      <li>CORS (cross-origin requests between frontend and backend)</li>
+    </ul>
+
+    <p>A simple Express server looks like this:</p>
+
+    <pre><code>const express = require('express');
+const app = express();
+app.use(express.json());
+
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', time: new Date() });
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));</code></pre>
+
+    <h2>Phase 3: Database and API Integration</h2>
+
+    <p>Learn PostgreSQL basics: creating tables, inserting data, querying with SELECT, filtering with WHERE, and joining tables. Use Supabase for a free hosted PostgreSQL database with a nice web UI.</p>
+
+    <p>Connect your Express backend to PostgreSQL using a library like <code>pg</code> (node-postgres) or Prisma (an ORM that makes database work easier).</p>
+
+    <pre><code>const { Pool } = require('pg');
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL
+});
+
+app.get('/api/users', async (req, res) => {
+  const result = await pool.query('SELECT * FROM users');
+  res.json(result.rows);
+});</code></pre>
+
+    <p>Now connect your React frontend to this API using fetch or axios. This is the full stack flow: React calls Express, Express queries PostgreSQL, and the data flows back to the UI.</p>
+
+    <h2>Phase 4: Authentication</h2>
+
+    <p>Most real applications need user accounts. Implement a simple JWT (JSON Web Token) based auth system:</p>
+    <ul>
+      <li>User registers with email and password</li>
+      <li>Password is hashed with bcrypt and stored in PostgreSQL</li>
+      <li>On login, a JWT token is generated and sent to the frontend</li>
+      <li>Frontend stores the token (localStorage or httpOnly cookie)</li>
+      <li>Protected routes on the backend verify the token before responding</li>
+    </ul>
+
+    <p>Alternatively, use Supabase Auth which handles all of this out of the box.</p>
+
+    <h2>Phase 5: Deployment</h2>
+
+    <p>Deploy your frontend (React) on Vercel or Netlify. Deploy your backend (Express) on Render or Railway. Both offer free tiers. Store your database credentials and API keys in environment variables.</p>
+
+    <p>Set up a custom domain if you have one, enable HTTPS, and you have a production-grade full stack application running at zero cost.</p>
+
+    <h2>Learning Roadmap Summary</h2>
+
+    <ol>
+      <li>HTML + CSS + JavaScript (4 weeks)</li>
+      <li>React basics (4 weeks)</li>
+      <li>Node.js + Express (3 weeks)</li>
+      <li>PostgreSQL + database design (2 weeks)</li>
+      <li>Connect frontend to backend (1 week)</li>
+      <li>Authentication (1 week)</li>
+      <li>Deployment (1 week)</li>
+    </ol>
+
+    <p>In about 16 weeks of consistent effort, you can go from zero to a deployed full stack application. Build projects, not tutorials. Each project teaches more than a dozen video courses.</p>
+
+    <h2>Conclusion</h2>
+
+    <p>Full stack development is a rewarding skill that opens doors to freelance work, startup opportunities, and full-time jobs. The key is to start building early, make mistakes, and iterate. Pick one small project &mdash; a task manager, a blog engine, a society management portal &mdash; and build it from start to finish.</p>
+
+    <p>Need guidance on your first full stack project? Aarti Tech Services offers mentorship and project development support for engineering students and aspiring developers in Navi Mumbai. <a href="/contact">Get in touch</a> to learn more.</p>
+
+    <div class="bp-tags">
+      <span>Full Stack</span>
+      <span>Web Development</span>
+      <span>JavaScript</span>
+      <span>React</span>
+      <span>Node.js</span>
+    </div>
+    </div>
+    <aside class="bp-sidebar" id="bp-sidebar"></aside>
+  </main>
+
+  <div id="footer"></div>
+
+</body>
+</html>

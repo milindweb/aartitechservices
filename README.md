@@ -1,134 +1,64 @@
-# AartiTechServices (MK9)
+# AartiTechServices
 
-Multi-service business portal with static HTML/CSS/JS frontend, Supabase backend, and Cloudflare Pages hosting.
+Business and portfolio website for Aarti Tech Services — a clean, static HTML/CSS/JS site hosted on Cloudflare Pages. No backend, no database, no auth.
 
 ## Tech Stack
 
 - **Frontend:** HTML5, CSS3 (custom properties, dark/light mode), JavaScript (ES6 modules)
 - **Hosting:** Cloudflare Pages (static, no build step)
-- **Backend:** Supabase Edge Functions (TypeScript/Deno)
-- **Database:** Supabase PostgreSQL with Row Level Security
-- **Auth:** Supabase Auth (email/password, magic link, OAuth)
-- **Storage:** Supabase Storage
-- **CDN:** Font Awesome 6.4, PapaParse, SheetJS, jsPDF, jsPDF-AutoTable
+- **Fonts:** Self-hosted Font Awesome 6.4 + Bootstrap Icons 1.10.5
+- **Contact Form:** Google Apps Script
+- **Blog:** Static JSON-driven engine (search, category/tag filtering, pagination, clean `/blog/:slug` URLs)
 
 ## Project Structure
 
 ```
-├── frontend/              # Static website (Cloudflare Pages)
-│   ├── _headers           # Cloudflare headers & caching
-│   ├── _redirects         # Cloudflare URL rewrites
-│   ├── .htaccess          # Apache security & caching
-│   ├── 404.html           # Custom 404 page
-│   ├── robots.txt         # Crawler rules
-│   ├── sitemap.xml        # XML sitemap
-│   ├── index.html         # Homepage (SEO indexed)
-│   ├── data/              # Static data files
-│   │   └── posts.json     # Blog posts data (JSON-driven)
-│   ├── blog/              # Blog module
-│   │   └── posts/         # 29 individual blog post HTML files
-│   ├── pages/             # SEO-indexed public pages
-│   │   ├── about.html     # About page
-│   │   ├── contact.html   # Contact page
-│   │   ├── blog.html      # Blog listing (dynamic, JS-driven)
-│   │   ├── portfolio.html # Portfolio page
-│   │   ├── links.html     # Links page
-│   │   ├── privacy.html   # Privacy policy
-│   │   ├── terms.html     # Terms of service
-│   │   ├── expertise/     # Service pages
-│   │   │   ├── digital-engineering.html
-│   │   │   ├── freelance-digital-marketing-seo.html
-│   │   │   └── learning-innovation.html
-│   │   └── partners/      # Partner pages
-│   │       ├── index.html
-│   │       ├── graphics.html
-│   │       ├── electrical.html
-│   │       └── automotive.html
-│   ├── app/               # Login-required (noindex)
-│   │   ├── auth/          # Login, register, password-reset, callback pages
-│   │   ├── admin/         # Admin: user management, audit logs
-│   │   ├── dashboard.html # Post-login dashboard
-│   │   ├── profile.html   # User profile
-│   │   ├── seniority/     # Seniority management
-│   │   ├── hospital/      # Hospital management module
-│   │   │   ├── dashboard.html
-│   │   │   ├── new-visit.html
-│   │   │   ├── patient-list.html
-│   │   │   ├── patient-profile.html
-│   │   │   ├── appointments.html
-│   │   │   ├── data/masters.json
-│   │   │   ├── components/hospital-nav.html
-│   │   │   ├── css/hospital.css
-│   │   │   └── js/hospital-nav.js
-│   │   ├── society/       # (placeholder)
-│   │   ├── future-apps/   # (placeholder)
-│   │   └── ticket-manager/ # (placeholder)
-│   ├── shared/            # Shared components, CSS, JS, assets
-│   │   ├── components/    # header.html, footer.html
-│   │   ├── css/           # style.css, headerfooter.css, auth.css, blog-sidebar.css, nadstyle.css
-│   │   ├── js/            # config.js, seo-injector.js, headerfooter.js, auth.js, blog.js, blog-sidebar.js, form-handler.js
-│   │   └── assets/img/    # Logo, favicon, OG image, icons, social calendar images
-│   ├── config/            # Runtime config
-│   │   └── supabase.js    # Supabase client initialization
-│   └── services/          # API service classes
-├── backend/               # Database schema & configuration
-│   ├── schema/            # schema.sql, rls-policies.sql, auth-trigger.sql, admin-rls-policy.sql, database-design.md
-│   ├── seed/              # seed.sql
-│   ├── import/            # ETL pipeline for CDCI + LOINC master data
-│   │   ├── scripts/       # filter, import, verify scripts
-│   │   └── sql/           # medicine, investigation, diagnosis DDL
-│   └── modules/           # Module-specific schema
-│       ├── blog/          # (reserved)
-│       └── hospital/      # Schema, seed, RLS for hospital module
-├── supabase/
-│   ├── config.toml        # Supabase project config
-│   └── functions/         # Edge Functions
-│       ├── blog-posts/    # Blog CRUD API
-│       ├── hospital-patients/  # Patient CRUD API
-│       ├── hospital-masters/   # Master data lookup API
-│       └── hospital-dashboard/ # Dashboard aggregation API
-├── docs/                  # DEPLOYMENT.md, ROADMAP.md, SRS-Hospital.md
-├── Future/                # Module placeholders (CRM, ERP, HRMS, Inventory, School)
-└── VScode/                # (empty)
+├── index.html           Homepage
+├── about.html           About page
+├── blog.html            Blog listing (JS-driven)
+├── contact.html         Contact page
+├── contactform.html     Contact form partial
+├── links.html           Links page
+├── portfolio.html       Portfolio page
+├── privacy.html         Privacy policy
+├── terms.html           Terms of service
+├── 404.html             Custom 404 page
+├── expertise/           Service pages (digital engineering, marketing/SEO, learning & innovation)
+├── partners/            Partner pages (graphics, electrical, automotive)
+├── blog/posts/          29 blog post HTML files
+├── css/                 Stylesheets
+├── js/                  Scripts (config, seo-injector, header/footer, blog, forms)
+├── data/                Static data (posts.json)
+├── img/                 Images
+├── fonts/               Self-hosted icon fonts
+├── components/          Header & footer partials (loaded at runtime)
+├── archive/             Archived code (auth, app modules, backend, hospital) — not deployed
+├── docs/                Deployment & roadmap
+├── _headers             Cloudflare security headers & caching
+├── _redirects           Cloudflare URL rewrites
+├── robots.txt           Crawler rules
+└── sitemap.xml          XML sitemap
 ```
 
 ## Features
 
-### Implemented
 - **Homepage** with hero, service cards, premium services, team section
-- **6 Service Pages:** Digital Marketing & SEO, Web & Software Development, College Projects & Training, Graphics/Photography & Branding, Electrical, Automotive
-- **Centralized Configuration** (`shared/js/config.js`) — brand name, domain, contact, social links in one file
+- **6 Service Pages** (Digital Marketing & SEO, Web & Software Development, Projects & Training, Graphics/Photography & Branding, Electrical, Automotive)
+- **Centralized Configuration** (`js/config.js`) — brand name, domain, contact, social links in one file
 - **Dynamic SEO Injection** — titles, meta, OG/Twitter tags, JSON-LD generated from config at runtime
-- **Blog System** — static JSON-driven engine with 29 posts, search, category/tag filtering, pagination, and clean `/blog/:slug` URLs
-- **Seniority Management** module with CSV/Excel/PDF export
-- **Authentication** — Supabase Auth with email/password login, registration, password reset, auth callback handling, and session management
-- **User Dashboard** — post-login landing page with user profile info, role badge, and module navigation
-- **User Profile** page
-- **Admin Module** — user management and audit logs
-- **Auth Guard** — protected pages redirect unauthenticated users to login
-- **Auth-Aware Navigation** — header shows DASHBOARD link only when logged in; no SIGN IN link (accessible via footer)
-- **Contact Form** integrated with Google Apps Script, dynamically loaded per-page (no labels, placeholders only)
-- **Shared component classes** (`p-*`) in `style.css` — consistent dark gradient hero, white cards, blue gradient icons across all service pages
+- **Blog System** — static JSON-driven engine with 29 posts, search, category/tag filtering, pagination, clean `/blog/:slug` URLs
+- **Contact Form** integrated with Google Apps Script, dynamically loaded per-page
 - **Dark/Light Theme** toggle with localStorage persistence
 - **Responsive Design** with mobile hamburger navigation
 - **SEO:** robots.txt, sitemap.xml, favicon, dynamic Open Graph / JSON-LD
-- **Hospital Management Module** — OPD visit workflow (7-step form), patient registry, appointment calendar, vitals/prescriptions/billing with master data autocomplete (CDCI medicines, LOINC investigations, ICD-10 diagnoses)
-- **Medical Master Data Pipeline** — ETL pipeline importing CDCI (186K drugs) and LOINC (102K lab tests) into Supabase PostgreSQL
-
-### Planned
-- Full blog CRUD with comments
-- Society management (groups, members, events)
-- Ticket manager
-- Additional Supabase Edge Functions (comments, society, etc.)
-- Automated sitemap generation
+- **Self-hosted fonts** — no external CDN dependencies
 
 ## Getting Started
 
 1. Clone the repo
-2. Edit `frontend/shared/js/config.js` with your brand name, domain, and contact info
-3. Configure `frontend/config/supabase.js` with your Supabase project URL and anon key
-4. Configure `backend/.env.example` with your Supabase project credentials
-5. Run `backend/schema/schema.sql` and `backend/schema/auth-trigger.sql` against your Supabase database
-6. Deploy the `frontend/` directory to Cloudflare Pages
-7. Deploy Edge Functions from `supabase/functions/`
-8. Set `site_url` and redirect URLs in Supabase Auth settings
+2. Edit `js/config.js` with your brand name, domain, and contact info
+3. Deploy the repo root to Cloudflare Pages (static, no build step)
+
+## Deployment
+
+See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).

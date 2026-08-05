@@ -1,0 +1,71 @@
+<!-- header.html -->
+<link rel="stylesheet" href="/css/headerfooter.css">
+
+<header class="hf-header">
+    <nav class="hf-nav-container">
+        <!-- Logo Section -->
+        <div class="hf-logo-section">
+            <div class="hf-logo-icon">{{LOGO_ICON}}</div>
+            <div class="hf-logo-text">
+                <a href="/" class="hf-logo">{{SITE_NAME}}</a>
+                <p class="hf-tagline">{{TAGLINE}}</p>
+            </div>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <ul class="hf-nav-menu">
+            <li class="hf-nav-item hf-dropdown">
+                <a href="#" class="hf-nav-link">EXPERTISE</a>
+                <div class="hf-dropdown-content">
+                    <a href="/expertise/digital-engineering" class="hf-dropdown-item">Digital Engineering</a>
+                    <a href="/expertise/digital-marketing-seo" class="hf-dropdown-item">Digital Marketing & SEO</a>
+                    <a href="/expertise/learning-innovation" class="hf-dropdown-item">Learning &amp; Innovation</a>
+                    <div class="hf-dropdown-item-sub">
+                        <a href="/partners" class="hf-dropdown-item has-sub">Strategic Partners</a>
+                        <div class="hf-sub-dropdown-content">
+                            <a href="/partners/graphics" class="hf-dropdown-item">Graphics, Photography &amp; Branding</a>
+                            <a href="/partners/electrical" class="hf-dropdown-item">Electrical Services</a>
+                            <a href="/partners/automotive" class="hf-dropdown-item">Automotive Services</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="hf-nav-item"><a href="/portfolio" class="hf-nav-link">PORTFOLIO</a></li>
+            <li class="hf-nav-item"><a href="/blog" class="hf-nav-link">BLOG</a></li>
+            <li class="hf-nav-item"><a href="/about" class="hf-nav-link">ABOUT</a></li>
+            <li class="hf-nav-item"><a href="/contact" class="hf-nav-link">CONTACT</a></li>
+        </ul>
+
+        <!-- Theme Toggle -->
+        <div class="hf-theme-toggle" title="Toggle Dark/Light Mode">
+            <i class="fas fa-moon"></i>
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <div class="hf-mobile-toggle">
+            <div class="hf-hamburger-line"></div>
+            <div class="hf-hamburger-line"></div>
+            <div class="hf-hamburger-line"></div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="hf-mobile-menu">
+        <ul class="hf-mobile-nav-list">
+            <li><a href="/expertise/digital-engineering" class="hf-mobile-nav-link">DIGITAL ENGINEERING</a></li>
+            <li><a href="/expertise/digital-marketing-seo" class="hf-mobile-nav-link">DIGITAL MARKETING & SEO</a></li>
+            <li><a href="/expertise/learning-innovation" class="hf-mobile-nav-link">LEARNING &amp; INNOVATION</a></li>
+            <li><a href="/partners" class="hf-mobile-nav-link">STRATEGIC PARTNERS</a></li>
+            <li><a href="/portfolio" class="hf-mobile-nav-link">PORTFOLIO</a></li>
+            <li><a href="/blog" class="hf-mobile-nav-link">BLOG</a></li>
+            <li><a href="/about" class="hf-mobile-nav-link">ABOUT</a></li>
+            <li><a href="/contact" class="hf-mobile-nav-link">CONTACT</a></li>
+            <li class="hf-mobile-nav-link hf-mobile-theme-toggle">
+                <i class="fas fa-moon"></i> <span>Toggle Theme</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="hf-mobile-overlay"></div>
+</header>

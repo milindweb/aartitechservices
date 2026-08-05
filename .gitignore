@@ -7,9 +7,9 @@ backend/.env.local
 structure copy.md
 Hospital data raw/
 supabase/.temp/
-backend/import/raw/
-backend/import/cleaned/
-backend/import/import.log
-backend/import/.env
+archive/backend/import/raw/
+archive/backend/import/cleaned/
+archive/backend/import/import.log
+archive/backend/import/.env
 __pycache__/
 *.pyc
