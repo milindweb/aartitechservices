@@ -15,4 +15,4 @@
   Cache-Control: public, max-age=86400, no-transform
 
 *.js
-  Cache-Control: public, max-age=86400, no-transform
+  Cache-Control: public, max-age=300, no-transform
