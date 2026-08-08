@@ -98,10 +98,6 @@ Copy the contents of `contact-form.js` into your project and include it:
 The script reads `SITE_CONFIG.appsScriptUrl` and
 `SITE_CONFIG.contact.siteName` and sends them with every submission.
 
-> In this repo the file lives at `js/contact-form.js`, the URL + `siteName`
-> are set in `js/config.js`, and it is loaded in place of the old
-> `js/form-handler.js`.
-
 ---
 
 ## 4. Where data goes
