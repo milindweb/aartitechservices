@@ -1,6 +1,8 @@
 const SITE_CONFIG = {
   version: 'v1.0.2',
 
+  appsScriptUrl: 'https://script.google.com/macros/s/AKfycbyO87cybPXuwXOGBMj7OdMf8VXNPtNFW8055qcTzizXHpwIvbD_9kSBFZQIBXFHGzMs/exec',
+
   brand: {
     name: 'Aarti Tech Services',
     nameUppercase: 'AARTI TECH SERVICES',
@@ -16,6 +18,7 @@ const SITE_CONFIG = {
   locale: 'en_IN',
 
   contact: {
+    siteName: 'AartiTechServices',
     phone: '+91-9869787575',
     phoneDisplay: '+91 9869787575',
     phoneWA: '919869787575',
