@@ -1,4 +1,4 @@
-const SITE_CONFIG = {
+window.SITE_CONFIG = {
   version: 'v1.0.2',
 
   appsScriptUrl: 'https://script.google.com/macros/s/AKfycbyO87cybPXuwXOGBMj7OdMf8VXNPtNFW8055qcTzizXHpwIvbD_9kSBFZQIBXFHGzMs/exec',
