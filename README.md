@@ -26,7 +26,7 @@ Business and portfolio website for Aarti Tech Services — a clean, static HTML/
 ├── partners/            Partner pages (graphics, electrical, automotive)
 ├── blog/posts/          29 blog post HTML files
 ├── css/                 Stylesheets
-├── js/                  Scripts (config, seo-injector, header/footer, blog, forms)
+├── js/                  Scripts (config, seo-injector, header/footer, blog, forms, lightbox)
 ├── data/                Static data (posts.json)
 ├── img/                 Images
 ├── fonts/               Self-hosted icon fonts

@@ -1,5 +1,28 @@
 # Changelog
 
+## v2.3.0 — 2026-09-28 — Add MKsociety, NADSOC and Society Calculator screenshots to portfolio
+
+### Added
+- `portfolio.html` — new featured project card for **MKsociety – Society & Apartment Management Platform** (status Live, live preview `https://mksoc.in`) with modules, technology stack and an eight-screenshot grid
+- `img/MKsociety/` — eight WebP product screenshots (`dashboard`, `dashboard-dark`, `maintenance-billing`, `invoice`, `accounting`, `trial-balance`, `reports`, `complaint`; ~431 KB total)
+- `portfolio.html` — eleven-screenshot grid added to the existing **NAD Society Management System** card
+- `img/NADSOC/` — eleven PNG screenshots converted to WebP (`admin-panel`, `bulk-sms`, `custom-report`, `dashboard`, `demand`, `final-settlement`, `members`, `recovery`, `report`, `surety`, `user-management`; ~736 KB total)
+- `img/SocCal/` — four Society Calculator screenshots converted from root PNGs to WebP (`soccal-01`–`soccal-04`; ~198 KB total, down from ~2.8 MB)
+- `js/lightbox.js` — click-to-zoom lightbox for `.screenshot-grid` images (native `<dialog>`, close via button, backdrop click or Escape; progressive enhancement)
+
+### Changed
+- `portfolio.html` — Society Calculator screenshots moved from `img/` to `img/SocCal/`
+- `portfolio.html` — added `rel="noopener"` to external preview links and de-duplicated the `.screenshot-grid img` cursor rule
+
+### Fixed
+- `js/lightbox.js` — added `aria-label` to the lightbox dialog for screen-reader context
+
+### Documentation
+- `README.md` — added `js/lightbox.js` to the scripts list
+- `CHANGELOG.md` — added this entry
+
+---
+
 ## v2.2.0 — 2026-08-05 — Fix Cloudflare clean-URL redirect loops
 
 ### Fixed

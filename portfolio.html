@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/fonts/fontawesome/css/all.min.css" />
   <script src="/js/headerfooter.js" defer></script>
+  <script src="/js/lightbox.js" defer></script>
   <style>
     main { max-width: 1000px; margin: 0 auto; padding: 3rem 1rem; }
     h1 { font-size: 2rem; margin-bottom: 0.5rem; }
@@ -33,7 +34,7 @@
     .tech-card li { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.3rem; }
     .tech-card li::before { content: "• "; color: var(--accent); }
     .screenshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1rem; margin: 1.5rem 0; }
-    .screenshot-grid img { width: 100%; border-radius: 10px; border: 1px solid var(--border); cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .screenshot-grid img { width: 100%; border-radius: 10px; border: 1px solid var(--border); cursor: zoom-in; transition: transform 0.3s ease, box-shadow 0.3s ease; }
     .screenshot-grid img:hover { transform: scale(1.03); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
     .cta-section { text-align: center; padding: 3rem 1rem; margin: 3rem 0; background: var(--secondary-bg); border-radius: 14px; border: 1px solid var(--border); }
     .cta-section h2 { margin-top: 0; }
@@ -41,6 +42,11 @@
     .partner-list { list-style: none; padding: 0; margin: 0; }
     .partner-list li { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 0.3rem; }
     .partner-list li::before { content: "• "; color: var(--accent); }
+    .shot-lightbox { border: 0; padding: 0; background: transparent; max-width: 92vw; max-height: 92vh; }
+    .shot-lightbox::backdrop { background: rgba(0,0,0,0.78); }
+    .shot-lightbox img { display: block; max-width: 92vw; max-height: 88vh; width: auto; height: auto; border-radius: 12px; box-shadow: 0 30px 60px -20px rgba(0,0,0,0.6); }
+    .shot-lightbox-close { position: fixed; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%; border: 0; background: #fff; color: #111; font-size: 1.4rem; line-height: 1; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+    .shot-lightbox-close:hover { background: var(--accent); color: #fff; }
     @media (max-width: 768px) { h1 { font-size: 1.6rem; } h2 { font-size: 1.3rem; } }
   </style>
 </head>
@@ -57,6 +63,38 @@
     <h2>Featured Projects</h2>
 
     <div class="project-card">
+      <div class="status">Live</div>
+      <h3>MKsociety – Society &amp; Apartment Management Platform</h3>
+      <p>A multi-tenant SaaS platform that helps cooperative housing societies and gated communities run their day-to-day operations online — members and flats, maintenance billing and receipts, dues, accounting, complaints, notices, visitors and reports, all in one secure system.</p>
+      <p>Built Marathi-first with English support, so committee members and staff can work in the language they prefer.</p>
+      <h4>Modules</h4>
+      <ul>
+        <li>Members, Flats &amp; Towers</li>
+        <li>Maintenance Billing &amp; Receipts</li>
+        <li>Accounting &amp; Ledger (Trial Balance, Balance Sheet)</li>
+        <li>Complaints &amp; Helpdesk</li>
+        <li>Notices &amp; Communication</li>
+        <li>Visitors &amp; Gate Passes</li>
+        <li>Facilities &amp; Bookings</li>
+        <li>Reports &amp; Exports</li>
+        <li>Role-based Access &amp; Backups</li>
+        <li>WhatsApp Sharing &amp; Marathi / English</li>
+      </ul>
+      <p class="tech"><strong>Technologies</strong><br />Laravel 12 • PHP • MySQL • Blade • Bootstrap 5 • JavaScript • Hostinger • Razorpay</p>
+      <a class="preview-link" href="https://mksoc.in" target="_blank" rel="noopener">Live Preview <i class="fas fa-external-link-alt"></i></a>
+      <div class="screenshot-grid">
+        <img src="/img/MKsociety/dashboard.webp" alt="MKsociety dashboard" loading="eager" />
+        <img src="/img/MKsociety/dashboard-dark.webp" alt="MKsociety dashboard (dark theme)" loading="lazy" />
+        <img src="/img/MKsociety/maintenance-billing.webp" alt="MKsociety maintenance billing" loading="lazy" />
+        <img src="/img/MKsociety/invoice.webp" alt="MKsociety invoice and receipt" loading="lazy" />
+        <img src="/img/MKsociety/accounting.webp" alt="MKsociety accounting and ledger" loading="lazy" />
+        <img src="/img/MKsociety/trial-balance.webp" alt="MKsociety trial balance report" loading="lazy" />
+        <img src="/img/MKsociety/reports.webp" alt="MKsociety society reports" loading="lazy" />
+        <img src="/img/MKsociety/complaint.webp" alt="MKsociety complaint tracking" loading="lazy" />
+      </div>
+    </div>
+
+    <div class="project-card">
       <div class="status">In Development</div>
       <h3>CSMA – Chhatrapati Shivaji Maharaj Auditorium Ticket Management System</h3>
       <p>A modern web-based ticket booking and management system developed for auditorium event management.</p>
@@ -71,7 +109,7 @@
         <li>Mobile Responsive Design</li>
       </ul>
       <p class="tech"><strong>Technologies</strong><br />HTML • CSS • JavaScript • PostgreSQL • Cloudflare • Razorpay</p>
-      <a class="preview-link" href="https://csma.pages.dev" target="_blank">Live Preview <i class="fas fa-external-link-alt"></i></a>
+      <a class="preview-link" href="https://csma.pages.dev" target="_blank" rel="noopener">Live Preview <i class="fas fa-external-link-alt"></i></a>
     </div>
 
     <div class="project-card">
@@ -90,7 +128,20 @@
       </ul>
       <p>Designed to replace manual processes with a secure and efficient digital workflow.</p>
       <p class="tech"><strong>Technologies</strong><br />PostgreSQL • JavaScript • Cloudflare • GitHub</p>
-      <a class="preview-link" href="https://nadsociety.vercel.app" target="_blank">Live Preview <i class="fas fa-external-link-alt"></i></a>
+      <a class="preview-link" href="https://nadsociety.vercel.app" target="_blank" rel="noopener">Live Preview <i class="fas fa-external-link-alt"></i></a>
+      <div class="screenshot-grid">
+        <img src="/img/NADSOC/dashboard.webp" alt="NAD Society management dashboard" loading="lazy" />
+        <img src="/img/NADSOC/members.webp" alt="NAD Society member management" loading="lazy" />
+        <img src="/img/NADSOC/demand.webp" alt="NAD Society demand generation" loading="lazy" />
+        <img src="/img/NADSOC/recovery.webp" alt="NAD Society recovery management" loading="lazy" />
+        <img src="/img/NADSOC/final-settlement.webp" alt="NAD Society final settlement" loading="lazy" />
+        <img src="/img/NADSOC/surety.webp" alt="NAD Society surety details" loading="lazy" />
+        <img src="/img/NADSOC/report.webp" alt="NAD Society reports" loading="lazy" />
+        <img src="/img/NADSOC/custom-report.webp" alt="NAD Society custom report" loading="lazy" />
+        <img src="/img/NADSOC/bulk-sms.webp" alt="NAD Society bulk SMS" loading="lazy" />
+        <img src="/img/NADSOC/user-management.webp" alt="NAD Society user management" loading="lazy" />
+        <img src="/img/NADSOC/admin-panel.webp" alt="NAD Society admin panel" loading="lazy" />
+      </div>
     </div>
 
     <div class="project-card">
@@ -106,7 +157,7 @@
         <li>SEO Friendly</li>
       </ul>
       <p class="tech"><strong>Technologies</strong><br />HTML • CSS • JavaScript • Cloudflare Pages</p>
-      <a class="preview-link" href="https://drakanksha.pages.dev" target="_blank">Live Preview <i class="fas fa-external-link-alt"></i></a>
+      <a class="preview-link" href="https://drakanksha.pages.dev" target="_blank" rel="noopener">Live Preview <i class="fas fa-external-link-alt"></i></a>
     </div>
 
     <div class="project-card">
@@ -124,10 +175,10 @@
       </ul>
       <p class="tech"><strong>Technologies</strong><br />HTML • CSS • JavaScript • PostgreSQL • Cloudflare Pages</p>
       <div class="screenshot-grid">
-        <img src="/img/SocCal01.png" alt="Society Calculator Screenshot 1" loading="lazy" />
-        <img src="/img/SocCal02.png" alt="Society Calculator Screenshot 2" loading="lazy" />
-        <img src="/img/SocCal03.png" alt="Society Calculator Screenshot 3" loading="lazy" />
-        <img src="/img/SocCal04.png" alt="Society Calculator Screenshot 4" loading="lazy" />
+        <img src="/img/SocCal/soccal-01.webp" alt="Society Calculator Screenshot 1" loading="lazy" />
+        <img src="/img/SocCal/soccal-02.webp" alt="Society Calculator Screenshot 2" loading="lazy" />
+        <img src="/img/SocCal/soccal-03.webp" alt="Society Calculator Screenshot 3" loading="lazy" />
+        <img src="/img/SocCal/soccal-04.webp" alt="Society Calculator Screenshot 4" loading="lazy" />
       </div>
     </div>
 
