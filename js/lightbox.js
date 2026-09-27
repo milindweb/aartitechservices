@@ -51,7 +51,21 @@
     }
 
     Array.prototype.forEach.call(grids, function (grid) {
+        var pointerStartX = null;
+
+        grid.addEventListener('pointerdown', function (event) {
+            pointerStartX = event.clientX;
+        });
+
         grid.addEventListener('click', function (event) {
+            // Ignore the click that follows a horizontal swipe/drag in the carousel.
+            if (pointerStartX !== null) {
+                var moved = Math.abs(event.clientX - pointerStartX);
+                pointerStartX = null;
+                if (moved > 10) {
+                    return;
+                }
+            }
             var img = event.target.closest('img');
             if (img) {
                 event.preventDefault();

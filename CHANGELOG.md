@@ -9,13 +9,16 @@
 - `img/NADSOC/` — eleven PNG screenshots converted to WebP (`admin-panel`, `bulk-sms`, `custom-report`, `dashboard`, `demand`, `final-settlement`, `members`, `recovery`, `report`, `surety`, `user-management`; ~736 KB total)
 - `img/SocCal/` — four Society Calculator screenshots converted from root PNGs to WebP (`soccal-01`–`soccal-04`; ~198 KB total, down from ~2.8 MB)
 - `js/lightbox.js` — click-to-zoom lightbox for `.screenshot-grid` images (native `<dialog>`, close via button, backdrop click or Escape; progressive enhancement)
+- `js/gallery.js` — one-image-at-a-time horizontal carousel for each project's screenshots (scroll-snap for swipe/trackpad, prev/next buttons, `current / total` counter, arrow/Home/End keys; progressive enhancement)
 
 ### Changed
 - `portfolio.html` — Society Calculator screenshots moved from `img/` to `img/SocCal/`
+- `portfolio.html` — screenshot grids converted from an auto-fit grid to a single-image scroll-snap carousel with prev/next controls and a counter
 - `portfolio.html` — added `rel="noopener"` to external preview links and de-duplicated the `.screenshot-grid img` cursor rule
 
 ### Fixed
 - `js/lightbox.js` — added `aria-label` to the lightbox dialog for screen-reader context
+- `js/lightbox.js` — ignore the click that follows a horizontal swipe so scrolling a carousel no longer opens the lightbox
 
 ### Documentation
 - `README.md` — added `js/lightbox.js` to the scripts list
